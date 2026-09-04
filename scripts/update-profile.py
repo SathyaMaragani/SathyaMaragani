@@ -1155,7 +1155,9 @@ def generate_contribution_svg(contribution_data):
     cell_size = 12
     gap = 3
     start_x = 45
-    start_y = 30
+    # Leaves a clear band for the title (y=16) above the month labels (y=32),
+    # which otherwise collide near the centre of the graph.
+    start_y = 42
     cells_svg = ""
     month_labels = {}
 
@@ -1181,7 +1183,7 @@ def generate_contribution_svg(contribution_data):
     months_svg = ""
     for mx, label in sorted(month_labels.items()):
         months_svg += (
-            f'<text x="{mx}" y="{start_y - 8}" font-size="9" '
+            f'<text x="{mx}" y="{start_y - 10}" font-size="9" '
             f'fill="{P["text_muted"]}" '
             f'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">'
             f'{label}</text>\n    '
