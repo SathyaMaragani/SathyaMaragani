@@ -100,7 +100,6 @@ duplicated here; the self-check asserts that.
 | `interests`, `side_text` | Hero tags and the vertical side text |
 | `cards` | Focus / Mindset / Interests card contents |
 | `quote`, `motto`, `footer_message` | About-card quote and footer copy |
-| `currently` | `building` / `learning` / `focus`. `null` → auto-detected |
 | `socials` | Links. Empty strings are omitted from the README entirely |
 | `featured_repositories` | Names to force to the top |
 | `exclude_repositories` | Names to hide (the profile repo is automatic) |
@@ -111,9 +110,6 @@ duplicated here; the self-check asserts that.
 | `tech_stack_overrides` | Extra technologies to claim explicitly |
 | `language_min_share` | Ignore languages below this share of a repo's bytes |
 | `ranking_weights` | See below |
-
-`currently.building` set to `null` auto-detects the most recently **pushed**
-eligible repository, which is what "currently building" actually means.
 
 ---
 
@@ -250,8 +246,8 @@ Generated content lives strictly between:
 <!-- PROFILE:SECTION:END -->
 ```
 
-Sections: `HERO`, `ABOUT`, `CURRENTLY`, `TECHSTACK`, `STATS`,
-`CONTRIBUTIONS`, `REPOS`, `CONNECT`, `FOOTER`.
+Sections: `HERO`, `ABOUT`, `TECHSTACK`, `STATS`, `CONTRIBUTIONS`, `REPOS`,
+`CONNECT`, `FOOTER`.
 
 Everything outside the markers is preserved byte for byte — add your own
 sections freely.
@@ -367,9 +363,8 @@ Measured in headless Chrome: `document.scrollWidth == clientWidth` and
   the topics row is dropped for the whole set rather than leaving a band of
   dead space on every card. All cards in a set share one height so they tile
   evenly.
-- The only remaining table is the "Currently" block. GitHub gives README
-  tables `display: block; overflow: auto`, so a long value scrolls inside the
-  table rather than widening the page.
+- There are no markdown tables left in the generated output, so nothing can
+  force the page wider than the viewport.
 
 Known limitation: markdown cannot carry media queries, so the two-column card
 grid stays two-up on a phone (~170px per card) rather than stacking. Set

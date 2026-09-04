@@ -36,12 +36,6 @@
   "motto": "Discipline today, freedom tomorrow.",
   "side_text": ["SAME", "HUMAN", "DIFFERENT", "MINDSET"],
 
-  "currently": {
-    "building": null,
-    "learning": null,
-    "focus": null
-  },
-
   "featured_repositories": [],
   "exclude_repositories": ["Sathya994"],
   "include_forks_in_featured": false,

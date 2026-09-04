@@ -1409,7 +1409,7 @@ def generate_footer_svg(config):
 # README GENERATION
 # ============================================================
 
-SECTION_NAMES = ["HERO", "ABOUT", "CURRENTLY", "TECHSTACK", "STATS",
+SECTION_NAMES = ["HERO", "ABOUT", "TECHSTACK", "STATS",
                  "CONTRIBUTIONS", "REPOS", "CONNECT", "FOOTER"]
 
 class MarkerError(Exception):
@@ -1514,7 +1514,6 @@ def build_readme(user_data, all_repos, ranked_repos, config, allow_init=False,
 </div>'''
 
     repos_md = _build_repos_section(ranked_repos, username)
-    currently_md = _build_currently_section(all_repos, config, username)
     connect_md = _build_connect_section(config)
 
     footer = f'''<div align="center">
@@ -1524,7 +1523,6 @@ def build_readme(user_data, all_repos, ranked_repos, config, allow_init=False,
     sections = {
         "HERO": hero,
         "ABOUT": about,
-        "CURRENTLY": currently_md,
         "TECHSTACK": tech,
         "STATS": stats,
         "CONTRIBUTIONS": contrib,
@@ -1570,10 +1568,6 @@ def build_readme(user_data, all_repos, ranked_repos, config, allow_init=False,
 <!-- PROFILE:ABOUT:START -->
 {about}
 <!-- PROFILE:ABOUT:END -->
-
-<!-- PROFILE:CURRENTLY:START -->
-{currently_md}
-<!-- PROFILE:CURRENTLY:END -->
 
 <!-- PROFILE:TECHSTACK:START -->
 {tech}
@@ -1625,50 +1619,6 @@ def _build_repos_section(repos, username):
             f'<img src="assets/repo-card-{idx}.svg" alt="{alt}" width="48%"/></a>'
         )
     lines += ['', '</div>']
-    return '\n'.join(lines)
-
-def _build_currently_section(repos, config, username=""):
-    """
-    Build the 'Currently' section. `building` is auto-detected as the most
-    recently *pushed* eligible repo (which is what "currently building"
-    actually means), unless overridden in config.
-    """
-    currently = config.get("currently") or {}
-    building = currently.get("building")
-
-    if not building:
-        excluded = excluded_repo_names(config, username)
-        candidates = [r for r in repos
-                      if is_featurable(r, config, excluded) and not r.get("archived")]
-        if candidates:
-            building = min(candidates, key=repo_age_days).get("name")
-
-    if not building:
-        building = "something new"
-
-    learning = currently.get("learning") or "Always exploring new technologies"
-    focus = currently.get("focus") or "Building useful tools and applications"
-
-    lines = [
-        '<div align="center">',
-        '',
-        '<table>',
-        '<tr>',
-        f'<td><strong>Currently Building</strong></td>',
-        f'<td>{safe_text(building)}</td>',
-        '</tr>',
-        '<tr>',
-        f'<td><strong>Learning</strong></td>',
-        f'<td>{safe_text(learning)}</td>',
-        '</tr>',
-        '<tr>',
-        f'<td><strong>Focus</strong></td>',
-        f'<td>{safe_text(focus)}</td>',
-        '</tr>',
-        '</table>',
-        '',
-        '</div>',
-    ]
     return '\n'.join(lines)
 
 def _build_connect_section(config):
