@@ -19,27 +19,6 @@
 </div>
 <!-- PROFILE:ABOUT:END -->
 
-<!-- PROFILE:CURRENTLY:START -->
-<div align="center">
-
-<table>
-<tr>
-<td><strong>Currently Building</strong></td>
-<td>RPWeb</td>
-</tr>
-<tr>
-<td><strong>Learning</strong></td>
-<td>Always exploring new technologies</td>
-</tr>
-<tr>
-<td><strong>Focus</strong></td>
-<td>Building useful tools and applications</td>
-</tr>
-</table>
-
-</div>
-<!-- PROFILE:CURRENTLY:END -->
-
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" alt="Tech Stack" width="100%"/>
