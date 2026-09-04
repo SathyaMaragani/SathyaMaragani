@@ -1,0 +1,67 @@
+name: Update Profile README
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # Daily at 00:00 UTC
+  workflow_dispatch:       # Manual "Run workflow" button
+
+# Least privilege: the job reads public API data and pushes the regenerated
+# README + assets back to this repo. Nothing else is granted.
+permissions:
+  contents: write
+
+# Never let a scheduled run and a manual run push at the same time.
+concurrency:
+  group: update-profile
+  cancel-in-progress: false
+
+jobs:
+  update-profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Self-check the generator
+        run: python scripts/test_update_profile.py
+
+      - name: Update profile README
+        env:
+          # PROFILE_TOKEN is optional. The built-in GITHUB_TOKEN covers the
+          # REST endpoints; if the GraphQL contributions query is rejected for
+          # it, add a classic PAT with ONLY `read:user` as a repository secret
+          # named PROFILE_TOKEN. No other scope is needed, and never `repo`.
+          GITHUB_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ github.repository_owner }}
+        run: python scripts/update-profile.py
+
+      - name: Commit and push if changed
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Scope the commit to generated output only — never sweep up stray
+          # files a future step might leave in the workspace.
+          git add README.md assets
+
+          if git diff --cached --quiet; then
+            echo "No changes — nothing to commit."
+            exit 0
+          fi
+
+          git commit -m "chore(profile): refresh generated profile data"
+
+          # A push made with GITHUB_TOKEN does not trigger workflows, so this
+          # cannot re-trigger this workflow. Rebase first in case a human
+          # pushed while the job was running.
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "Profile updated."

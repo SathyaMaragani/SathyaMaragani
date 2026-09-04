@@ -1,0 +1,4 @@
+# Generated files must use LF everywhere, or a Windows local run and the
+# Linux Actions runner would disagree on every byte and commit daily.
+* text=auto eol=lf
+*.png binary

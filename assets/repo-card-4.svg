@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 122" width="380" height="122">
+  <defs>
+    <linearGradient id="cardBorder4" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EC4899" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1E293B" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="378" height="120" rx="10"
+        fill="#111827" stroke="url(#cardBorder4)" stroke-width="0.8"/>
+  <rect x="1" y="1" width="378" height="2" rx="1" fill="#EC4899" opacity="0.55"/>
+
+  <text x="18" y="32" font-size="15" font-weight="700" fill="#F1F5F9"
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">wsl-imgod</text>
+  <rect x="318.0" y="17" width="44.0" height="19" rx="9.5"
+        fill="#0F1419" stroke="#1E293B" stroke-width="0.4"/>
+  <text x="340.0" y="30" text-anchor="middle" font-size="9"
+        fill="#64748B" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Public</text>
+
+  <text x="18" y="56" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">No description provided</text>
+  <circle cx="23" cy="100" r="5" fill="#A8B9CC"/><text x="34" y="104" font-size="11" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">C</text>
+  <path transform="translate(272,93) scale(0.55)" fill="#A855F7" d="M10 0 L12.9 6.5 L20 7.3 L14.7 12.1 L16.2 19.2 L10 15.6 L3.8 19.2 L5.3 12.1 L0 7.3 L7.1 6.5 Z"/><text x="286" y="104" font-size="11" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text><g transform="translate(320,94)" stroke="#64748B" fill="#64748B" stroke-width="1.2"><circle cx="1.5" cy="1.5" r="1.5" stroke="none"/><circle cx="9.5" cy="1.5" r="1.5" stroke="none"/><circle cx="5.5" cy="10" r="1.5" stroke="none"/><path d="M1.5 3 v1.5 a2 2 0 0 0 2 2 h4 a2 2 0 0 0 2 -2 V3" fill="none"/><path d="M5.5 6.5 v2" fill="none"/></g><text x="336" y="104" font-size="11" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
+  
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 180" width="840" height="180">
+  <rect width="840" height="180" fill="transparent"/>
+  
+      <g>
+        <rect x="20.5" y="10" width="190" height="150" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.7"/>
+        <rect x="20.5" y="10" width="190" height="1" rx="0.5"
+              fill="#A855F7" opacity="0.5"/>
+        <text x="40.5" y="40" font-size="14" font-weight="600" fill="#A855F7"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          🎯  Focus</text>
+        <text x="40.5" y="68" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Build</text>
+      <text x="40.5" y="90" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Learn</text>
+      <text x="40.5" y="112" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Improve</text>
+      <text x="40.5" y="134" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Repeat</text>
+      
+      </g>
+      <g>
+        <rect x="223.5" y="10" width="190" height="150" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.7"/>
+        <rect x="223.5" y="10" width="190" height="1" rx="0.5"
+              fill="#06B6D4" opacity="0.5"/>
+        <text x="243.5" y="40" font-size="14" font-weight="600" fill="#06B6D4"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          🧠  Mindset</text>
+        <text x="243.5" y="68" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Discipline</text>
+      <text x="243.5" y="90" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Consistency</text>
+      <text x="243.5" y="112" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Progress</text>
+      <text x="243.5" y="134" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Freedom</text>
+      
+      </g>
+      <g>
+        <rect x="426.5" y="10" width="190" height="150" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.7"/>
+        <rect x="426.5" y="10" width="190" height="1" rx="0.5"
+              fill="#8B5CF6" opacity="0.5"/>
+        <text x="446.5" y="40" font-size="14" font-weight="600" fill="#8B5CF6"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          💡  Interests</text>
+        <text x="446.5" y="68" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Code</text>
+      <text x="446.5" y="90" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Create</text>
+      <text x="446.5" y="112" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Explore</text>
+      <text x="446.5" y="134" font-size="12" fill="#94A3B8" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Stay Curious</text>
+      
+      </g>
+      <g>
+        <rect x="629.5" y="10" width="190" height="150" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.7"/>
+        <rect x="629.5" y="10" width="190" height="1" rx="0.5"
+              fill="#EC4899" opacity="0.5"/>
+        <text x="647.5" y="42" font-size="28" fill="#A855F7" opacity="0.3"
+              font-family="Georgia,serif">&quot;</text>
+        <text x="654.5" y="70" font-size="12" fill="#94A3B8" font-style="italic" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">A dream without a plan is</text>
+      <text x="654.5" y="88" font-size="12" fill="#94A3B8" font-style="italic" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">just a wish.</text>
+      
+        <text x="801.5" y="142" text-anchor="end" font-size="28"
+              fill="#A855F7" opacity="0.3"
+              font-family="Georgia,serif">&quot;</text>
+      </g>
+</svg>

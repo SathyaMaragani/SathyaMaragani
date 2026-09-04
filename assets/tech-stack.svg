@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 143" width="840" height="143">
+  <rect width="840" height="143" fill="transparent"/>
+  <text x="25" y="30" font-size="18" font-weight="700" fill="#F1F5F9"
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+    Tech Stack</text>
+  <line x1="25" y1="40" x2="815" y2="40" stroke="#1E293B" stroke-width="0.5"/>
+  
+      <g transform="translate(104.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#3178C6" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#3178C6"
+              font-family="Consolas,Monaco,monospace">TS</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          TypeScript</text>
+      </g>
+      <g transform="translate(184.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#F7DF1E" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#F7DF1E"
+              font-family="Consolas,Monaco,monospace">JS</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          JavaScript</text>
+      </g>
+      <g transform="translate(264.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#ED8B00" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#ED8B00"
+              font-family="Consolas,Monaco,monospace">JV</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          Java</text>
+      </g>
+      <g transform="translate(344.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#E34F26" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#E34F26"
+              font-family="Consolas,Monaco,monospace">HT</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          HTML</text>
+      </g>
+      <g transform="translate(424.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#2C2D72" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#2C2D72"
+              font-family="Consolas,Monaco,monospace">LU</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          Lua</text>
+      </g>
+      <g transform="translate(504.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#3776AB" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#3776AB"
+              font-family="Consolas,Monaco,monospace">PY</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          Python</text>
+      </g>
+      <g transform="translate(584.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#A8B9CC" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#A8B9CC"
+              font-family="Consolas,Monaco,monospace">C</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          C</text>
+      </g>
+      <g transform="translate(664.0,50)">
+        <rect width="72" height="70" rx="10"
+              fill="#111827" stroke="#1E293B" stroke-width="0.5"/>
+        <rect x="18" y="10" width="36" height="30" rx="6"
+              fill="#F05032" opacity="0.15"/>
+        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
+              fill="#F05032"
+              font-family="Consolas,Monaco,monospace">GT</text>
+        <text x="36" y="58" text-anchor="middle" font-size="9" fill="#94A3B8"
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+          Git</text>
+      </g>
+</svg>

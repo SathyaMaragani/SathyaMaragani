@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 56" width="840" height="56">
+  <rect width="840" height="56" fill="transparent"/>
+  <text x="420.0" y="26" text-anchor="middle" font-size="13" fill="#94A3B8"
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Contribution activity unavailable</text>
+  <text x="420.0" y="44" text-anchor="middle" font-size="10" fill="#475569"
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">The GraphQL contributions API needs a token; this runs automatically in GitHub Actions</text>
+</svg>
