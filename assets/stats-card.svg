@@ -67,9 +67,9 @@
       <text x="550.5" y="148" font-size="11" fill="#64748B"
             font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">3</text>
       <text x="365" y="170" font-size="12" fill="#94A3B8"
-            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">HTML</text>
-      <rect x="475" y="161" width="67.5" height="11" rx="3"
-            fill="#E34F26" opacity="0.75"/>
-      <text x="550.5" y="170" font-size="11" fill="#64748B"
-            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">3</text>
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Python</text>
+      <rect x="475" y="161" width="45.0" height="11" rx="3"
+            fill="#3776AB" opacity="0.75"/>
+      <text x="528.0" y="170" font-size="11" fill="#64748B"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">2</text>
 </svg>
