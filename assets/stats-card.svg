@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 200" width="840" height="200">
+  <defs>
+    <linearGradient id="statsBorder" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2D1B69" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#1E293B" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  <rect width="840" height="200" fill="transparent"/>
+
+  <text x="25" y="28" font-size="18" font-weight="700" fill="#F1F5F9"
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">GitHub Stats</text>
+  <text x="815" y="28" text-anchor="end" font-size="11" fill="#64748B"
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">33 sources &#183; 1 fork &#183; 0 archived &#183; 0 forks received</text>
+  <line x1="25" y1="38" x2="815" y2="38" stroke="#1E293B" stroke-width="0.5"/>
+
+  <rect x="25" y="48" width="300" height="145" rx="10"
+        fill="#111827" stroke="url(#statsBorder)" stroke-width="0.7"/>
+  <text x="45" y="74" font-size="14" font-weight="700"
+        fill="#F1F5F9" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">SathyaMaragani</text>
+  <line x1="40" y1="88" x2="310" y2="88"
+        stroke="#1E293B" stroke-width="0.5"/>
+  
+      <text x="45" y="105" font-size="12.5" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Public Repositories</text>
+      <text x="305" y="105" text-anchor="end" font-size="12.5"
+            font-weight="600" fill="#F1F5F9"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">34</text>
+      <text x="45" y="127" font-size="12.5" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Total Stars Earned</text>
+      <text x="305" y="127" text-anchor="end" font-size="12.5"
+            font-weight="600" fill="#F1F5F9"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">2</text>
+      <text x="45" y="149" font-size="12.5" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Followers</text>
+      <text x="305" y="149" text-anchor="end" font-size="12.5"
+            font-weight="600" fill="#F1F5F9"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
+      <text x="45" y="171" font-size="12.5" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Following</text>
+      <text x="305" y="171" text-anchor="end" font-size="12.5"
+            font-weight="600" fill="#F1F5F9"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
+
+  <rect x="345" y="48" width="470" height="145" rx="10"
+        fill="#111827" stroke="url(#statsBorder)" stroke-width="0.7"/>
+  <text x="365" y="74" font-size="14" font-weight="700"
+        fill="#A855F7" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Most Used Languages</text>
+  <line x1="360" y1="88" x2="800" y2="88"
+        stroke="#1E293B" stroke-width="0.5"/>
+  
+      <text x="365" y="104" font-size="12" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">TypeScript</text>
+      <rect x="475" y="95" width="270.0" height="11" rx="3"
+            fill="#3178C6" opacity="0.75"/>
+      <text x="753.0" y="104" font-size="11" fill="#64748B"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">12</text>
+      <text x="365" y="126" font-size="12" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">JavaScript</text>
+      <rect x="475" y="117" width="135.0" height="11" rx="3"
+            fill="#F7DF1E" opacity="0.75"/>
+      <text x="618.0" y="126" font-size="11" fill="#64748B"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">6</text>
+      <text x="365" y="148" font-size="12" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Java</text>
+      <rect x="475" y="139" width="67.5" height="11" rx="3"
+            fill="#ED8B00" opacity="0.75"/>
+      <text x="550.5" y="148" font-size="11" fill="#64748B"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">3</text>
+      <text x="365" y="170" font-size="12" fill="#94A3B8"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">HTML</text>
+      <rect x="475" y="161" width="67.5" height="11" rx="3"
+            fill="#E34F26" opacity="0.75"/>
+      <text x="550.5" y="170" font-size="11" fill="#64748B"
+            font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">3</text>
+</svg>
