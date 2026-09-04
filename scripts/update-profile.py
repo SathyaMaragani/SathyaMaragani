@@ -1155,9 +1155,10 @@ def generate_contribution_svg(contribution_data):
     cell_size = 12
     gap = 3
     start_x = 45
-    # Leaves a clear band for the title (y=16) above the month labels (y=32),
-    # which otherwise collide near the centre of the graph.
-    start_y = 42
+    # Three clear bands: title (y=16), month labels (y=38), then the grid.
+    # A centred title and the Feb/Mar labels sit at the same x, so they need
+    # real vertical separation, not just non-overlapping boxes.
+    start_y = 48
     cells_svg = ""
     month_labels = {}
 
