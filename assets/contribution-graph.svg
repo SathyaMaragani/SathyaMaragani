@@ -386,6 +386,7 @@
     <rect x="810" y="138" width="12" height="12" rx="2" fill="#161B22"/>
     <rect x="825" y="48" width="12" height="12" rx="2" fill="#161B22"/>
     <rect x="825" y="63" width="12" height="12" rx="2" fill="#161B22"/>
+    <rect x="825" y="78" width="12" height="12" rx="2" fill="#161B22"/>
     
   <text x="680" y="170" font-size="9" fill="#64748B"
         font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Less</text>
