@@ -714,9 +714,11 @@ ANIM_CSS = """<style>
     .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
     .letter{animation:letter .75s ease-out both}
     .tick{animation:tick .34s linear both}
+    .breathe{animation:breathe 6s ease-in-out infinite}
+    .sheen{animation:sheen 6s ease-in-out infinite}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
-    .float{animation:float 44s ease-in-out infinite}
+    .float{animation:float 30s ease-in-out infinite}
     .twinkle{animation:twinkle 4s ease-in-out infinite}
     .blink{animation:blink 5s ease-in-out infinite}
     .shoot{animation:shoot 12s ease-in infinite;opacity:0}
@@ -726,9 +728,11 @@ ANIM_CSS = """<style>
     @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
     @keyframes letter{from{fill-opacity:0}}
     @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
+    @keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
+    @keyframes sheen{0%{transform:translateX(0)}70%,100%{transform:translateX(420px)}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
-    @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
-    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
+    @keyframes sway{0%,100%{transform:rotate(-2.6deg)}50%{transform:rotate(2.6deg)}}
+    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(26px)}}
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
@@ -753,10 +757,20 @@ def _drawn(length, delay=0.2):
     return (f' stroke-dasharray="{length:.0f}" stroke-dashoffset="0" class="draw"'
             f' style="--len:{length:.0f};animation-delay:{delay:.2f}s"')
 
-def _rule(x1, y, x2, color, delay=0.2, width=1):
-    """A hairline that draws itself left to right."""
-    return (f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{color}" '
+def _rule(x1, y, x2, color, delay=0.2, width=1, loop=True, period=7.0):
+    """
+    A hairline that draws itself left to right, then breathes.
+
+    The loop lives on a wrapper rather than the line itself: the `animation`
+    shorthand is one property, so two classes on one element would mean the
+    later rule silently wins and the draw never runs.
+    """
+    line = (f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{color}" '
             f'stroke-width="{width}"{_drawn(abs(x2 - x1), delay)}/>')
+    if not loop:
+        return line
+    return (f'<g class="breathe" style="animation-duration:{period}s;'
+            f'animation-delay:{delay + 1.2:.2f}s">{line}</g>')
 
 def _letters(text, base=0.18, step=0.045):
     """
@@ -987,10 +1001,10 @@ def _generate_clouds_svg():
     """Cumulus banks: heavy ones stacked at the horizon, wisps higher up."""
     # (x, y, scale, seed, drift seconds, delay)
     specs = [
-        (300, 172, 1.90, 3, 46, -8),  (474, 156, 1.45, 9, 38, -21),
-        (120, 178, 1.15, 5, 52, -3),  (-34, 150, 0.90, 8, 44, -30),
-        (556, 190, 0.85, 12, 58, -14), (226, 104, 0.50, 17, 62, -40),
-        (398, 88,  0.42, 21, 34, -19),
+        (300, 172, 1.90, 3, 31, -8),  (474, 156, 1.45, 9, 26, -21),
+        (120, 178, 1.15, 5, 35, -3),  (-34, 150, 0.90, 8, 29, -30),
+        (556, 190, 0.85, 12, 38, -14), (226, 104, 0.50, 17, 41, -40),
+        (398, 88,  0.42, 21, 23, -19),
     ]
     return "\n    ".join(_cloud(*s) for s in specs)
 
@@ -1312,8 +1326,9 @@ def generate_about_svg(config):
           <rect width="{card_w}" height="{card_h}" rx="12"
                 fill="{P["bg_card"]}" stroke="{P["border"]}" stroke-width="0.9"
                 {_drawn(2 * (card_w + card_h), 0.12 + 0.08 * idx)}/>
-          <rect x="14" y="0" width="{card_w - 28}" height="2" rx="1"
-                fill="{accent}" opacity="0.75" class="grow"{_d(0.3 + 0.08 * idx)}/>
+          <g class="breathe" style="animation-duration:{6.5 + idx * 0.7}s;
+             animation-delay:{1.4 + idx * 0.35}s"><rect x="14" y="0" width="{card_w - 28}"
+             height="2" rx="1" fill="{accent}" class="grow"{_d(0.3 + 0.08 * idx)}/></g>
           {body(accent)}
         </g>
       </g>'''
@@ -1477,12 +1492,14 @@ def generate_stats_svg(user_data, stats):
     total_repos_with_lang = sum(c for _, c in stats["top_languages"]) or 1
     max_count = max((c for _, c in langs), default=1) or 1
     bar_x, bar_max = R_X + 118, R_W - 118 - 76
-    lang_svg = ""
+    lang_svg, clips_svg = "", ""
     for i, (lang, count) in enumerate(langs):
         y = 106 + i * 22
         width = max(5, bar_max * count / max_count)
         pct = 100.0 * count / total_repos_with_lang
         color = TECH_DB.get(lang, {}).get("color", P["emerald"])
+        clips_svg += (f'<clipPath id="barClip{i}"><rect x="{bar_x}" y="{y - 9}" '
+                      f'width="{width:.1f}" height="11" rx="5.5"/></clipPath>')
         lang_svg += f'''
       <g class="fade"{_d(0.3 + i * 0.09)}>
         <text x="{R_X + 20}" y="{y}" font-size="12" fill="{P["text_secondary"]}"
@@ -1491,11 +1508,17 @@ def generate_stats_svg(user_data, stats):
               fill="{P["track"]}"/>
         <rect x="{bar_x}" y="{y - 9}" width="{width:.1f}" height="11" rx="5.5"
               fill="{color}" opacity="0.9" class="grow"{_d(0.45 + i * 0.11)}/>
+        <g clip-path="url(#barClip{i})">
+          <g class="sheen" style="animation-delay:{1.4 + i * 0.8:.1f}s">
+            <rect x="{bar_x - 80}" y="{y - 9}" width="64" height="11" fill="url(#sheenGrad)"/>
+          </g>
+        </g>
         <text x="{R_X + R_W - 20}" y="{y}" text-anchor="end" font-size="11"
               fill="{P["text_muted"]}" font-family="{SANS}">{pct:.1f}%</text>
       </g>'''
 
     if not langs:
+        clips_svg = ""
         lang_svg = f'''
       <text x="{R_X + 20}" y="114" font-size="12" fill="{P["text_muted"]}"
             font-family="{SANS}">No language data available</text>'''
@@ -1517,6 +1540,12 @@ def generate_stats_svg(user_data, stats):
       <stop offset="0%" stop-color="{P["border_glow"]}" stop-opacity="0.8"/>
       <stop offset="100%" stop-color="{P["border"]}" stop-opacity="0.35"/>
     </linearGradient>
+    <linearGradient id="sheenGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    {clips_svg}
   </defs>
   <rect width="{W}" height="{H}" fill="transparent"/>
   {_section_header("graph", "GitHub Stats", composition, W, P["emerald"])}
@@ -1616,7 +1645,8 @@ def generate_identity_svg(user_data, config, stats):
     <rect x="25" y="8" width="{W - 50}" height="{H - 22}" rx="14"
           fill="url(#idPanel)" stroke="url(#idEdge)" stroke-width="0.9"
           {_drawn(2 * (W - 50 + H - 22), 0.15)}/>
-    <rect x="25" y="8" width="4" height="{H - 22}" rx="2" fill="{P["gold"]}" opacity="0.6"/>
+    <g class="breathe" style="animation-duration:7s"><rect x="25" y="8" width="4"
+          height="{H - 22}" rx="2" fill="{P["gold"]}" opacity="0.9"/></g>
     <text x="50" y="46" font-size="23" font-weight="700" fill="{P["text_bright"]}"
           font-family="{SANS}">{name}<tspan dx="10" font-size="13" font-weight="400"
           fill="{P["text_muted"]}">{handle}</tspan></text>
@@ -2057,7 +2087,9 @@ def generate_repo_card_svg(repo, index=0, with_topics=True, with_desc=True):
   <g class="rise">
     <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="12"
           fill="{P["bg_card"]}" stroke="url(#cardEdge{index})" stroke-width="0.9"/>
-    <rect x="1" y="1" width="{W-2}" height="2.5" rx="1.25" fill="url(#cardTop{index})"/>
+    <g class="breathe" style="animation-duration:{7 + index * 0.6}s;animation-delay:{0.8 + index * 0.3}s">
+      <rect x="1" y="1" width="{W-2}" height="2.5" rx="1.25" fill="url(#cardTop{index})"/>
+    </g>
 
     <text x="{PAD}" y="32" font-size="15" font-weight="700" fill="{P["text_bright"]}"
           font-family="{SANS}">{name}</text>
@@ -2097,8 +2129,10 @@ def generate_footer_svg(config):
     </linearGradient>
   </defs>
   <rect width="{W}" height="{H}" fill="transparent"/>
-  <line x1="90" y1="14.5" x2="{W - 90}" y2="14.5" stroke="url(#footerLine)"
-        stroke-width="1.4"{_drawn(W - 180, 0.15)}/>
+  <g class="breathe" style="animation-duration:7.5s;animation-delay:1.4s">
+    <line x1="90" y1="14.5" x2="{W - 90}" y2="14.5" stroke="url(#footerLine)"
+          stroke-width="1.4"{_drawn(W - 180, 0.15)}/>
+  </g>
   <g transform="translate({W/2 - 90},32)">{ui_icon("heart", 16, P["lime"])}</g>
   <text x="{W/2 + 10}" y="45" text-anchor="middle" font-size="15" font-weight="700"
         fill="{P["text_bright"]}" font-family="{SANS}" class="rise">Thanks for visiting</text>

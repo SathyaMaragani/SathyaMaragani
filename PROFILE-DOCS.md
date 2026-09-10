@@ -335,7 +335,18 @@ deliberately rationed:
 | Section rules | hairlines draw left to right | once |
 | Stat and activity numbers | count up, then hold | once |
 | Stats | language bars grow from zero | once |
-| Brand marks, contribution calendar, repo card contents | **nothing** | — |
+| Section hairlines, card accent bars, the identity spine, repo card top edges, the footer rule | breathe between 50% and 100% opacity on 6.5–7.5s cycles, each offset from the next | loop |
+| Stats language bars | a soft highlight travels along each bar, clipped to its own length | loop |
+| Brand marks, contribution calendar, numbers, bar lengths | **nothing** | — |
+
+Every loop is decorative. Nothing that carries a value moves: a number or a
+bar that pulses reads as data flickering, which is worse than static. The
+language-bar sheen is a highlight passing *over* the bar, clipped to it — the
+bar itself does not change.
+
+Loops live on a wrapper `<g>`, never on the element that also draws itself:
+`animation` is a single shorthand property, so two classes on one element
+means the later rule silently wins and the draw never runs.
 
 Three mechanics do most of the work:
 
@@ -546,6 +557,23 @@ controls it. To fill it in: **Settings → Public profile**, and the
 The generator reads those same fields back through the API, so anything set
 there also appears in `identity-card.svg`. Fields left unset are simply
 omitted from the card rather than invented.
+
+### If nothing appears to animate
+
+Check the viewer's own motion setting before suspecting the assets. On
+Windows, **Settings → Accessibility → Visual effects → Animation effects**
+off sets `prefers-reduced-motion: reduce`, which every asset here honours by
+switching all animation off — the images then render complete and static,
+which looks identical to "the animations are broken". macOS has the same
+switch under **Accessibility → Display → Reduce motion**.
+
+To confirm, open any asset directly and run in the console:
+
+```js
+matchMedia('(prefers-reduced-motion: reduce)').matches
+```
+
+`true` means the profile is deliberately holding still.
 
 Also unavailable inside a README, by GitHub's HTML sanitiser: `<style>`
 blocks, `class`/`style` attributes, JavaScript, and hover states. CSS works

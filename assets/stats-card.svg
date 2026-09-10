@@ -6,9 +6,11 @@
     .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
     .letter{animation:letter .75s ease-out both}
     .tick{animation:tick .34s linear both}
+    .breathe{animation:breathe 6s ease-in-out infinite}
+    .sheen{animation:sheen 6s ease-in-out infinite}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
-    .float{animation:float 44s ease-in-out infinite}
+    .float{animation:float 30s ease-in-out infinite}
     .twinkle{animation:twinkle 4s ease-in-out infinite}
     .blink{animation:blink 5s ease-in-out infinite}
     .shoot{animation:shoot 12s ease-in infinite;opacity:0}
@@ -18,9 +20,11 @@
     @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
     @keyframes letter{from{fill-opacity:0}}
     @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
+    @keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
+    @keyframes sheen{0%{transform:translateX(0)}70%,100%{transform:translateX(420px)}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
-    @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
-    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
+    @keyframes sway{0%,100%{transform:rotate(-2.6deg)}50%{transform:rotate(2.6deg)}}
+    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(26px)}}
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
@@ -31,9 +35,15 @@
       <stop offset="0%" stop-color="#2F6B52" stop-opacity="0.8"/>
       <stop offset="100%" stop-color="#1E4034" stop-opacity="0.35"/>
     </linearGradient>
+    <linearGradient id="sheenGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="barClip0"><rect x="463" y="97" width="276.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip1"><rect x="463" y="119" width="138.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip2"><rect x="463" y="141" width="69.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip3"><rect x="463" y="163" width="46.0" height="11" rx="5.5"/></clipPath>
   </defs>
   <rect width="840" height="204" fill="transparent"/>
-  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#34D399"><path d="M2.5 2.75a.75.75 0 0 0-1.5 0v18.5c0 .414.336.75.75.75H20a.75.75 0 0 0 0-1.5H2.5V2.75Z"/><path d="M22.28 7.78a.75.75 0 0 0-1.06-1.06l-5.72 5.72-3.72-3.72a.75.75 0 0 0-1.06 0l-6 6a.75.75 0 1 0 1.06 1.06l5.47-5.47 3.72 3.72a.75.75 0 0 0 1.06 0l6.25-6.25Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">GitHub Stats</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">33 sources &#183; 1 fork &#183; 0 archived &#183; 0 forks received</text><line x1="25" y1="38.5" x2="815" y2="38.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.15s"/>
+  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#34D399"><path d="M2.5 2.75a.75.75 0 0 0-1.5 0v18.5c0 .414.336.75.75.75H20a.75.75 0 0 0 0-1.5H2.5V2.75Z"/><path d="M22.28 7.78a.75.75 0 0 0-1.06-1.06l-5.72 5.72-3.72-3.72a.75.75 0 0 0-1.06 0l-6 6a.75.75 0 1 0 1.06 1.06l5.47-5.47 3.72 3.72a.75.75 0 0 0 1.06 0l6.25-6.25Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">GitHub Stats</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">33 sources &#183; 1 fork &#183; 0 archived &#183; 0 forks received</text><g class="breathe" style="animation-duration:7.0s;animation-delay:1.35s"><line x1="25" y1="38.5" x2="815" y2="38.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.15s"/></g>
 
   <g class="rise" style="animation-delay:0.12s">
     <rect x="25" y="50" width="300" height="145" rx="12"
@@ -82,6 +92,11 @@
               fill="#12291F"/>
         <rect x="463" y="97" width="276.0" height="11" rx="5.5"
               fill="#3178C6" opacity="0.9" class="grow" style="animation-delay:0.45s"/>
+        <g clip-path="url(#barClip0)">
+          <g class="sheen" style="animation-delay:1.4s">
+            <rect x="383" y="97" width="64" height="11" fill="url(#sheenGrad)"/>
+          </g>
+        </g>
         <text x="795" y="106" text-anchor="end" font-size="11"
               fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">44.4%</text>
       </g>
@@ -92,6 +107,11 @@
               fill="#12291F"/>
         <rect x="463" y="119" width="138.0" height="11" rx="5.5"
               fill="#F7DF1E" opacity="0.9" class="grow" style="animation-delay:0.56s"/>
+        <g clip-path="url(#barClip1)">
+          <g class="sheen" style="animation-delay:2.2s">
+            <rect x="383" y="119" width="64" height="11" fill="url(#sheenGrad)"/>
+          </g>
+        </g>
         <text x="795" y="128" text-anchor="end" font-size="11"
               fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">22.2%</text>
       </g>
@@ -102,6 +122,11 @@
               fill="#12291F"/>
         <rect x="463" y="141" width="69.0" height="11" rx="5.5"
               fill="#ED8B00" opacity="0.9" class="grow" style="animation-delay:0.67s"/>
+        <g clip-path="url(#barClip2)">
+          <g class="sheen" style="animation-delay:3.0s">
+            <rect x="383" y="141" width="64" height="11" fill="url(#sheenGrad)"/>
+          </g>
+        </g>
         <text x="795" y="150" text-anchor="end" font-size="11"
               fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">11.1%</text>
       </g>
@@ -112,6 +137,11 @@
               fill="#12291F"/>
         <rect x="463" y="163" width="46.0" height="11" rx="5.5"
               fill="#3776AB" opacity="0.9" class="grow" style="animation-delay:0.78s"/>
+        <g clip-path="url(#barClip3)">
+          <g class="sheen" style="animation-delay:3.8s">
+            <rect x="383" y="163" width="64" height="11" fill="url(#sheenGrad)"/>
+          </g>
+        </g>
         <text x="795" y="172" text-anchor="end" font-size="11"
               fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">7.4%</text>
       </g>

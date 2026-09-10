@@ -6,9 +6,11 @@
     .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
     .letter{animation:letter .75s ease-out both}
     .tick{animation:tick .34s linear both}
+    .breathe{animation:breathe 6s ease-in-out infinite}
+    .sheen{animation:sheen 6s ease-in-out infinite}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
-    .float{animation:float 44s ease-in-out infinite}
+    .float{animation:float 30s ease-in-out infinite}
     .twinkle{animation:twinkle 4s ease-in-out infinite}
     .blink{animation:blink 5s ease-in-out infinite}
     .shoot{animation:shoot 12s ease-in infinite;opacity:0}
@@ -18,9 +20,11 @@
     @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
     @keyframes letter{from{fill-opacity:0}}
     @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
+    @keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
+    @keyframes sheen{0%{transform:translateX(0)}70%,100%{transform:translateX(420px)}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
-    @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
-    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
+    @keyframes sway{0%,100%{transform:rotate(-2.6deg)}50%{transform:rotate(2.6deg)}}
+    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(26px)}}
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
@@ -40,7 +44,9 @@
   <g class="rise">
     <rect x="1" y="1" width="378" height="86" rx="12"
           fill="#0D211A" stroke="url(#cardEdge3)" stroke-width="0.9"/>
-    <rect x="1" y="1" width="378" height="2.5" rx="1.25" fill="url(#cardTop3)"/>
+    <g class="breathe" style="animation-duration:8.8s;animation-delay:1.7s">
+      <rect x="1" y="1" width="378" height="2.5" rx="1.25" fill="url(#cardTop3)"/>
+    </g>
 
     <text x="18" y="32" font-size="15" font-weight="700" fill="#EAF7F0"
           font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">RPWeb</text>

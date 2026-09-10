@@ -6,9 +6,11 @@
     .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
     .letter{animation:letter .75s ease-out both}
     .tick{animation:tick .34s linear both}
+    .breathe{animation:breathe 6s ease-in-out infinite}
+    .sheen{animation:sheen 6s ease-in-out infinite}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
-    .float{animation:float 44s ease-in-out infinite}
+    .float{animation:float 30s ease-in-out infinite}
     .twinkle{animation:twinkle 4s ease-in-out infinite}
     .blink{animation:blink 5s ease-in-out infinite}
     .shoot{animation:shoot 12s ease-in infinite;opacity:0}
@@ -18,9 +20,11 @@
     @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
     @keyframes letter{from{fill-opacity:0}}
     @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
+    @keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
+    @keyframes sheen{0%{transform:translateX(0)}70%,100%{transform:translateX(420px)}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
-    @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
-    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
+    @keyframes sway{0%,100%{transform:rotate(-2.6deg)}50%{transform:rotate(2.6deg)}}
+    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(26px)}}
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
@@ -38,8 +42,10 @@
     </linearGradient>
   </defs>
   <rect width="840" height="104" fill="transparent"/>
-  <line x1="90" y1="14.5" x2="750" y2="14.5" stroke="url(#footerLine)"
-        stroke-width="1.4" stroke-dasharray="660" stroke-dashoffset="0" class="draw" style="--len:660;animation-delay:0.15s"/>
+  <g class="breathe" style="animation-duration:7.5s;animation-delay:1.4s">
+    <line x1="90" y1="14.5" x2="750" y2="14.5" stroke="url(#footerLine)"
+          stroke-width="1.4" stroke-dasharray="660" stroke-dashoffset="0" class="draw" style="--len:660;animation-delay:0.15s"/>
+  </g>
   <g transform="translate(330.0,32)"><g transform="scale(0.6667)" fill="#86EFAC"><path d="m12 20.703.343.667a.748.748 0 0 1-.686 0l-.003-.002-.007-.003-.025-.013a31.138 31.138 0 0 1-5.233-3.576C3.8 15.573 1 12.332 1 8.514v-.001C1 5.053 3.829 2.5 6.736 2.5 9.03 2.5 10.881 3.726 12 5.605 13.12 3.726 14.97 2.5 17.264 2.5 20.17 2.5 23 5.052 23 8.514c0 3.818-2.801 7.06-5.389 9.262a31.148 31.148 0 0 1-5.233 3.576l-.025.013-.007.003-.002.001ZM6.736 4C4.657 4 2.5 5.88 2.5 8.514c0 3.107 2.324 5.96 4.861 8.12a29.655 29.655 0 0 0 4.566 3.175l.073.041.073-.04c.271-.153.661-.38 1.13-.674.94-.588 2.19-1.441 3.436-2.502 2.537-2.16 4.861-5.013 4.861-8.12C21.5 5.88 19.343 4 17.264 4c-2.106 0-3.801 1.389-4.553 3.643a.751.751 0 0 1-1.422 0C10.537 5.389 8.841 4 6.736 4Z"/></g></g>
   <text x="430.0" y="45" text-anchor="middle" font-size="15" font-weight="700"
         fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="rise">Thanks for visiting</text>
