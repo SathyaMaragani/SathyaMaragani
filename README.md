@@ -43,10 +43,10 @@
 <h3>Featured Repositories</h3>
 
 <a href="https://github.com/SathyaMaragani/Multimodal-Road-Safety-Risk-Assessment-System"><img src="assets/repo-card-0.svg" alt="Multimodal-Road-Safety-Risk-Assessment-System" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-1.svg" alt="RPWeb" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-2.svg" alt="3dwebportfolio" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-3.svg" alt="Enterprise-Knowledge-Intelligence-Platform" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-4.svg" alt="wsl-imgod" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-1.svg" alt="wsl-imgod" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-2.svg" alt="RPWeb" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-3.svg" alt="3dwebportfolio" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-4.svg" alt="Enterprise-Knowledge-Intelligence-Platform" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/JavaPrep"><img src="assets/repo-card-5.svg" alt="JavaPrep" width="48%"/></a>
 
 </div>

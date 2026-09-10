@@ -1,23 +1,49 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 100" width="840" height="100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 104" width="840" height="104">
+  <style>
+    .fade{animation:fade .9s ease-out both}
+    .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
+    .grow{animation:grow 1.3s cubic-bezier(.2,.8,.3,1) both;transform-box:fill-box;transform-origin:left center}
+    .pop{animation:pop .7s cubic-bezier(.2,1.5,.5,1) both;transform-box:fill-box;transform-origin:center}
+    .glow{animation:glow 4.5s ease-in-out infinite}
+    .spin{animation:spin 11s linear infinite;transform-box:fill-box;transform-origin:center}
+    .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
+    .drift{animation:drift 90s linear infinite}
+    .twinkle{animation:twinkle 4s ease-in-out infinite}
+    .blink{animation:blink 5s ease-in-out infinite}
+    .shoot{animation:shoot 12s ease-in infinite;opacity:0}
+    .sweep{animation:sweep 5s ease-in-out infinite}
+    .beat{animation:beat 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+    @keyframes fade{from{opacity:0}}
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}}
+    @keyframes grow{from{transform:scaleX(0)}}
+    @keyframes pop{from{opacity:0;transform:scale(.72)}}
+    @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
+    @keyframes drift{to{transform:translateX(1160px)}}
+    @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
+    @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
+    @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
+    @keyframes sweep{0%,100%{opacity:.2}50%{opacity:.9}}
+    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>
   <defs>
     <linearGradient id="footerLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="transparent"/>
-      <stop offset="30%" stop-color="#A855F7" stop-opacity="0.3"/>
-      <stop offset="70%" stop-color="#8B5CF6" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="transparent"/>
+      <stop offset="0%" stop-color="#34D399" stop-opacity="0"/>
+      <stop offset="35%" stop-color="#34D399" stop-opacity="0.55"/>
+      <stop offset="65%" stop-color="#E9C97E" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#E9C97E" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <rect width="840" height="100" fill="transparent"/>
-  <line x1="100" y1="15" x2="740" y2="15" stroke="url(#footerLine)" stroke-width="1"/>
-  <text x="420.0" y="45" text-anchor="middle" font-size="15" font-weight="600"
-        fill="#F1F5F9"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-    Thanks for visiting</text>
-  <text x="420.0" y="68" text-anchor="middle" font-size="12" fill="#94A3B8"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-    Let&apos;s build something incredible together.</text>
-  <text x="420.0" y="90" text-anchor="middle" font-size="10" font-style="italic"
-        fill="#64748B"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+  <rect width="840" height="104" fill="transparent"/>
+  <rect x="90" y="14" width="660" height="1.4" fill="url(#footerLine)" class="sweep"/>
+  <g transform="translate(332.0,32)"><path d="M1 15 C1 6 8 1 16 1 C16 9 10 15 1 15 Z" fill="#86EFAC" opacity="0.9"/><path d="M2.5 14.5 C6 11 10.5 7 15 2.5" stroke="#86EFAC" stroke-width="1.1" fill="none" opacity="0.45" stroke-linecap="round"/></g>
+  <text x="430.0" y="45" text-anchor="middle" font-size="15" font-weight="700"
+        fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="rise">Thanks for visiting</text>
+  <text x="420.0" y="70" text-anchor="middle" font-size="13" fill="#34D399"
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="rise" style="animation-delay:0.12s">Let&apos;s build something incredible together.</text>
+  <text x="420.0" y="92" text-anchor="middle" font-size="10.5" font-style="italic"
+        fill="#6C8C7E" font-family="Segoe Script,Bradley Hand,Brush Script MT,Snell Roundhand,cursive" class="fade" style="animation-delay:0.30s">
     &quot;Discipline today, freedom tomorrow.&quot;</text>
 </svg>

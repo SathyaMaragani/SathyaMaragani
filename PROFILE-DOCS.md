@@ -315,16 +315,29 @@ not assumed: `validate_svg()` parses each file and fails the run on any
 violation, and the self-check verifies the validator itself catches script
 tags, `foreignObject`, `onclick`, malformed XML and a missing `viewBox`.
 
-The only dynamic element is declarative SMIL `<animate>` on the hero's stars,
-which renders inside an `<img>` without scripting.
+Motion is CSS `@keyframes` in an inline `<style>` block — twinkling stars,
+drifting clouds, a shooting star, swaying foliage, cards and tiles easing in,
+stat bars growing, the contribution grid filling as a wave. CSS rather than
+SMIL for two reasons: staggering ~370 contribution cells costs one inline
+`animation-delay` each instead of 370 `<animate>` elements, and CSS is the
+only form `prefers-reduced-motion` can switch off — every asset ends with
+`@media (prefers-reduced-motion:reduce){*{animation:none!important}}`.
+
+Every animated element is authored so its **static** state is the finished
+state. If animation never runs — reduced motion, an old renderer, a feed
+reader — the image still reads correctly; nothing is stranded at `opacity:0`.
+
+Icons and brand marks are drawn as paths, never emoji codepoints: a README
+image renders with the *viewer's* fonts, so an emoji is a coin toss between
+colour, monochrome and tofu.
 
 All text is XML-escaped through `safe_text()`. A repository described as
 `A <B> & C project` renders literally and cannot break the document —
 verified by the self-check.
 
-Fonts are system stacks (`-apple-system, Segoe UI, Helvetica, Arial`) with
-`Consolas, Monaco, monospace` for code-ish labels, so nothing is fetched at
-render time.
+Fonts are system stacks (`-apple-system, Segoe UI, Helvetica, Arial`), a
+monospace stack for code-ish labels, and a cursive stack for the handwritten
+margin note and motto, so nothing is fetched at render time.
 
 ---
 
@@ -414,17 +427,26 @@ the repository name matches the username exactly.
 
 ## 17. Design system
 
+Forest dusk: deep green ground, warm gold headline, emerald and teal accents.
+
 | Token | Colour | Usage |
 |---|---|---|
-| Background | `#04060B` → `#0D1117` | Sky gradient, page ground |
-| Card surface | `#111827` | Card fills |
-| Border | `#1E293B` | Card outlines |
-| Accent purple | `#A855F7` | Primary accent |
-| Accent violet | `#8B5CF6` | Secondary accent |
-| Accent cyan | `#06B6D4` | Tertiary accent |
-| Text bright | `#F1F5F9` | Headings and values |
-| Text secondary | `#94A3B8` | Labels |
-| Text muted | `#64748B` | Captions |
+| Sky | `#071A22` → `#1B3A2E` | Hero gradient, top to horizon |
+| Background | `#050D0A` | Darkest ground, city silhouette |
+| Card surface | `#0D211A` | Card and panel fills |
+| Border | `#1E4034` (glow `#2F6B52`) | Outlines, pill edges |
+| Gold | `#E9C97E` | Headline, stat values, warm accent |
+| Emerald | `#34D399` | Primary accent |
+| Teal | `#2DD4BF` | Secondary accent |
+| Lime | `#86EFAC` | Leaf glyphs, tertiary accent |
+| Contribution heat | `#102A20` → `#22C55E` → `#FDE68A` | Calendar levels 0–4 |
+| Text bright | `#EAF7F0` | Headings and values |
+| Text secondary | `#93B3A6` | Labels |
+| Text muted | `#6C8C7E` | Captions |
+
+Brand marks in the tech grid keep their own brand colours; anything without a
+drawn mark falls back to a tinted monogram tile, so adding a language to
+`TECH_DB` never leaves a hole in the grid.
 
 The palette is deliberately dark-only. GitHub renders README images
 identically in both themes, and a light-theme variant would double every

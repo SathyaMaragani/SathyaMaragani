@@ -82,32 +82,42 @@ TOPIC_MAX_PX = 90
 # ============================================================
 
 P = {
-    "bg_darkest":     "#04060B",
-    "bg_dark":        "#080B14",
-    "bg":             "#0D1117",
-    "bg_surface":     "#0F1419",
-    "bg_card":        "#111827",
-    "bg_card_alt":    "#151C28",
-    "border":         "#1E293B",
-    "border_glow":    "#2D1B69",
-    "border_subtle":  "#1A1F2E",
-    "accent_purple":  "#A855F7",
-    "accent_violet":  "#8B5CF6",
-    "accent_indigo":  "#6366F1",
-    "accent_cyan":    "#06B6D4",
-    "accent_blue":    "#3B82F6",
-    "accent_pink":    "#EC4899",
-    "accent_green":   "#22C55E",
-    "text_bright":    "#F1F5F9",
-    "text_primary":   "#E2E8F0",
-    "text_secondary": "#94A3B8",
-    "text_muted":     "#64748B",
-    "text_dim":       "#475569",
-    "contrib_0":      "#161B22",
-    "contrib_1":      "#2D1B69",
-    "contrib_2":      "#5B21B6",
-    "contrib_3":      "#7C3AED",
-    "contrib_4":      "#A855F7",
+    # Ground — a deep forest-night green rather than GitHub's neutral slate
+    "bg_darkest":     "#050D0A",
+    "bg_card":        "#0D211A",
+    "pill":           "#102A21",
+    "track":          "#12291F",
+    "border":         "#1E4034",
+    "border_glow":    "#2F6B52",
+    # Dusk sky, top to horizon
+    "sky_top":        "#071A22",
+    "sky_mid":        "#0C2A2C",
+    "sky_low":        "#1B3A2E",
+    "cloud":          "#CFE3D6",
+    "city":           "#061410",
+    "city_edge":      "#122C22",
+    "leaf_dark":      "#04120D",
+    "leaf_mid":       "#0B241A",
+    # Accents
+    "emerald":        "#34D399",
+    "teal":           "#2DD4BF",
+    "lime":           "#86EFAC",
+    "sky":            "#38BDF8",
+    "gold":           "#E9C97E",
+    "gold_bright":    "#FBEFC8",
+    "amber":          "#D9A441",
+    # Type
+    "text_bright":    "#EAF7F0",
+    "text_primary":   "#CFE6DA",
+    "text_secondary": "#93B3A6",
+    "text_muted":     "#6C8C7E",
+    "text_dim":       "#4E6E60",
+    # Contribution heat — greens climbing to a harvest gold at the top level
+    "contrib_0":      "#102A20",
+    "contrib_1":      "#14532D",
+    "contrib_2":      "#15803D",
+    "contrib_3":      "#22C55E",
+    "contrib_4":      "#FDE68A",
 }
 
 # Technology detection: maps language/topic names to display info
@@ -668,32 +678,297 @@ def detect_tech_stack(repos, config, languages_by_repo=None):
     return dict(categories)
 
 # ============================================================
+# SHARED SVG PIECES
+# ============================================================
+
+SANS = "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
+MONO = "ui-monospace,SFMono-Regular,Consolas,Monaco,monospace"
+HAND = "Segoe Script,Bradley Hand,Brush Script MT,Snell Roundhand,cursive"
+
+# One stylesheet, inlined into every asset. Animations are CSS rather than
+# SMIL for two reasons: staggering 400 contribution cells costs one inline
+# `animation-delay` instead of 400 <animate> elements, and CSS is the only
+# form `prefers-reduced-motion` can switch off. Every animated element is
+# authored so its *static* state is the finished state — if animation never
+# runs (reduced motion, an old renderer, a feed reader), the image still
+# reads correctly.
+ANIM_CSS = """<style>
+    .fade{animation:fade .9s ease-out both}
+    .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
+    .grow{animation:grow 1.3s cubic-bezier(.2,.8,.3,1) both;transform-box:fill-box;transform-origin:left center}
+    .pop{animation:pop .7s cubic-bezier(.2,1.5,.5,1) both;transform-box:fill-box;transform-origin:center}
+    .glow{animation:glow 4.5s ease-in-out infinite}
+    .spin{animation:spin 11s linear infinite;transform-box:fill-box;transform-origin:center}
+    .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
+    .drift{animation:drift 90s linear infinite}
+    .twinkle{animation:twinkle 4s ease-in-out infinite}
+    .blink{animation:blink 5s ease-in-out infinite}
+    .shoot{animation:shoot 12s ease-in infinite;opacity:0}
+    .sweep{animation:sweep 5s ease-in-out infinite}
+    .beat{animation:beat 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+    @keyframes fade{from{opacity:0}}
+    @keyframes rise{from{opacity:0;transform:translateY(14px)}}
+    @keyframes grow{from{transform:scaleX(0)}}
+    @keyframes pop{from{opacity:0;transform:scale(.72)}}
+    @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
+    @keyframes drift{to{transform:translateX(1160px)}}
+    @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
+    @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
+    @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
+    @keyframes sweep{0%,100%{opacity:.2}50%{opacity:.9}}
+    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+  </style>"""
+
+def _d(seconds):
+    """Inline animation-delay attribute fragment."""
+    return f' style="animation-delay:{seconds:.2f}s"'
+
+# ============================================================
+# ICONS — drawn as paths, never emoji. A README image is rendered with the
+# *viewer's* fonts, so an emoji codepoint is a coin toss between colour,
+# monochrome and tofu. Every glyph here is geometry, on a 16x16 box.
+# ============================================================
+
+def _icon_leaf(color):
+    return (f'<path d="M1 15 C1 6 8 1 16 1 C16 9 10 15 1 15 Z" fill="{color}" opacity="0.9"/>'
+            f'<path d="M2.5 14.5 C6 11 10.5 7 15 2.5" stroke="{color}" stroke-width="1.1" '
+            f'fill="none" opacity="0.45" stroke-linecap="round"/>')
+
+def _icon_brain(color):
+    # Two lobes plus folds carved back out in the card colour — at 16px a
+    # smooth blob reads as a cloud, the folds are what make it a brain.
+    return (f'<path d="M7.5 1.6 C4.4 1.6 2.4 3.4 2.6 5.6 C1 6.6 1 9.2 2.8 10.2 '
+            f'C2.6 12.6 5 14.6 7.5 13.8 Z" fill="{color}" opacity="0.92"/>'
+            f'<path d="M8.5 1.6 C11.6 1.6 13.6 3.4 13.4 5.6 C15 6.6 15 9.2 13.2 10.2 '
+            f'C13.4 12.6 11 14.6 8.5 13.8 Z" fill="{color}" opacity="0.6"/>'
+            f'<path d="M5.2 3.8 C6.6 4.8 6.6 6.2 5 7.2 M5.4 9.2 C6.8 9.9 6.8 11.4 5.2 12.2 '
+            f'M10.8 3.8 C9.4 4.8 9.4 6.2 11 7.2" stroke="{P["bg_card"]}" stroke-width="1" '
+            f'fill="none" stroke-linecap="round"/>')
+
+def _icon_bulb(color):
+    return (f'<path d="M8 1 C4.7 1 2.4 3.4 2.4 6.3 C2.4 8.3 3.6 9.6 4.5 10.7 L4.9 12 H11.1 L11.5 10.7 '
+            f'C12.4 9.6 13.6 8.3 13.6 6.3 C13.6 3.4 11.3 1 8 1 Z" fill="{color}" opacity="0.9"/>'
+            f'<rect x="5.2" y="12.8" width="5.6" height="1.5" rx="0.75" fill="{color}" opacity="0.55"/>'
+            f'<rect x="6" y="15" width="4" height="1.4" rx="0.7" fill="{color}" opacity="0.4"/>')
+
+def _icon_quote(color):
+    return (f'<path d="M1 13 C1 8 2.6 4.4 6.4 2.6 L7.2 4.4 C5 5.7 4.2 7.2 4.1 8.4 H6.6 V13 Z" fill="{color}"/>'
+            f'<path d="M9 13 C9 8 10.6 4.4 14.4 2.6 L15.2 4.4 C13 5.7 12.2 7.2 12.1 8.4 H14.6 V13 Z" fill="{color}"/>')
+
+def _icon_chart(color):
+    return (f'<rect x="1" y="9" width="3.6" height="6" rx="1" fill="{color}" opacity="0.55"/>'
+            f'<rect x="6.2" y="5" width="3.6" height="10" rx="1" fill="{color}" opacity="0.8"/>'
+            f'<rect x="11.4" y="1.5" width="3.6" height="13.5" rx="1" fill="{color}"/>')
+
+def _icon_code(color):
+    return (f'<path d="M5.6 3.5 L1 8 L5.6 12.5" stroke="{color}" stroke-width="1.8" fill="none" '
+            f'stroke-linecap="round" stroke-linejoin="round"/>'
+            f'<path d="M10.4 3.5 L15 8 L10.4 12.5" stroke="{color}" stroke-width="1.8" fill="none" '
+            f'stroke-linecap="round" stroke-linejoin="round"/>')
+
+def _icon_star_badge(color):
+    return (f'<path d="M8 0.8 L10.2 5.6 L15.4 6.2 L11.5 9.8 L12.6 15 L8 12.4 L3.4 15 L4.5 9.8 '
+            f'L0.6 6.2 L5.8 5.6 Z" fill="{color}"/>')
+
+CARD_ICONS = {
+    "focus": _icon_leaf,
+    "mindset": _icon_brain,
+    "interests_card": _icon_bulb,
+    "quote": _icon_quote,
+}
+
+def _star_icon(x, y, color):
+    """A 5-point star drawn as a path — no emoji font dependency."""
+    return (f'<path transform="translate({x},{y}) scale(0.55)" fill="{color}" '
+            f'd="M10 0 L12.9 6.5 L20 7.3 L14.7 12.1 L16.2 19.2 L10 15.6 '
+            f'L3.8 19.2 L5.3 12.1 L0 7.3 L7.1 6.5 Z"/>')
+
+def _fork_icon(x, y, color):
+    """GitHub-style fork glyph: two parents joining a child, drawn as shapes."""
+    return (f'<g transform="translate({x},{y})" stroke="{color}" fill="{color}" '
+            f'stroke-width="1.2">'
+            f'<circle cx="1.5" cy="1.5" r="1.5" stroke="none"/>'
+            f'<circle cx="9.5" cy="1.5" r="1.5" stroke="none"/>'
+            f'<circle cx="5.5" cy="10" r="1.5" stroke="none"/>'
+            f'<path d="M1.5 3 v1.5 a2 2 0 0 0 2 2 h4 a2 2 0 0 0 2 -2 V3" fill="none"/>'
+            f'<path d="M5.5 6.5 v2" fill="none"/>'
+            f'</g>')
+
+# ============================================================
+# BRAND MARKS — geometric recreations on a 32x32 box, drawn in the brand
+# colour. Anything without a mark falls back to a tinted monogram tile, so
+# adding a language to TECH_DB never leaves a hole in the grid.
+# ============================================================
+
+def _hexagon(cx, cy, r, **kw):
+    pts = " ".join(f"{cx + r*math.cos(math.radians(a)):.1f},{cy + r*math.sin(math.radians(a)):.1f}"
+                   for a in range(-90, 270, 60))
+    attrs = " ".join(f'{k.replace("_", "-")}="{v}"' for k, v in kw.items())
+    return f'<polygon points="{pts}" {attrs}/>'
+
+def _mark_javascript(c):
+    return (f'<rect x="2" y="2" width="28" height="28" rx="5" fill="{c}"/>'
+            f'<text x="16" y="24" text-anchor="middle" font-size="15" font-weight="800" '
+            f'fill="#0B1F17" font-family="{MONO}">JS</text>')
+
+def _mark_typescript(c):
+    return (f'<rect x="2" y="2" width="28" height="28" rx="5" fill="{c}"/>'
+            f'<text x="16" y="24" text-anchor="middle" font-size="15" font-weight="800" '
+            f'fill="#FFFFFF" font-family="{MONO}">TS</text>')
+
+def _mark_python(_c):
+    blue, yellow = "#4B8BBE", "#FFD343"
+    return (f'<path d="M16 2 C10.5 2 10.8 4.6 10.8 4.6 L10.8 8 H16.2 V9 H8.6 C8.6 9 4.8 8.6 4.8 15 '
+            f'C4.8 21.4 8.1 21.2 8.1 21.2 H10.2 V17.6 C10.2 17.6 10.1 14.2 13.5 14.2 H18.9 '
+            f'C18.9 14.2 22 14.3 22 11.2 V5.2 C22 5.2 22.4 2 16 2 Z" fill="{blue}"/>'
+            f'<circle cx="13" cy="5.8" r="1.4" fill="#FFFFFF"/>'
+            f'<path d="M16 30 C21.5 30 21.2 27.4 21.2 27.4 L21.2 24 H15.8 V23 H23.4 C23.4 23 27.2 23.4 27.2 17 '
+            f'C27.2 10.6 23.9 10.8 23.9 10.8 H21.8 V14.4 C21.8 14.4 21.9 17.8 18.5 17.8 H13.1 '
+            f'C13.1 17.8 10 17.7 10 20.8 V26.8 C10 26.8 9.6 30 16 30 Z" fill="{yellow}"/>'
+            f'<circle cx="19" cy="26.2" r="1.4" fill="#FFFFFF"/>')
+
+def _mark_java(c):
+    return (f'<path d="M13 3 C13 3 10.4 5.6 13.6 8 C16.8 10.4 15.2 12.4 15.2 12.4" stroke="{c}" '
+            f'stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+            f'<path d="M18.4 5.4 C18.4 5.4 16.6 7.4 19 9.2 C21.4 11 20.2 12.6 20.2 12.6" stroke="{c}" '
+            f'stroke-width="1.3" fill="none" opacity="0.6" stroke-linecap="round"/>'
+            f'<path d="M8.5 15 H21.5 L20.4 24 C20.2 25.4 19 26.4 17.6 26.4 H12.4 C11 26.4 9.8 25.4 9.6 24 Z" '
+            f'fill="{c}"/>'
+            f'<path d="M21.8 17 C24.8 17 26 18.4 26 19.8 C26 21.2 24.6 22.2 22.6 22.6" stroke="{c}" '
+            f'stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+            f'<ellipse cx="15" cy="28.4" rx="9" ry="1.8" fill="{c}" opacity="0.45"/>')
+
+def _mark_hex_text(c, label, size=11):
+    return (_hexagon(16, 16, 14, fill=c, opacity="0.95") +
+            f'<text x="16" y="{16 + size*0.36:.1f}" text-anchor="middle" font-size="{size}" '
+            f'font-weight="800" fill="#08160F" font-family="{MONO}">{label}</text>')
+
+def _mark_shield(c, label):
+    return (f'<path d="M5 3 H27 L25 27 L16 30 L7 27 Z" fill="{c}"/>'
+            f'<path d="M16 5 V28.2 L23.2 25.6 L24.9 5 Z" fill="#FFFFFF" opacity="0.18"/>'
+            f'<text x="16" y="21" text-anchor="middle" font-size="12" font-weight="800" '
+            f'fill="#FFFFFF" font-family="{MONO}">{label}</text>')
+
+def _mark_react(c):
+    ell = "".join(f'<ellipse cx="16" cy="16" rx="13.5" ry="5.2" fill="none" stroke="{c}" '
+                  f'stroke-width="1.5" transform="rotate({a} 16 16)"/>' for a in (0, 60, 120))
+    return (f'<g class="spin">{ell}</g><circle cx="16" cy="16" r="2.8" fill="{c}"/>')
+
+def _mark_node(c):
+    return (_hexagon(16, 16, 14, fill="none", stroke=c, stroke_width="2") +
+            _hexagon(16, 16, 9, fill=c, opacity="0.18") +
+            f'<text x="16" y="20" text-anchor="middle" font-size="10" font-weight="800" '
+            f'fill="{c}" font-family="{MONO}">JS</text>')
+
+def _mark_git(c):
+    return (f'<g transform="rotate(45 16 16)">'
+            f'<rect x="4" y="4" width="24" height="24" rx="4" fill="{c}"/>'
+            f'<circle cx="11" cy="21" r="2.6" fill="#0B1F17"/>'
+            f'<circle cx="21" cy="21" r="2.6" fill="#0B1F17"/>'
+            f'<circle cx="21" cy="11" r="2.6" fill="#0B1F17"/>'
+            f'<path d="M11 21 H21 V11" stroke="#0B1F17" stroke-width="2" fill="none"/>'
+            f'</g>')
+
+def _mark_go(c):
+    return (f'<rect x="1" y="8" width="30" height="16" rx="8" fill="{c}" opacity="0.18"/>'
+            f'<text x="16" y="21" text-anchor="middle" font-size="13" font-weight="800" '
+            f'fill="{c}" font-family="{MONO}">GO</text>')
+
+def _mark_rust(c):
+    spokes = "".join(f'<rect x="15" y="1" width="2" height="5" rx="1" fill="{c}" '
+                     f'transform="rotate({a} 16 16)"/>' for a in range(0, 360, 45))
+    return (spokes +
+            f'<circle cx="16" cy="16" r="11" fill="none" stroke="{c}" stroke-width="2"/>'
+            f'<text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="800" '
+            f'fill="{c}" font-family="{MONO}">R</text>')
+
+def _mark_docker(c):
+    boxes = "".join(f'<rect x="{7 + col*5}" y="{16 - row*5}" width="4.2" height="4.2" rx="0.6" '
+                    f'fill="{c}"/>'
+                    for col, rows in enumerate((2, 3, 3, 2)) for row in range(rows))
+    return (boxes +
+            f'<path d="M4 21 H27 C27 25 24 27.5 19 27.5 H11 C7 27.5 4 25 4 21 Z" fill="{c}" opacity="0.85"/>'
+            f'<path d="M24 15 C26 13 28.5 14 29 15.6 C27.6 16.6 25.6 16.4 24.6 15.6 Z" fill="{c}" opacity="0.7"/>')
+
+def _mark_monogram(c, label):
+    return (f'<rect x="2" y="2" width="28" height="28" rx="8" fill="{c}" opacity="0.16"/>'
+            f'<rect x="2" y="2" width="28" height="28" rx="8" fill="none" stroke="{c}" '
+            f'stroke-width="1" opacity="0.45"/>'
+            f'<text x="16" y="21" text-anchor="middle" font-size="12.5" font-weight="800" '
+            f'fill="{c}" font-family="{MONO}">{label}</text>')
+
+BRAND_MARKS = {
+    "javascript": _mark_javascript,
+    "typescript": _mark_typescript,
+    "python":     _mark_python,
+    "java":       _mark_java,
+    "html":       lambda c: _mark_shield(c, "5"),
+    "css":        lambda c: _mark_shield(c, "3"),
+    "scss":       lambda c: _mark_shield(c, "S"),
+    "sass":       lambda c: _mark_shield(c, "S"),
+    "c++":        lambda c: _mark_hex_text(c, "C++", 10),
+    "c#":         lambda c: _mark_hex_text(c, "C#", 11),
+    "c":          lambda c: _mark_hex_text(c, "C", 13),
+    "react":      _mark_react,
+    "node.js":    _mark_node,
+    "git":        _mark_git,
+    "go":         _mark_go,
+    "rust":       _mark_rust,
+    "docker":     _mark_docker,
+}
+
+def _brand_mark(name, color, fallback_label):
+    """SVG markup for one 32x32 brand mark, drawn in the brand colour."""
+    draw = BRAND_MARKS.get(str(name).strip().lower())
+    return draw(color) if draw else _mark_monogram(color, safe_text(fallback_label))
+
+# ============================================================
 # SVG GENERATION — Hero Banner
 # ============================================================
 
 def _generate_stars_svg(count=60, w=840, h=200, seed=42):
-    """Generate twinkling star elements with CSS animation."""
+    """Twinkling starfield. Base brightness rides on fill-opacity so the
+    stars keep their depth when the CSS animation is switched off."""
     rng = random.Random(seed)
     stars = []
-    for i in range(count):
+    for _ in range(count):
         x = rng.randint(0, w)
-        y = rng.randint(5, h)
-        r = rng.uniform(0.3, 1.2)
-        opacity = rng.uniform(0.2, 0.8)
-        delay = rng.uniform(0, 5)
+        y = rng.randint(4, h)
+        r = round(rng.uniform(0.4, 1.35), 2)
+        op = round(rng.uniform(0.25, 0.9), 2)
+        dur = round(rng.uniform(2.5, 7.0), 1)
+        delay = round(rng.uniform(0, 6), 1)
         stars.append(
-            f'<circle cx="{x}" cy="{y}" r="{r}" '
-            f'fill="{P["text_bright"]}" opacity="{opacity:.2f}">'
-            f'<animate attributeName="opacity" values="{opacity:.2f};{opacity*0.3:.2f};{opacity:.2f}" '
-            f'dur="{2+delay:.1f}s" repeatCount="indefinite"/>'
-            f'</circle>'
-        )
+            f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFF6DF" fill-opacity="{op}" '
+            f'class="twinkle" style="animation-duration:{dur}s;animation-delay:{delay}s"/>')
     return "\n    ".join(stars)
 
+def _generate_clouds_svg(seed=7):
+    """Soft cloud banks drifting across the sky, left to right."""
+    rng = random.Random(seed)
+    out = []
+    for i, (y, scale, op) in enumerate([(46, 1.0, 0.10), (86, 0.7, 0.07), (28, 1.35, 0.06)]):
+        puffs = "".join(
+            f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}"/>'
+            for cx, cy, rx, ry in [
+                (0, 0, 46, 13), (38, -7, 34, 15), (74, 2, 40, 11), (-34, 4, 30, 9)])
+        dur = 70 + i * 26
+        delay = -rng.randint(0, dur)
+        out.append(
+            f'<g transform="translate(-180,{y}) scale({scale})" fill="{P["cloud"]}" opacity="{op}">'
+            f'<g class="drift" style="animation-duration:{dur}s;animation-delay:{delay}s">'
+            f'{puffs}</g></g>')
+    return "\n    ".join(out)
+
 def _generate_buildings_svg(w=840, base_y=240):
-    """Generate cyberpunk city skyline buildings."""
+    """Distant skyline, silhouetted against the horizon glow. A handful of
+    windows blink so the city reads as inhabited rather than printed."""
     rng = random.Random(123)
     buildings = []
+    lit_colors = ["#FFD79A", "#FFC46B", "#7FE0A8", "#5EEAD4", "#FFEFC7"]
 
     # Building specs: (x, width, height, window_rows, window_cols)
     specs = [
@@ -713,289 +988,350 @@ def _generate_buildings_svg(w=840, base_y=240):
         y = base_y - bh
         buildings.append(
             f'<rect x="{x}" y="{y}" width="{bw}" height="{bh}" '
-            f'fill="{P["bg_dark"]}" stroke="{P["border_subtle"]}" stroke-width="0.5"/>'
-        )
+            f'fill="{P["city"]}" stroke="{P["city_edge"]}" stroke-width="0.5"/>')
         win_w, win_h = 3, 3
         pad_x = (bw - wc * (win_w + 4)) / 2 + 2
         for row in range(wr):
             for col in range(wc):
                 wx = x + pad_x + col * (win_w + 4)
                 wy = y + 6 + row * (win_h + 5)
-                lit = rng.random() > 0.35
-                color = rng.choice([P["accent_purple"], P["accent_cyan"],
-                                    P["accent_violet"], "#FFE4B5", P["accent_blue"]]) if lit else P["bg_darkest"]
-                op = rng.uniform(0.4, 0.9) if lit else 0.15
+                lit = rng.random() > 0.4
+                color = rng.choice(lit_colors) if lit else P["bg_darkest"]
+                op = round(rng.uniform(0.35, 0.9), 2) if lit else 0.12
+                cls = ""
+                if lit and rng.random() > 0.88:
+                    cls = (f' class="blink" style="animation-duration:{rng.uniform(3, 9):.1f}s;'
+                           f'animation-delay:{rng.uniform(0, 6):.1f}s"')
                 buildings.append(
                     f'<rect x="{wx}" y="{wy}" width="{win_w}" height="{win_h}" '
-                    f'rx="0.5" fill="{color}" opacity="{op:.2f}"/>'
-                )
+                    f'rx="0.5" fill="{color}" fill-opacity="{op}"{cls}/>')
 
     return "\n    ".join(buildings)
 
+def _leaf(x, y, rot, scale, fill, opacity):
+    return (f'<path transform="translate({x},{y}) rotate({rot}) scale({scale})" '
+            f'd="M0 0 C7 -9 20 -9 27 0 C20 9 7 9 0 0 Z" fill="{fill}" opacity="{opacity}"/>')
+
+def _generate_foliage_svg(w=840, seed=11):
+    """Framing foliage in the upper corners, swaying on a slow loop —
+    the branch-over-the-viewport framing from the reference artwork."""
+    rng = random.Random(seed)
+    out = []
+    corners = [
+        # (anchor_x, anchor_y, branch path, leaf origin, x-direction, delay)
+        (14, -6, "M-10 -4 C46 12 112 34 186 50", 1, 0.0),
+        (w - 14, -6, "M10 -4 C-46 12 -112 34 -186 50", -1, 1.4),
+    ]
+    for ax, ay, branch, xdir, delay in corners:
+        leaves = []
+        for i in range(20):
+            t = i / 19
+            lx = xdir * (8 + 178 * t) + rng.uniform(-10, 10)
+            ly = 2 + 50 * t + rng.uniform(-12, 14)
+            rot = rng.uniform(-70, 20) * xdir + (180 if rng.random() > 0.55 else 0)
+            sc = rng.uniform(0.40, 0.86)
+            shade = rng.choice([P["leaf_dark"], P["leaf_mid"], P["leaf_dark"]])
+            leaves.append(_leaf(lx, ly, f"{rot:.0f}", f"{sc:.2f}", shade,
+                                f"{rng.uniform(0.55, 0.95):.2f}"))
+        out.append(
+            f'<g transform="translate({ax},{ay})">'
+            f'<g class="sway" style="transform-origin:{ax}px {ay}px;animation-delay:{delay}s">'
+            f'<path d="{branch}" stroke="{P["leaf_dark"]}" stroke-width="2.6" fill="none" '
+            f'stroke-linecap="round" opacity="0.9"/>'
+            f'{"".join(leaves)}</g></g>')
+    return "\n    ".join(out)
+
 def generate_hero_svg(config):
-    """Generate the hero banner SVG with cyberpunk cityscape."""
+    """Hero banner: dusk sky, drifting clouds, a shooting star, a distant
+    skyline and framing foliage, with the headline set over a soft scrim."""
     W, H = 840, 300
 
     # Fit to the free area left of the vertical side-text column
-    name = safe_text(fit_text(config.get("name") or "DEVELOPER", 470, 42, bold=True))
-    subtitle = safe_text(fit_text(config.get("hero_subtitle", ""), 600, 14))
+    name = safe_text(fit_text(config.get("name") or "DEVELOPER", 430, 44, bold=True))
+    subtitle = safe_text(fit_text(config.get("hero_subtitle", ""), 560, 14))
     side_text = config.get("side_text") or []
     interests = config.get("interests") or []
 
     # Interest tags — respecting width boundary
     tags_svg = ""
-    tag_x = 25
-    tag_y = H - 30
-    for interest in interests:
-        label = fit_text(interest, 130, 10)
-        text_len = text_width(label, 10) + 20
-        if tag_x + text_len > W - 25:
+    tag_x = 35
+    tag_y = H - 42
+    for i, interest in enumerate(interests):
+        label = fit_text(interest, 130, 10.5)
+        text_len = text_width(label, 10.5) + 24
+        if tag_x + text_len > W - 30:
             break  # Stop if we'd overflow
         tags_svg += (
-            f'<g transform="translate({tag_x},{tag_y})">'
-            f'<rect width="{text_len}" height="22" rx="11" '
-            f'fill="{P["bg_card"]}" stroke="{P["border_glow"]}" stroke-width="0.7"/>'
-            f'<text x="{text_len/2}" y="14.5" text-anchor="middle" '
-            f'font-size="10" fill="{P["text_secondary"]}" '
-            f'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">'
-            f'{safe_text(label)}</text></g>\n    '
-        )
-        tag_x += text_len + 8
+            f'<g transform="translate({tag_x:.1f},{tag_y})">'
+            f'<g class="rise"{_d(0.55 + i * 0.09)}>'
+            f'<rect width="{text_len:.1f}" height="24" rx="12" '
+            f'fill="{P["pill"]}" stroke="{P["border_glow"]}" stroke-width="0.8"/>'
+            f'<text x="{text_len/2:.1f}" y="15.5" text-anchor="middle" '
+            f'font-size="10.5" fill="{P["text_primary"]}" font-family="{SANS}">'
+            f'{safe_text(label)}</text></g></g>\n    ')
+        tag_x += text_len + 9
 
-    # Side text
+    # Handwritten side note, tilted like a margin scribble
     side_svg = ""
-    for i, word in enumerate(side_text[:6]):  # Cap at 6 words
-        sy = 80 + i * 22
+    for i, word in enumerate(side_text[:5]):
+        word = str(word)
+        label = word.capitalize() if word.isupper() else word
+        sy = 76 + i * 30
         side_svg += (
-            f'<text x="{W - 30}" y="{sy}" text-anchor="end" '
-            f'font-size="13" font-weight="700" letter-spacing="3" '
-            f'fill="{P["text_muted"]}" opacity="0.5" '
-            f'font-family="Consolas,Monaco,monospace">'
-            f'{safe_text(word)}</text>\n    '
-        )
+            f'<text x="{W - 34}" y="{sy}" text-anchor="end" font-size="20" '
+            f'fill="{P["gold"]}" opacity="0.72" font-family="{HAND}" '
+            f'class="rise"{_d(0.7 + i * 0.12)}>{safe_text(fit_text(label, 200, 20))}</text>\n    ')
+    if side_svg:
+        side_svg = f'<g transform="rotate(-7 {W - 34} 110)">\n    {side_svg}</g>'
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="{P["bg_darkest"]}"/>
-      <stop offset="60%" stop-color="{P["bg_dark"]}"/>
-      <stop offset="100%" stop-color="{P["bg"]}"/>
+      <stop offset="0%" stop-color="{P["sky_top"]}"/>
+      <stop offset="45%" stop-color="{P["sky_mid"]}"/>
+      <stop offset="78%" stop-color="{P["sky_low"]}"/>
+      <stop offset="100%" stop-color="{P["bg_darkest"]}"/>
     </linearGradient>
-    <radialGradient id="cityGlow" cx="0.5" cy="0.85" r="0.5">
-      <stop offset="0%" stop-color="{P["accent_purple"]}" stop-opacity="0.15"/>
-      <stop offset="50%" stop-color="{P["accent_violet"]}" stop-opacity="0.06"/>
-      <stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+    <radialGradient id="horizonGlow" cx="0.42" cy="0.82" r="0.62">
+      <stop offset="0%" stop-color="{P["gold"]}" stop-opacity="0.30"/>
+      <stop offset="42%" stop-color="{P["amber"]}" stop-opacity="0.11"/>
+      <stop offset="100%" stop-color="{P["amber"]}" stop-opacity="0"/>
     </radialGradient>
-    <filter id="textGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <linearGradient id="groundLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="transparent"/>
-      <stop offset="20%" stop-color="{P["accent_purple"]}" stop-opacity="0.4"/>
-      <stop offset="80%" stop-color="{P["accent_violet"]}" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="transparent"/>
+    <linearGradient id="goldText" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="{P["gold_bright"]}"/>
+      <stop offset="55%" stop-color="{P["gold"]}"/>
+      <stop offset="100%" stop-color="{P["amber"]}"/>
     </linearGradient>
-    <radialGradient id="textScrim" cx="0.35" cy="0.5" r="0.62">
-      <stop offset="0%" stop-color="{P["bg_darkest"]}" stop-opacity="0.9"/>
-      <stop offset="55%" stop-color="{P["bg_darkest"]}" stop-opacity="0.72"/>
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0.5">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#FFF6DF" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="groundLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="{P["emerald"]}" stop-opacity="0"/>
+      <stop offset="25%" stop-color="{P["emerald"]}" stop-opacity="0.55"/>
+      <stop offset="70%" stop-color="{P["gold"]}" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="{P["gold"]}" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="textScrim" cx="0.34" cy="0.5" r="0.62">
+      <stop offset="0%" stop-color="{P["bg_darkest"]}" stop-opacity="0.92"/>
+      <stop offset="55%" stop-color="{P["bg_darkest"]}" stop-opacity="0.7"/>
       <stop offset="100%" stop-color="{P["bg_darkest"]}" stop-opacity="0"/>
     </radialGradient>
+    <filter id="textGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="4.5"/>
+    </filter>
   </defs>
 
-  <!-- Sky background -->
+  <!-- Sky -->
   <rect width="{W}" height="{H}" fill="url(#sky)"/>
 
   <!-- Stars -->
   <g>
-    {_generate_stars_svg(50, W, 180)}
+    {_generate_stars_svg(58, W, 190)}
   </g>
 
-  <!-- City glow -->
-  <rect width="{W}" height="{H}" fill="url(#cityGlow)"/>
+  <!-- Shooting star: a tail that streaks the sky every 12s -->
+  <g transform="translate(430,18)">
+    <g class="shoot">
+      <line x1="0" y1="0" x2="46" y2="24" stroke="url(#trail)" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="46" cy="24" r="1.7" fill="#FFF6DF"/>
+    </g>
+  </g>
 
-  <!-- Buildings -->
+  <!-- Horizon glow -->
+  <rect width="{W}" height="{H}" fill="url(#horizonGlow)"/>
+
+  <!-- Clouds -->
+  <g>
+    {_generate_clouds_svg()}
+  </g>
+
+  <!-- Skyline -->
   <g>
     {_generate_buildings_svg(W, 245)}
   </g>
-
-  <!-- Ground line -->
   <rect x="0" y="244" width="{W}" height="1.5" fill="url(#groundLine)"/>
 
   <!-- Scrim: keeps the headline legible where the skyline rises behind it.
        Soft-edged on every side so it reads as vignetting, not a panel. -->
-  <ellipse cx="290" cy="135" rx="440" ry="125" fill="url(#textScrim)"/>
+  <ellipse cx="280" cy="132" rx="430" ry="126" fill="url(#textScrim)"/>
 
-  <!-- Title text -->
-  <text x="35" y="100" font-size="22" fill="{P["text_secondary"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-        font-weight="400">Hi there,</text>
-  <text x="35" y="145" font-size="42" fill="{P["text_bright"]}" font-weight="800"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-        filter="url(#textGlow)">I&#39;m {name}</text>
-  <text x="35" y="180" font-size="14" fill="{P["text_secondary"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-        font-weight="400">{subtitle}</text>
+  <!-- Foliage frame -->
+  <g>
+    {_generate_foliage_svg(W)}
+  </g>
 
-  <!-- Side text -->
+  <!-- Headline -->
+  <text x="35" y="96" font-size="21" fill="{P["text_secondary"]}" font-family="{SANS}"
+        class="fade">Hi there,</text>
+  <text x="35" y="146" font-size="44" font-weight="800" fill="{P["gold"]}" opacity="0.5"
+        font-family="{SANS}" filter="url(#textGlow)" class="glow">I&#39;m {name}</text>
+  <text x="35" y="146" font-size="44" font-weight="800" fill="url(#goldText)"
+        font-family="{SANS}" class="rise"{_d(0.1)}>I&#39;m {name}</text>
+  <text x="35" y="180" font-size="14" fill="{P["text_secondary"]}" font-family="{SANS}"
+        class="rise"{_d(0.28)}>{subtitle}</text>
+
+  <!-- Handwritten margin note -->
   {side_svg}
 
   <!-- Interest tags -->
   {tags_svg}
 
-  <!-- Bottom border glow -->
   <rect x="0" y="{H-2}" width="{W}" height="2" fill="url(#groundLine)"/>
 </svg>'''
-    return svg
 
 # ============================================================
 # SVG GENERATION — About Cards
 # ============================================================
 
 def generate_about_svg(config):
-    """Generate about cards SVG (Focus, Mindset, Interests, Quote)."""
+    """Focus / Mindset / Interests / Quote cards, dealt in one by one."""
     cards_cfg = config.get("cards", {})
     quote = config.get("quote", "") or ""   # escaped once, at render time
     W = 840
     card_w = 190
-    card_h = 150
+    card_h = 156
     gap = 13
     start_x = (W - (4 * card_w + 3 * gap)) / 2
     H = card_h + 30
 
-    def make_card(x, title, emoji, items, idx):
-        accent_colors = [P["accent_purple"], P["accent_cyan"], P["accent_violet"], P["accent_pink"]]
-        accent = accent_colors[idx % len(accent_colors)]
-        lines = ""
-        for i, item in enumerate(items[:5]):  # Cap at 5 items
-            lines += (f'<text x="{x+20}" y="{68 + i*22}" font-size="12" '
-                      f'fill="{P["text_secondary"]}" '
-                      f'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">'
-                      f'{safe_text(fit_text(item, card_w - 40, 12))}</text>\n      ')
+    accents = [P["emerald"], P["teal"], P["gold"], P["lime"]]
+
+    def card_frame(x, idx, body):
+        accent = accents[idx % len(accents)]
         return f'''
-      <g>
-        <rect x="{x}" y="10" width="{card_w}" height="{card_h}" rx="10"
-              fill="{P["bg_card"]}" stroke="{P["border"]}" stroke-width="0.7"/>
-        <rect x="{x}" y="10" width="{card_w}" height="1" rx="0.5"
-              fill="{accent}" opacity="0.5"/>
-        <text x="{x+20}" y="40" font-size="14" font-weight="600" fill="{accent}"
-              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-          {safe_text(emoji)}  {safe_text(title)}</text>
-        {lines}
+      <g transform="translate({x:.1f},10)">
+        <g class="rise"{_d(0.08 * idx)}>
+          <rect width="{card_w}" height="{card_h}" rx="12"
+                fill="{P["bg_card"]}" stroke="{P["border"]}" stroke-width="0.9"/>
+          <rect x="14" y="0" width="{card_w - 28}" height="2" rx="1"
+                fill="{accent}" opacity="0.75" class="grow"{_d(0.3 + 0.08 * idx)}/>
+          {body(accent)}
+        </g>
       </g>'''
 
     cards_svg = ""
-    card_keys = [("focus", 0), ("mindset", 1), ("interests_card", 2)]
-    for i, (key, idx) in enumerate(card_keys):
+    for idx, key in enumerate(["focus", "mindset", "interests_card"]):
         card = cards_cfg.get(key, {})
-        x = start_x + i * (card_w + gap)
-        cards_svg += make_card(
-            x, card.get("title", key.replace("_card", "").title()),
-            card.get("emoji", ""),
-            card.get("items", []),
-            idx
-        )
+        title = card.get("title") or key.replace("_card", "").title()
+        items = card.get("items", [])
+
+        def body(accent, key=key, title=title, items=items, idx=idx):
+            icon = CARD_ICONS.get(key, _icon_leaf)(accent)
+            lines = ""
+            for i, item in enumerate(items[:5]):
+                lines += (f'<text x="21" y="{74 + i*22}" font-size="12.5" fill="{P["text_primary"]}" '
+                          f'font-family="{SANS}" class="fade"{_d(0.45 + 0.08*idx + 0.06*i)}>'
+                          f'{safe_text(fit_text(item, card_w - 42, 12.5))}</text>')
+            return (f'<g transform="translate(20,26)">{icon}</g>'
+                    f'<text x="46" y="39" font-size="14.5" font-weight="700" fill="{accent}" '
+                    f'font-family="{SANS}">{safe_text(fit_text(title, card_w - 66, 14.5, bold=True))}</text>'
+                    f'{lines}')
+
+        cards_svg += card_frame(start_x + idx * (card_w + gap), idx, body)
 
     # Quote card
-    qx = start_x + 3 * (card_w + gap)
     quote_lines = []
-    line_px = card_w - 50
+    line_px = card_w - 52
     line = ""
     for word in quote.split():
         candidate = f"{line} {word}".strip()
-        if line and text_width(candidate, 12) > line_px:
+        if line and text_width(candidate, 12.5, ) > line_px:
             quote_lines.append(line)
             # A single word wider than the card gets trimmed, not overflowed
-            line = fit_text(word, line_px, 12)
+            line = fit_text(word, line_px, 12.5)
         else:
             line = candidate
     if line:
         quote_lines.append(line)
 
-    quote_text = ""
-    for i, ql in enumerate(quote_lines[:5]):  # Cap lines
-        quote_text += (f'<text x="{qx+25}" y="{70 + i*18}" font-size="12" '
-                       f'fill="{P["text_secondary"]}" font-style="italic" '
-                       f'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">'
-                       f'{safe_text(ql)}</text>\n      ')
+    def quote_body(accent):
+        out = f'<g transform="translate(20,24)">{_icon_quote(accent)}</g>'
+        for i, ql in enumerate(quote_lines[:5]):
+            out += (f'<text x="21" y="{72 + i*20}" font-size="12.5" fill="{P["text_primary"]}" '
+                    f'font-style="italic" font-family="{SANS}" class="fade"{_d(0.65 + 0.06*i)}>'
+                    f'{safe_text(ql)}</text>')
+        out += (f'<g transform="translate({card_w - 20},{card_h - 22}) rotate(180)" '
+                f'opacity="0.45">{_icon_quote(accent)}</g>')
+        return out
 
-    cards_svg += f'''
-      <g>
-        <rect x="{qx}" y="10" width="{card_w}" height="{card_h}" rx="10"
-              fill="{P["bg_card"]}" stroke="{P["border"]}" stroke-width="0.7"/>
-        <rect x="{qx}" y="10" width="{card_w}" height="1" rx="0.5"
-              fill="{P["accent_pink"]}" opacity="0.5"/>
-        <text x="{qx+18}" y="42" font-size="28" fill="{P["accent_purple"]}" opacity="0.3"
-              font-family="Georgia,serif">&quot;</text>
-        {quote_text}
-        <text x="{qx+card_w-18}" y="{card_h-8}" text-anchor="end" font-size="28"
-              fill="{P["accent_purple"]}" opacity="0.3"
-              font-family="Georgia,serif">&quot;</text>
-      </g>'''
+    cards_svg += card_frame(start_x + 3 * (card_w + gap), 3, quote_body)
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
   <rect width="{W}" height="{H}" fill="transparent"/>
   {cards_svg}
 </svg>'''
+
+# ============================================================
+# SVG GENERATION — Section header
+# ============================================================
+
+def _section_header(icon, title, note, w=840, accent=None):
+    """Icon + title on the left, a muted note on the right, over a hairline."""
+    accent = accent or P["emerald"]
+    note_svg = ""
+    if note:
+        note_svg = (f'<text x="{w - 25}" y="26" text-anchor="end" font-size="10.5" '
+                    f'fill="{P["text_muted"]}" font-family="{SANS}" class="fade"{_d(0.35)}>'
+                    f'{note}</text>')
+    return (f'<g transform="translate(25,10)">{icon(accent)}</g>'
+            f'<text x="49" y="27" font-size="17" font-weight="700" fill="{P["text_bright"]}" '
+            f'font-family="{SANS}" class="fade">{safe_text(title)}</text>'
+            f'{note_svg}'
+            f'<rect x="25" y="38" width="{w - 50}" height="1" fill="{P["border"]}" '
+            f'class="grow"{_d(0.15)}/>')
 
 # ============================================================
 # SVG GENERATION — Tech Stack
 # ============================================================
 
 def generate_tech_svg(tech_stack):
-    """Generate tech stack SVG with categorized tech grid."""
+    """Tech grid of brand marks. Order follows evidence strength, not taste."""
     W = 840
     all_techs = []
     for cat in ["Languages", "Frameworks", "Databases", "Tools"]:
-        items = tech_stack.get(cat, [])
-        all_techs.extend(items[:12])
+        all_techs.extend(tech_stack.get(cat, [])[:12])
 
     if not all_techs:
         return None
 
-    icon_w = 72
-    icon_h = 70
+    tile_w, tile_h = 76, 78
     cols = min(len(all_techs), 10)
     rows = math.ceil(len(all_techs) / cols)
-    gap_x = 8
-    gap_y = 8
-    grid_w = cols * (icon_w + gap_x) - gap_x
+    gap_x = gap_y = 8
+    grid_w = cols * (tile_w + gap_x) - gap_x
     start_x = (W - grid_w) / 2
-    H = 55 + rows * (icon_h + gap_y) + 10
+    H = 58 + rows * (tile_h + gap_y) + 6
 
-    icons_svg = ""
+    tiles = ""
     for i, tech in enumerate(all_techs):
-        row = i // cols
-        col = i % cols
-        x = start_x + col * (icon_w + gap_x)
-        y = 50 + row * (icon_h + gap_y)
+        x = start_x + (i % cols) * (tile_w + gap_x)
+        y = 54 + (i // cols) * (tile_h + gap_y)
         color = tech["color"]
-        # Ensure contrast on dark background
+        # Ensure contrast on the dark ground
         if color.upper() in ("#FFFFFF", "#FFF", "#EEEEEE", "#CCCCCC"):
-            color = "#C8C8C8"
-
-        tech_label = safe_text(fit_text(tech["name"], icon_w - 8, 9))
-        icons_svg += f'''
-      <g transform="translate({x},{y})">
-        <rect width="{icon_w}" height="{icon_h}" rx="10"
-              fill="{P["bg_card"]}" stroke="{P["border"]}" stroke-width="0.5"/>
-        <rect x="18" y="10" width="36" height="30" rx="6"
-              fill="{color}" opacity="0.15"/>
-        <text x="36" y="32" text-anchor="middle" font-size="14" font-weight="700"
-              fill="{color}"
-              font-family="Consolas,Monaco,monospace">{safe_text(tech["icon"])}</text>
-        <text x="36" y="58" text-anchor="middle" font-size="9" fill="{P["text_secondary"]}"
-              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-          {tech_label}</text>
+            color = "#C8D6CF"
+        label = safe_text(fit_text(tech["name"], tile_w - 10, 9.5))
+        tiles += f'''
+      <g transform="translate({x:.1f},{y})">
+        <g class="pop"{_d(0.1 + i * 0.055)}>
+          <rect width="{tile_w}" height="{tile_h}" rx="12" fill="{P["bg_card"]}"
+                stroke="{P["border"]}" stroke-width="0.8"/>
+          <rect width="{tile_w}" height="{tile_h}" rx="12" fill="{color}" opacity="0.05"/>
+          <g transform="translate({(tile_w - 32) / 2},14)">{_brand_mark(tech["name"], color, tech["icon"])}</g>
+          <text x="{tile_w / 2}" y="66" text-anchor="middle" font-size="9.5"
+                fill="{P["text_secondary"]}" font-family="{SANS}">{label}</text>
+        </g>
       </g>'''
 
+    note = f'{len(all_techs)} detected from repo languages &#183; topics'
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
   <rect width="{W}" height="{H}" fill="transparent"/>
-  <text x="25" y="30" font-size="18" font-weight="700" fill="{P["text_bright"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-    Tech Stack</text>
-  <line x1="25" y1="40" x2="{W-25}" y2="40" stroke="{P["border"]}" stroke-width="0.5"/>
-  {icons_svg}
+  {_section_header(_icon_code, "Tech Stack", note, W, P["teal"])}
+  {tiles}
 </svg>'''
 
 # ============================================================
@@ -1008,13 +1344,12 @@ def generate_stats_svg(user_data, stats):
       public_repos / followers / following -> user endpoint
       stars, forks, language mix, fork & archive counts -> repo endpoint
     """
-    SANS = "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-    username = safe_text(fit_text(user_data.get("login", ""), 260, 14, bold=True))
+    username = safe_text(fit_text(user_data.get("login", ""), 250, 14, bold=True))
 
-    W, H = 840, 200
+    W, H = 840, 204
     L_X, L_W = 25, 300          # left panel
     R_X, R_W = 345, 470         # right panel
-    C_Y, C_H = 48, 145
+    C_Y, C_H = 50, 145
 
     rows = [
         ("Public Repositories", fmt_num(user_data.get("public_repos", 0))),
@@ -1024,34 +1359,41 @@ def generate_stats_svg(user_data, stats):
     ]
     rows_svg = ""
     for i, (label, value) in enumerate(rows):
-        y = 105 + i * 22        # starts below the divider at y=88 — no overlap
+        y = 107 + i * 22        # starts below the divider at y=90 — no overlap
         rows_svg += f'''
-      <text x="{L_X + 20}" y="{y}" font-size="12.5" fill="{P["text_secondary"]}"
-            font-family="{SANS}">{label}</text>
-      <text x="{L_X + L_W - 20}" y="{y}" text-anchor="end" font-size="12.5"
-            font-weight="600" fill="{P["text_bright"]}"
-            font-family="{SANS}">{value}</text>'''
+      <g class="fade"{_d(0.3 + i * 0.09)}>
+        <text x="{L_X + 20}" y="{y}" font-size="12.5" fill="{P["text_secondary"]}"
+              font-family="{SANS}">{label}</text>
+        <text x="{L_X + L_W - 20}" y="{y}" text-anchor="end" font-size="12.5"
+              font-weight="700" fill="{P["gold"]}" font-family="{SANS}">{value}</text>
+      </g>'''
 
     # Language mix — share of non-fork repos whose primary language is X
     langs = stats["top_languages"][:4]
+    total_repos_with_lang = sum(c for _, c in stats["top_languages"]) or 1
     max_count = max((c for _, c in langs), default=1) or 1
-    bar_x, bar_max = R_X + 130, R_W - 130 - 70
+    bar_x, bar_max = R_X + 118, R_W - 118 - 76
     lang_svg = ""
     for i, (lang, count) in enumerate(langs):
-        y = 104 + i * 22
-        width = max(4, bar_max * count / max_count)
-        color = TECH_DB.get(lang, {}).get("color", P["accent_violet"])
+        y = 106 + i * 22
+        width = max(5, bar_max * count / max_count)
+        pct = 100.0 * count / total_repos_with_lang
+        color = TECH_DB.get(lang, {}).get("color", P["emerald"])
         lang_svg += f'''
-      <text x="{R_X + 20}" y="{y}" font-size="12" fill="{P["text_secondary"]}"
-            font-family="{SANS}">{safe_text(fit_text(lang, 100, 12))}</text>
-      <rect x="{bar_x}" y="{y - 9}" width="{width:.1f}" height="11" rx="3"
-            fill="{color}" opacity="0.75"/>
-      <text x="{bar_x + width + 8:.1f}" y="{y}" font-size="11" fill="{P["text_muted"]}"
-            font-family="{SANS}">{count}</text>'''
+      <g class="fade"{_d(0.3 + i * 0.09)}>
+        <text x="{R_X + 20}" y="{y}" font-size="12" fill="{P["text_secondary"]}"
+              font-family="{SANS}">{safe_text(fit_text(lang, 92, 12))}</text>
+        <rect x="{bar_x}" y="{y - 9}" width="{bar_max}" height="11" rx="5.5"
+              fill="{P["track"]}"/>
+        <rect x="{bar_x}" y="{y - 9}" width="{width:.1f}" height="11" rx="5.5"
+              fill="{color}" opacity="0.9" class="grow"{_d(0.45 + i * 0.11)}/>
+        <text x="{R_X + R_W - 20}" y="{y}" text-anchor="end" font-size="11"
+              fill="{P["text_muted"]}" font-family="{SANS}">{pct:.1f}%</text>
+      </g>'''
 
     if not langs:
         lang_svg = f'''
-      <text x="{R_X + 20}" y="112" font-size="12" fill="{P["text_muted"]}"
+      <text x="{R_X + 20}" y="114" font-size="12" fill="{P["text_muted"]}"
             font-family="{SANS}">No language data available</text>'''
 
     def plural(n, word):
@@ -1065,35 +1407,35 @@ def generate_stats_svg(user_data, stats):
     ])
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
   <defs>
-    <linearGradient id="statsBorder" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="{P["border_glow"]}" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="{P["border"]}" stop-opacity="0.3"/>
+    <linearGradient id="panelEdge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="{P["border_glow"]}" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="{P["border"]}" stop-opacity="0.35"/>
     </linearGradient>
   </defs>
   <rect width="{W}" height="{H}" fill="transparent"/>
+  {_section_header(_icon_chart, "GitHub Stats", composition, W, P["emerald"])}
 
-  <text x="25" y="28" font-size="18" font-weight="700" fill="{P["text_bright"]}"
-        font-family="{SANS}">GitHub Stats</text>
-  <text x="{W - 25}" y="28" text-anchor="end" font-size="11" fill="{P["text_muted"]}"
-        font-family="{SANS}">{composition}</text>
-  <line x1="25" y1="38" x2="{W - 25}" y2="38" stroke="{P["border"]}" stroke-width="0.5"/>
+  <g class="rise"{_d(0.12)}>
+    <rect x="{L_X}" y="{C_Y}" width="{L_W}" height="{C_H}" rx="12"
+          fill="{P["bg_card"]}" stroke="url(#panelEdge)" stroke-width="0.9"/>
+    <text x="{L_X + 20}" y="{C_Y + 27}" font-size="14" font-weight="700"
+          fill="{P["text_bright"]}" font-family="{SANS}">{username}</text>
+    <rect x="{L_X + 15}" y="{C_Y + 40}" width="{L_W - 30}" height="1" fill="{P["border"]}"/>
+    {rows_svg}
+  </g>
 
-  <rect x="{L_X}" y="{C_Y}" width="{L_W}" height="{C_H}" rx="10"
-        fill="{P["bg_card"]}" stroke="url(#statsBorder)" stroke-width="0.7"/>
-  <text x="{L_X + 20}" y="{C_Y + 26}" font-size="14" font-weight="700"
-        fill="{P["text_bright"]}" font-family="{SANS}">{username}</text>
-  <line x1="{L_X + 15}" y1="{C_Y + 40}" x2="{L_X + L_W - 15}" y2="{C_Y + 40}"
-        stroke="{P["border"]}" stroke-width="0.5"/>
-  {rows_svg}
-
-  <rect x="{R_X}" y="{C_Y}" width="{R_W}" height="{C_H}" rx="10"
-        fill="{P["bg_card"]}" stroke="url(#statsBorder)" stroke-width="0.7"/>
-  <text x="{R_X + 20}" y="{C_Y + 26}" font-size="14" font-weight="700"
-        fill="{P["accent_purple"]}" font-family="{SANS}">Most Used Languages</text>
-  <line x1="{R_X + 15}" y1="{C_Y + 40}" x2="{R_X + R_W - 15}" y2="{C_Y + 40}"
-        stroke="{P["border"]}" stroke-width="0.5"/>
-  {lang_svg}
+  <g class="rise"{_d(0.2)}>
+    <rect x="{R_X}" y="{C_Y}" width="{R_W}" height="{C_H}" rx="12"
+          fill="{P["bg_card"]}" stroke="url(#panelEdge)" stroke-width="0.9"/>
+    <text x="{R_X + 20}" y="{C_Y + 27}" font-size="14" font-weight="700"
+          fill="{P["emerald"]}" font-family="{SANS}">Most Used Languages</text>
+    <text x="{R_X + R_W - 20}" y="{C_Y + 27}" text-anchor="end" font-size="10"
+          fill="{P["text_dim"]}" font-family="{SANS}">share of repos by primary language</text>
+    <rect x="{R_X + 15}" y="{C_Y + 40}" width="{R_W - 30}" height="1" fill="{P["border"]}"/>
+    {lang_svg}
+  </g>
 </svg>'''
 
 # ============================================================
@@ -1111,13 +1453,13 @@ def _contribution_fallback(reason):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} 56" width="{W}" height="56">
   <rect width="{W}" height="56" fill="transparent"/>
   <text x="{W/2}" y="26" text-anchor="middle" font-size="13" fill="{P["text_secondary"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Contribution activity unavailable</text>
+        font-family="{SANS}">Contribution activity unavailable</text>
   <text x="{W/2}" y="44" text-anchor="middle" font-size="10" fill="{P["text_dim"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">{safe_text(reason)}</text>
+        font-family="{SANS}">{safe_text(reason)}</text>
 </svg>'''
 
 def generate_contribution_svg(contribution_data):
-    """Generate contribution graph SVG. Shows an honest fallback if no data."""
+    """Contribution calendar, filling in as a wave from January outward."""
     W = 840
 
     if not contribution_data:
@@ -1155,10 +1497,8 @@ def generate_contribution_svg(contribution_data):
     cell_size = 12
     gap = 3
     start_x = 45
-    # Three clear bands: title (y=16), month labels (y=38), then the grid.
-    # A centred title and the Feb/Mar labels sit at the same x, so they need
-    # real vertical separation, not just non-overlapping boxes.
-    start_y = 48
+    # Three clear bands: header (y<=40), month labels (y=44), then the grid.
+    start_y = 56
     cells_svg = ""
     month_labels = {}
 
@@ -1169,11 +1509,12 @@ def generate_contribution_svg(contribution_data):
             date_str = day.get("date", "")
             x = start_x + wi * (cell_size + gap)
             y = start_y + weekday * (cell_size + gap)
-            color = get_color(count)
+            delay = 0.15 + wi * 0.011 + weekday * 0.012
+            cls = "fade" if count == 0 else "pop"
             cells_svg += (
                 f'<rect x="{x}" y="{y}" width="{cell_size}" height="{cell_size}" '
-                f'rx="2" fill="{color}"/>\n    '
-            )
+                f'rx="2.5" fill="{get_color(count)}" class="{cls}" '
+                f'style="animation-delay:{delay:.2f}s"/>\n    ')
             if date_str and date_str.endswith("-01"):
                 try:
                     dt = datetime.strptime(date_str, "%Y-%m-%d")
@@ -1184,43 +1525,39 @@ def generate_contribution_svg(contribution_data):
     months_svg = ""
     for mx, label in sorted(month_labels.items()):
         months_svg += (
-            f'<text x="{mx}" y="{start_y - 10}" font-size="9" '
-            f'fill="{P["text_muted"]}" '
-            f'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">'
-            f'{label}</text>\n    '
-        )
+            f'<text x="{mx}" y="{start_y - 8}" font-size="9" fill="{P["text_muted"]}" '
+            f'font-family="{SANS}" class="fade">{label}</text>\n    ')
 
     day_labels_svg = ""
-    day_names = ["", "Mon", "", "Wed", "", "Fri", ""]
-    for i, name in enumerate(day_names):
-        if name:
+    for i, dname in enumerate(["", "Mon", "", "Wed", "", "Fri", ""]):
+        if dname:
             y = start_y + i * (cell_size + gap) + 10
             day_labels_svg += (
                 f'<text x="{start_x - 8}" y="{y}" text-anchor="end" font-size="9" '
-                f'fill="{P["text_muted"]}" '
-                f'font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">'
-                f'{name}</text>\n    '
-            )
+                f'fill="{P["text_muted"]}" font-family="{SANS}" class="fade">{dname}</text>\n    ')
 
-    H = start_y + 7 * (cell_size + gap) + 25
+    H = start_y + 7 * (cell_size + gap) + 26
+    legend = "".join(
+        f'<rect x="{W - 140 + i*16}" y="{H - 18}" width="{cell_size}" height="{cell_size}" '
+        f'rx="2.5" fill="{P[f"contrib_{i}"]}"/>' for i in range(5))
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
   <rect width="{W}" height="{H}" fill="transparent"/>
-  <text x="{W/2}" y="16" text-anchor="middle" font-size="11" fill="{P["text_muted"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-    {total} contributions in the last year</text>
+  <g transform="translate(25,8)">{_icon_leaf(P["lime"])}</g>
+  <text x="49" y="25" font-size="15" font-weight="700" fill="{P["text_bright"]}"
+        font-family="{SANS}" class="fade">{total} contributions in the last year</text>
+  <text x="{W - 25}" y="25" text-anchor="end" font-size="10.5" fill="{P["text_muted"]}"
+        font-family="{SANS}" class="fade">public activity, rolling 12 months</text>
+  <rect x="25" y="36" width="{W - 50}" height="1" fill="{P["border"]}" class="grow"/>
   {months_svg}
   {day_labels_svg}
   {cells_svg}
-  <text x="{W - 160}" y="{H - 8}" font-size="9" fill="{P["text_muted"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Less</text>
-  <rect x="{W - 140}" y="{H - 17}" width="{cell_size}" height="{cell_size}" rx="2" fill="{P["contrib_0"]}"/>
-  <rect x="{W - 124}" y="{H - 17}" width="{cell_size}" height="{cell_size}" rx="2" fill="{P["contrib_1"]}"/>
-  <rect x="{W - 108}" y="{H - 17}" width="{cell_size}" height="{cell_size}" rx="2" fill="{P["contrib_2"]}"/>
-  <rect x="{W - 92}" y="{H - 17}" width="{cell_size}" height="{cell_size}" rx="2" fill="{P["contrib_3"]}"/>
-  <rect x="{W - 76}" y="{H - 17}" width="{cell_size}" height="{cell_size}" rx="2" fill="{P["contrib_4"]}"/>
-  <text x="{W - 60}" y="{H - 8}" font-size="9" fill="{P["text_muted"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">More</text>
+  <text x="{W - 160}" y="{H - 9}" font-size="9" fill="{P["text_muted"]}"
+        font-family="{SANS}">Less</text>
+  {legend}
+  <text x="{W - 58}" y="{H - 9}" font-size="9" fill="{P["text_muted"]}"
+        font-family="{SANS}">More</text>
 </svg>'''
 
 # ============================================================
@@ -1257,23 +1594,6 @@ def wrap_text(text, max_px, font_size, max_lines=2, bold=False):
                              max_px, font_size, bold)
     return [l for l in lines if l]
 
-def _star_icon(x, y, color):
-    """A 5-point star drawn as a path — no emoji font dependency."""
-    return (f'<path transform="translate({x},{y}) scale(0.55)" fill="{color}" '
-            f'd="M10 0 L12.9 6.5 L20 7.3 L14.7 12.1 L16.2 19.2 L10 15.6 '
-            f'L3.8 19.2 L5.3 12.1 L0 7.3 L7.1 6.5 Z"/>')
-
-def _fork_icon(x, y, color):
-    """GitHub-style fork glyph: two parents joining a child, drawn as shapes."""
-    return (f'<g transform="translate({x},{y})" stroke="{color}" fill="{color}" '
-            f'stroke-width="1.2">'
-            f'<circle cx="1.5" cy="1.5" r="1.5" stroke="none"/>'
-            f'<circle cx="9.5" cy="1.5" r="1.5" stroke="none"/>'
-            f'<circle cx="5.5" cy="10" r="1.5" stroke="none"/>'
-            f'<path d="M1.5 3 v1.5 a2 2 0 0 0 2 2 h4 a2 2 0 0 0 2 -2 V3" fill="none"/>'
-            f'<path d="M5.5 6.5 v2" fill="none"/>'
-            f'</g>')
-
 def generate_repo_card_svg(repo, index=0, with_topics=True):
     """
     Generate one repository card.
@@ -1286,7 +1606,6 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
     same height; when no featured repo has topics the row is dropped entirely
     rather than leaving a band of dead space on every card.
     """
-    SANS = "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
     W = 380
     H = 150 if with_topics else 122
     PAD = 18
@@ -1299,9 +1618,8 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
     topics = (repo.get("topics") or [])[:3]
     badge = "Archived" if repo.get("archived") else ("Fork" if repo.get("fork") else "Public")
 
-    accent_colors = [P["accent_purple"], P["accent_cyan"], P["accent_violet"],
-                     P["accent_blue"], P["accent_pink"], P["accent_indigo"]]
-    accent = accent_colors[index % len(accent_colors)]
+    accents = [P["emerald"], P["teal"], P["gold"], P["lime"], P["sky"], P["amber"]]
+    accent = accents[index % len(accents)]
 
     badge_w = max(44, text_width(badge, 9) + 18)
     name = safe_text(fit_text(raw_name, W - PAD * 2 - badge_w - 10, 15, bold=True))
@@ -1311,7 +1629,7 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
     desc_lines = wrap_text(raw_desc, W - PAD * 2, 12, max_lines=2)
     desc_svg = "".join(
         f'<text x="{PAD}" y="{56 + i * 17}" font-size="12" fill="{P["text_secondary"]}" '
-        f'font-family="{SANS}">{safe_text(line)}</text>'
+        f'font-family="{SANS}" class="fade"{_d(0.2 + i * 0.07)}>{safe_text(line)}</text>'
         for i, line in enumerate(desc_lines))
 
     lang_color = TECH_DB.get(lang, {}).get("color", P["text_muted"])
@@ -1319,14 +1637,14 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
     lang_svg = ""
     if lang:
         lang_svg = (
-            f'<circle cx="{PAD + 5}" cy="100" r="5" fill="{lang_color}"/>'
+            f'<circle cx="{PAD + 5}" cy="100" r="5" fill="{lang_color}" class="beat"/>'
             f'<text x="{PAD + 16}" y="104" font-size="11" fill="{P["text_secondary"]}" '
             f'font-family="{SANS}">{lang_display}</text>')
 
     # Stars / forks share the language row, right-aligned — no dead band when
     # a repo has no topics.
     counts_svg = (
-        _star_icon(W - 108, 93, P["accent_purple"]) +
+        _star_icon(W - 108, 93, P["gold"]) +
         f'<text x="{W - 94}" y="104" font-size="11" fill="{P["text_secondary"]}" '
         f'font-family="{SANS}">{stars}</text>' +
         _fork_icon(W - 60, 94, P["text_muted"]) +
@@ -1335,40 +1653,50 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
 
     topics_svg = ""
     tx = PAD
-    for topic in (topics if with_topics else []):
+    for i, topic in enumerate(topics if with_topics else []):
         label = fit_text(topic, TOPIC_MAX_PX, 9)
         tw = text_width(label, 9) + 16
         if tx + tw > W - PAD:
             break
         topics_svg += (
-            f'<rect x="{tx:.1f}" y="118" width="{tw:.1f}" height="19" rx="4" '
-            f'fill="{P["bg_surface"]}" stroke="{P["border"]}" stroke-width="0.4"/>'
+            f'<g class="fade"{_d(0.4 + i * 0.08)}>'
+            f'<rect x="{tx:.1f}" y="118" width="{tw:.1f}" height="19" rx="9.5" '
+            f'fill="{P["pill"]}" stroke="{P["border"]}" stroke-width="0.5"/>'
             f'<text x="{tx + tw / 2:.1f}" y="131" text-anchor="middle" font-size="9" '
-            f'fill="{P["text_muted"]}" font-family="{SANS}">{safe_text(label)}</text>')
+            f'fill="{P["text_muted"]}" font-family="{SANS}">{safe_text(label)}</text></g>')
         tx += tw + 5
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
   <defs>
-    <linearGradient id="cardBorder{index}" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="{accent}" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="{P["border"]}" stop-opacity="0.2"/>
+    <linearGradient id="cardEdge{index}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="{accent}" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="{P["border"]}" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="cardTop{index}" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="{accent}" stop-opacity="0.15"/>
+      <stop offset="50%" stop-color="{accent}" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="{accent}" stop-opacity="0.15"/>
     </linearGradient>
   </defs>
-  <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="10"
-        fill="{P["bg_card"]}" stroke="url(#cardBorder{index})" stroke-width="0.8"/>
-  <rect x="1" y="1" width="{W-2}" height="2" rx="1" fill="{accent}" opacity="0.55"/>
+  <g class="rise">
+    <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="12"
+          fill="{P["bg_card"]}" stroke="url(#cardEdge{index})" stroke-width="0.9"/>
+    <rect x="1" y="1" width="{W-2}" height="2.5" rx="1.25" fill="url(#cardTop{index})"
+          class="sweep"/>
 
-  <text x="{PAD}" y="32" font-size="15" font-weight="700" fill="{P["text_bright"]}"
-        font-family="{SANS}">{name}</text>
-  <rect x="{W - PAD - badge_w:.1f}" y="17" width="{badge_w:.1f}" height="19" rx="9.5"
-        fill="{P["bg_surface"]}" stroke="{P["border"]}" stroke-width="0.4"/>
-  <text x="{W - PAD - badge_w / 2:.1f}" y="30" text-anchor="middle" font-size="9"
-        fill="{P["text_muted"]}" font-family="{SANS}">{safe_text(badge)}</text>
+    <text x="{PAD}" y="32" font-size="15" font-weight="700" fill="{P["text_bright"]}"
+          font-family="{SANS}">{name}</text>
+    <rect x="{W - PAD - badge_w:.1f}" y="17" width="{badge_w:.1f}" height="19" rx="9.5"
+          fill="{P["pill"]}" stroke="{P["border"]}" stroke-width="0.5"/>
+    <text x="{W - PAD - badge_w / 2:.1f}" y="30" text-anchor="middle" font-size="9"
+          fill="{P["text_muted"]}" font-family="{SANS}">{safe_text(badge)}</text>
 
-  {desc_svg}
-  {lang_svg}
-  {counts_svg}
-  {topics_svg}
+    {desc_svg}
+    {lang_svg}
+    {counts_svg}
+    {topics_svg}
+  </g>
 </svg>'''
 
 # ============================================================
@@ -1376,32 +1704,30 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
 # ============================================================
 
 def generate_footer_svg(config):
-    """Generate footer SVG."""
-    W, H = 840, 100
-    motto = safe_text(fit_text(config.get("motto", ""), W - 200, 10))
-    message = safe_text(fit_text(config.get("footer_message", ""), W - 160, 12))
+    """Closing band: a hairline that breathes, the message, the motto."""
+    W, H = 840, 104
+    motto = safe_text(fit_text(config.get("motto", ""), W - 220, 10.5))
+    message = safe_text(fit_text(config.get("footer_message", ""), W - 200, 13))
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
   <defs>
     <linearGradient id="footerLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="transparent"/>
-      <stop offset="30%" stop-color="{P["accent_purple"]}" stop-opacity="0.3"/>
-      <stop offset="70%" stop-color="{P["accent_violet"]}" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="transparent"/>
+      <stop offset="0%" stop-color="{P["emerald"]}" stop-opacity="0"/>
+      <stop offset="35%" stop-color="{P["emerald"]}" stop-opacity="0.55"/>
+      <stop offset="65%" stop-color="{P["gold"]}" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="{P["gold"]}" stop-opacity="0"/>
     </linearGradient>
   </defs>
   <rect width="{W}" height="{H}" fill="transparent"/>
-  <line x1="100" y1="15" x2="{W-100}" y2="15" stroke="url(#footerLine)" stroke-width="1"/>
-  <text x="{W/2}" y="45" text-anchor="middle" font-size="15" font-weight="600"
-        fill="{P["text_bright"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-    Thanks for visiting</text>
-  <text x="{W/2}" y="68" text-anchor="middle" font-size="12" fill="{P["text_secondary"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
-    {message}</text>
-  <text x="{W/2}" y="90" text-anchor="middle" font-size="10" font-style="italic"
-        fill="{P["text_muted"]}"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+  <rect x="90" y="14" width="{W - 180}" height="1.4" fill="url(#footerLine)" class="sweep"/>
+  <g transform="translate({W/2 - 88},32)">{_icon_leaf(P["lime"])}</g>
+  <text x="{W/2 + 10}" y="45" text-anchor="middle" font-size="15" font-weight="700"
+        fill="{P["text_bright"]}" font-family="{SANS}" class="rise">Thanks for visiting</text>
+  <text x="{W/2}" y="70" text-anchor="middle" font-size="13" fill="{P["emerald"]}"
+        font-family="{SANS}" class="rise"{_d(0.12)}>{message}</text>
+  <text x="{W/2}" y="92" text-anchor="middle" font-size="10.5" font-style="italic"
+        fill="{P["text_muted"]}" font-family="{HAND}" class="fade"{_d(0.3)}>
     &quot;{motto}&quot;</text>
 </svg>'''
 
