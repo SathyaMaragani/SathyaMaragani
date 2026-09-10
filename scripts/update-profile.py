@@ -89,15 +89,28 @@ P = {
     "track":          "#12291F",
     "border":         "#1E4034",
     "border_glow":    "#2F6B52",
-    # Dusk sky, top to horizon
-    "sky_top":        "#071A22",
-    "sky_mid":        "#0C2A2C",
-    "sky_low":        "#1B3A2E",
-    "cloud":          "#CFE3D6",
-    "city":           "#061410",
-    "city_edge":      "#122C22",
-    "leaf_dark":      "#04120D",
-    "leaf_mid":       "#0B241A",
+    "band":           "#07130E",
+    "pill_hero":      "#0C2019",
+    "pill_edge":      "#4E8E72",
+    # Dusk valley, sky top to ground
+    "sky_top":        "#245562",
+    "sky_mid":        "#3E7F7C",
+    "sky_haze":       "#86B49C",
+    "sky_horizon":    "#D7C795",
+    "sky_ground":     "#16342B",
+    "cloud_lit":      "#FBEFCB",
+    "cloud_lit2":     "#E4D0A2",
+    "cloud_shade":    "#9DB6A8",
+    "cloud_shade2":   "#6E948F",
+    "mountain":       "#2A5257",
+    "mountain_near":  "#1D3F41",
+    "town":           "#132E2B",
+    "tree_mid":       "#123024",
+    "tree_dark":      "#0A1D16",
+    "leaf_dark":      "#0C2418",
+    "leaf_mid":       "#153A24",
+    "leaf_deep":      "#061710",
+    "leaf_hi":        "#4A6B2E",
     # Accents
     "emerald":        "#34D399",
     "teal":           "#2DD4BF",
@@ -107,6 +120,7 @@ P = {
     "gold_bright":    "#FBEFC8",
     "amber":          "#D9A441",
     # Type
+    "headline_mint":  "#DCF2E4",
     "text_bright":    "#EAF7F0",
     "text_primary":   "#CFE6DA",
     "text_secondary": "#93B3A6",
@@ -700,7 +714,7 @@ ANIM_CSS = """<style>
     .glow{animation:glow 4.5s ease-in-out infinite}
     .spin{animation:spin 11s linear infinite;transform-box:fill-box;transform-origin:center}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
-    .drift{animation:drift 90s linear infinite}
+    .float{animation:float 44s ease-in-out infinite}
     .twinkle{animation:twinkle 4s ease-in-out infinite}
     .blink{animation:blink 5s ease-in-out infinite}
     .shoot{animation:shoot 12s ease-in infinite;opacity:0}
@@ -713,7 +727,7 @@ ANIM_CSS = """<style>
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
     @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
-    @keyframes drift{to{transform:translateX(1160px)}}
+    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
@@ -927,235 +941,340 @@ def _brand_mark(name, color, fallback_label):
 
 # ============================================================
 # SVG GENERATION — Hero Banner
+#
+# A painted dusk valley: teal sky, cumulus catching the last warm light, a
+# ridgeline, a lit town at the horizon, a conifer treeline, and heavy
+# foliage framing both upper corners. Everything is vector — no raster, no
+# external reference — so it stays a few tens of KB and scales cleanly.
 # ============================================================
 
-def _generate_stars_svg(count=60, w=840, h=200, seed=42):
-    """Twinkling starfield. Base brightness rides on fill-opacity so the
-    stars keep their depth when the CSS animation is switched off."""
+def _generate_stars_svg(count=26, w=840, h=110, seed=42):
+    """A handful of early stars. The sky is bright here, so they are sparse
+    and dim; base brightness rides on fill-opacity so they keep their depth
+    when the CSS animation is switched off."""
     rng = random.Random(seed)
     stars = []
     for _ in range(count):
         x = rng.randint(0, w)
         y = rng.randint(4, h)
-        r = round(rng.uniform(0.4, 1.35), 2)
-        op = round(rng.uniform(0.25, 0.9), 2)
+        r = round(rng.uniform(0.4, 1.1), 2)
+        op = round(rng.uniform(0.18, 0.6), 2)
         dur = round(rng.uniform(2.5, 7.0), 1)
         delay = round(rng.uniform(0, 6), 1)
         stars.append(
-            f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFF6DF" fill-opacity="{op}" '
+            f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFF8E4" fill-opacity="{op}" '
             f'class="twinkle" style="animation-duration:{dur}s;animation-delay:{delay}s"/>')
     return "\n    ".join(stars)
 
-def _generate_clouds_svg(seed=7):
-    """Soft cloud banks drifting across the sky, left to right."""
+def _cloud(x, y, scale, seed, dur, delay):
+    """One cumulus: a shadowed body with a lit crown riding on top of it.
+
+    Clouds only breathe sideways a few pixels rather than crossing the sky —
+    a full traverse would leave the composition looking different every time
+    someone loads the page.
+    """
+    rng = random.Random(seed)
+    base, cx = [], 0.0
+    for _ in range(rng.randint(4, 6)):
+        r = rng.uniform(15, 27)
+        base.append((cx, -rng.uniform(0, 5), r))
+        cx += r * rng.uniform(0.78, 1.15)
+    right = max(px + pr for px, _, pr in base)
+
+    # A second, smaller tier riding between the base puffs domes the mass;
+    # a single row of circles reads as a caterpillar, not a cumulus.
+    upper = []
+    for i in range(len(base) - 1):
+        (x1, _, r1), (x2, _, r2) = base[i], base[i + 1]
+        r = (r1 + r2) * 0.5 * rng.uniform(0.55, 0.8)
+        upper.append(((x1 + x2) / 2, -(r1 + r2) * 0.5 * rng.uniform(0.45, 0.7), r))
+    if len(base) > 2:
+        mid = base[len(base) // 2]
+        upper.append((mid[0] + rng.uniform(-6, 6), -mid[2] * rng.uniform(0.95, 1.25),
+                      mid[2] * rng.uniform(0.5, 0.68)))
+    puffs = base + upper
+
+    body = "".join(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{pr:.1f}"/>'
+                   for px, py, pr in puffs)
+    body += f'<rect x="-8" y="-4" width="{right + 14:.1f}" height="16" rx="8"/>'
+    # The light sits low on the horizon, so the crown lifts up and to the left
+    crown = "".join(f'<circle cx="{px - 2.5:.1f}" cy="{py - pr * 0.42:.1f}" r="{pr * 0.74:.1f}"/>'
+                    for px, py, pr in puffs)
+
+    return (f'<g transform="translate({x},{y}) scale({scale})" filter="url(#cloudSoft)">'
+            f'<g class="float" style="animation-duration:{dur}s;animation-delay:{delay}s">'
+            f'<g fill="url(#cloudShade)">{body}</g>'
+            f'<g fill="url(#cloudLit)">{crown}</g>'
+            f'</g></g>')
+
+def _generate_clouds_svg():
+    """Cumulus banks: heavy ones stacked at the horizon, wisps higher up."""
+    # (x, y, scale, seed, drift seconds, delay)
+    specs = [
+        (300, 172, 1.90, 3, 46, -8),  (474, 156, 1.45, 9, 38, -21),
+        (120, 178, 1.15, 5, 52, -3),  (-34, 150, 0.90, 8, 44, -30),
+        (556, 190, 0.85, 12, 58, -14), (226, 104, 0.50, 17, 62, -40),
+        (398, 88,  0.42, 21, 34, -19),
+    ]
+    return "\n    ".join(_cloud(*s) for s in specs)
+
+def _generate_mountains_svg(w=840, base=196, seed=5):
+    """Two ridgelines — a hazy far range, a darker near one."""
+    rng = random.Random(seed)
+
+    def ridge(y0, amp, step, fill, opacity):
+        pts, x = [], -20.0
+        while x < w + 20:
+            pts.append((x, y0 - rng.uniform(0, amp)))
+            x += rng.uniform(step * 0.55, step * 1.5)
+        pts.append((w + 20, y0 - rng.uniform(0, amp)))
+        d = (f'M{pts[0][0]:.0f} {pts[0][1]:.0f} '
+             + " ".join(f'L{px:.0f} {py:.0f}' for px, py in pts[1:]))
+        return (f'<path d="{d} L{w + 20} {base + 70} L-20 {base + 70} Z" '
+                f'fill="{fill}" opacity="{opacity}"/>')
+
+    return (ridge(base - 8, 26, 78, P["mountain"], "0.55")
+            + "\n    " + ridge(base + 4, 15, 54, P["mountain_near"], "0.75"))
+
+def _generate_town_svg(w=840, base_y=236, seed=123):
+    """The town at the horizon: low blocks, warm windows, a few of which
+    blink so it reads as inhabited rather than printed."""
     rng = random.Random(seed)
     out = []
-    for i, (y, scale, op) in enumerate([(46, 1.0, 0.10), (86, 0.7, 0.07), (28, 1.35, 0.06)]):
-        puffs = "".join(
-            f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}"/>'
-            for cx, cy, rx, ry in [
-                (0, 0, 46, 13), (38, -7, 34, 15), (74, 2, 40, 11), (-34, 4, 30, 9)])
-        dur = 70 + i * 26
-        delay = -rng.randint(0, dur)
-        out.append(
-            f'<g transform="translate(-180,{y}) scale({scale})" fill="{P["cloud"]}" opacity="{op}">'
-            f'<g class="drift" style="animation-duration:{dur}s;animation-delay:{delay}s">'
-            f'{puffs}</g></g>')
-    return "\n    ".join(out)
-
-def _generate_buildings_svg(w=840, base_y=240):
-    """Distant skyline, silhouetted against the horizon glow. A handful of
-    windows blink so the city reads as inhabited rather than printed."""
-    rng = random.Random(123)
-    buildings = []
-    lit_colors = ["#FFD79A", "#FFC46B", "#7FE0A8", "#5EEAD4", "#FFEFC7"]
-
-    # Building specs: (x, width, height, window_rows, window_cols)
-    specs = [
-        (20, 28, 70, 5, 2), (48, 18, 100, 8, 1), (62, 32, 55, 4, 2),
-        (90, 22, 130, 10, 2), (108, 38, 75, 5, 3), (148, 16, 90, 7, 1),
-        (162, 26, 60, 4, 2), (186, 20, 110, 8, 1), (204, 34, 85, 6, 2),
-        (240, 28, 45, 3, 2), (270, 22, 95, 7, 1), (290, 30, 70, 5, 2),
-        (420, 24, 80, 6, 2), (442, 18, 120, 9, 1), (458, 36, 65, 5, 3),
-        (496, 20, 105, 8, 1), (514, 30, 50, 4, 2), (542, 26, 90, 7, 2),
-        (570, 16, 75, 5, 1), (588, 34, 60, 4, 2),
-        (640, 22, 110, 8, 1), (660, 28, 70, 5, 2), (690, 18, 95, 7, 1),
-        (710, 32, 55, 4, 2), (738, 24, 85, 6, 2), (760, 20, 65, 5, 1),
-        (780, 30, 100, 8, 2), (810, 22, 45, 3, 1),
-    ]
-
-    for x, bw, bh, wr, wc in specs:
-        y = base_y - bh
-        buildings.append(
-            f'<rect x="{x}" y="{y}" width="{bw}" height="{bh}" '
-            f'fill="{P["city"]}" stroke="{P["city_edge"]}" stroke-width="0.5"/>')
-        win_w, win_h = 3, 3
-        pad_x = (bw - wc * (win_w + 4)) / 2 + 2
-        for row in range(wr):
-            for col in range(wc):
-                wx = x + pad_x + col * (win_w + 4)
-                wy = y + 6 + row * (win_h + 5)
-                lit = rng.random() > 0.4
-                color = rng.choice(lit_colors) if lit else P["bg_darkest"]
-                op = round(rng.uniform(0.35, 0.9), 2) if lit else 0.12
+    lit = ["#FFD79A", "#FFC46B", "#FFEFC7", "#FFB74D"]
+    x = 120
+    while x < w - 90:
+        bw = rng.uniform(7, 17)
+        bh = rng.uniform(7, 24)
+        y = base_y - bh + rng.uniform(-2.5, 2.5)
+        out.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{bh:.1f}" '
+                   f'fill="{P["town"]}" opacity="{rng.uniform(0.34, 0.55):.2f}"/>')
+        for row in range(int(bh // 7)):
+            for col in range(max(1, int(bw // 6))):
+                if rng.random() > 0.55:
+                    continue
+                wx = x + 2.5 + col * 6
+                wy = y + 3 + row * 7
+                if wx > x + bw - 2.5:
+                    continue
                 cls = ""
-                if lit and rng.random() > 0.88:
+                if rng.random() > 0.85:
                     cls = (f' class="blink" style="animation-duration:{rng.uniform(3, 9):.1f}s;'
                            f'animation-delay:{rng.uniform(0, 6):.1f}s"')
-                buildings.append(
-                    f'<rect x="{wx}" y="{wy}" width="{win_w}" height="{win_h}" '
-                    f'rx="0.5" fill="{color}" fill-opacity="{op}"{cls}/>')
-
-    return "\n    ".join(buildings)
-
-def _leaf(x, y, rot, scale, fill, opacity):
-    return (f'<path transform="translate({x},{y}) rotate({rot}) scale({scale})" '
-            f'd="M0 0 C7 -9 20 -9 27 0 C20 9 7 9 0 0 Z" fill="{fill}" opacity="{opacity}"/>')
-
-def _generate_foliage_svg(w=840, seed=11):
-    """Framing foliage in the upper corners, swaying on a slow loop —
-    the branch-over-the-viewport framing from the reference artwork."""
-    rng = random.Random(seed)
-    out = []
-    corners = [
-        # (anchor_x, anchor_y, branch path, leaf origin, x-direction, delay)
-        (14, -6, "M-10 -4 C46 12 112 34 186 50", 1, 0.0),
-        (w - 14, -6, "M10 -4 C-46 12 -112 34 -186 50", -1, 1.4),
-    ]
-    for ax, ay, branch, xdir, delay in corners:
-        leaves = []
-        for i in range(20):
-            t = i / 19
-            lx = xdir * (8 + 178 * t) + rng.uniform(-10, 10)
-            ly = 2 + 50 * t + rng.uniform(-12, 14)
-            rot = rng.uniform(-70, 20) * xdir + (180 if rng.random() > 0.55 else 0)
-            sc = rng.uniform(0.40, 0.86)
-            shade = rng.choice([P["leaf_dark"], P["leaf_mid"], P["leaf_dark"]])
-            leaves.append(_leaf(lx, ly, f"{rot:.0f}", f"{sc:.2f}", shade,
-                                f"{rng.uniform(0.55, 0.95):.2f}"))
-        out.append(
-            f'<g transform="translate({ax},{ay})">'
-            f'<g class="sway" style="transform-origin:{ax}px {ay}px;animation-delay:{delay}s">'
-            f'<path d="{branch}" stroke="{P["leaf_dark"]}" stroke-width="2.6" fill="none" '
-            f'stroke-linecap="round" opacity="0.9"/>'
-            f'{"".join(leaves)}</g></g>')
+                out.append(f'<rect x="{wx:.1f}" y="{wy:.1f}" width="2" height="2" '
+                           f'fill="{rng.choice(lit)}" fill-opacity="{rng.uniform(0.4, 0.9):.2f}"{cls}/>')
+        x += bw + rng.uniform(1.5, 7)
     return "\n    ".join(out)
 
-def generate_hero_svg(config):
-    """Hero banner: dusk sky, drifting clouds, a shooting star, a distant
-    skyline and framing foliage, with the headline set over a soft scrim."""
-    W, H = 840, 300
+def _conifer(x, base, h, bw, fill, opacity):
+    """A stylised fir, drawn as one zigzag silhouette."""
+    d = (f'M{x:.1f} {base - h:.1f} '
+         f'L{x + bw*0.22:.1f} {base - h*0.60:.1f} L{x + bw*0.12:.1f} {base - h*0.63:.1f} '
+         f'L{x + bw*0.34:.1f} {base - h*0.28:.1f} L{x + bw*0.20:.1f} {base - h*0.31:.1f} '
+         f'L{x + bw*0.50:.1f} {base:.1f} L{x - bw*0.50:.1f} {base:.1f} '
+         f'L{x - bw*0.20:.1f} {base - h*0.31:.1f} L{x - bw*0.34:.1f} {base - h*0.28:.1f} '
+         f'L{x - bw*0.12:.1f} {base - h*0.63:.1f} L{x - bw*0.22:.1f} {base - h*0.60:.1f} Z')
+    return f'<path d="{d}" fill="{fill}" opacity="{opacity}"/>'
 
-    # Fit to the free area left of the vertical side-text column
-    name = safe_text(fit_text(config.get("name") or "DEVELOPER", 430, 44, bold=True))
-    subtitle = safe_text(fit_text(config.get("hero_subtitle", ""), 560, 14))
+def _generate_treeline_svg(w=840, base=274, seed=31):
+    """The near treeline: a dark band of firs closing off the valley."""
+    rng = random.Random(seed)
+    out, x = [], -10.0
+    while x < w + 10:
+        h = rng.uniform(22, 46)
+        bw = h * rng.uniform(0.42, 0.66)
+        out.append(_conifer(x, base, h, bw, P["tree_mid"], f"{rng.uniform(0.75, 1.0):.2f}"))
+        x += bw * rng.uniform(0.34, 0.62)
+    # A few tall ones in front for depth
+    for tx, th in [(452, 82), (612, 64), (208, 58), (742, 76), (96, 52), (338, 56)]:
+        out.append(_conifer(tx, base + 6, th, th * 0.46, P["tree_dark"], "0.96"))
+    return "\n    ".join(out)
+
+def _leaf(x, y, rot, scale, fill, opacity):
+    return (f'<path transform="translate({x:.1f},{y:.1f}) rotate({rot}) scale({scale})" '
+            f'd="M0 0 C7 -9 20 -9 27 0 C20 9 7 9 0 0 Z" fill="{fill}" opacity="{opacity}"/>')
+
+def _bough(ax, ay, branch, reach, drop, count, seed, xdir, delay, scale_lo, scale_hi):
+    """One leafy bough anchored to a corner, swaying on a slow loop."""
+    rng = random.Random(seed)
+    shades = [P["leaf_dark"], P["leaf_mid"], P["leaf_dark"], P["leaf_deep"], P["leaf_hi"]]
+    leaves = []
+    for i in range(count):
+        t = i / max(1, count - 1)
+        lx = xdir * (6 + reach * t) + rng.uniform(-16, 16)
+        ly = rng.uniform(-6, 10) + drop * t + rng.uniform(-14, 18)
+        rot = rng.uniform(-80, 25) * xdir + (180 if rng.random() > 0.5 else 0)
+        sc = rng.uniform(scale_lo, scale_hi)
+        # The light comes from the horizon, so only a few leaves catch it
+        shade = P["leaf_hi"] if rng.random() > 0.88 else rng.choice(shades[:4])
+        leaves.append(_leaf(lx, ly, f"{rot:.0f}", f"{sc:.2f}", shade,
+                            f"{rng.uniform(0.7, 1.0):.2f}"))
+    return (f'<g transform="translate({ax},{ay})">'
+            f'<g class="sway" style="transform-origin:{ax}px {ay}px;animation-delay:{delay}s">'
+            f'<path d="{branch}" stroke="{P["leaf_dark"]}" stroke-width="3.4" fill="none" '
+            f'stroke-linecap="round"/>'
+            f'{"".join(leaves)}</g></g>')
+
+def _generate_foliage_svg(w=840):
+    """Foliage framing: a heavy bough over the top-left, a lighter one over
+    the top-right, and a canopy anchored to the right edge."""
+    return "\n    ".join([
+        _bough(0, -10, "M-10 0 C70 18 160 34 268 44", 268, 52, 46, 11, 1, 0.0, 0.55, 1.45),
+        _bough(0, 34, "M-8 0 C40 22 92 40 150 50", 150, 54, 22, 23, 1, 0.9, 0.5, 1.15),
+        _bough(w, -10, "M8 0 C-56 16 -118 32 -186 46", 186, 48, 34, 7, -1, 1.4, 0.5, 1.3),
+        _bough(w, 176, "M6 0 C-22 20 -38 50 -46 92", 46, 104, 26, 29, -1, 2.1, 0.6, 1.3),
+    ])
+
+def generate_hero_svg(config):
+    """Hero banner: a painted dusk valley with the headline set over it."""
+    W, H = 840, 300
+    BAND_Y = 262                      # dark strip the interest pills sit on
+
+    name = safe_text(fit_text(config.get("name") or "DEVELOPER", 330, 46, bold=True))
+    subtitle_raw = fit_text(config.get("hero_subtitle", ""), 520, 15)
+    subtitle = safe_text(subtitle_raw)
     side_text = config.get("side_text") or []
     interests = config.get("interests") or []
 
-    # Interest tags — respecting width boundary
+    # Interest tags, sitting on the dark band
     tags_svg = ""
-    tag_x = 35
-    tag_y = H - 42
+    tag_x = 34
     for i, interest in enumerate(interests):
-        label = fit_text(interest, 130, 10.5)
-        text_len = text_width(label, 10.5) + 24
-        if tag_x + text_len > W - 30:
+        label = fit_text(interest, 130, 11)
+        text_len = text_width(label, 11) + 26
+        if tag_x + text_len > W - 28:
             break  # Stop if we'd overflow
         tags_svg += (
-            f'<g transform="translate({tag_x:.1f},{tag_y})">'
-            f'<g class="rise"{_d(0.55 + i * 0.09)}>'
-            f'<rect width="{text_len:.1f}" height="24" rx="12" '
-            f'fill="{P["pill"]}" stroke="{P["border_glow"]}" stroke-width="0.8"/>'
-            f'<text x="{text_len/2:.1f}" y="15.5" text-anchor="middle" '
-            f'font-size="10.5" fill="{P["text_primary"]}" font-family="{SANS}">'
+            f'<g transform="translate({tag_x:.1f},{BAND_Y + 6})">'
+            f'<g class="rise"{_d(0.6 + i * 0.09)}>'
+            f'<rect width="{text_len:.1f}" height="26" rx="13" '
+            f'fill="{P["pill_hero"]}" stroke="{P["pill_edge"]}" stroke-width="1"/>'
+            f'<text x="{text_len/2:.1f}" y="17" text-anchor="middle" '
+            f'font-size="11" fill="{P["text_bright"]}" font-family="{SANS}">'
             f'{safe_text(label)}</text></g></g>\n    ')
-        tag_x += text_len + 9
+        tag_x += text_len + 10
 
-    # Handwritten side note, tilted like a margin scribble
+    # Handwritten margin note, tilted like a scribble in the margin
     side_svg = ""
-    for i, word in enumerate(side_text[:5]):
-        word = str(word)
+    lines = [str(x) for x in side_text[:5]]
+    for i, word in enumerate(lines):
         label = word.capitalize() if word.isupper() else word
-        sy = 76 + i * 30
         side_svg += (
-            f'<text x="{W - 34}" y="{sy}" text-anchor="end" font-size="20" '
-            f'fill="{P["gold"]}" opacity="0.72" font-family="{HAND}" '
-            f'class="rise"{_d(0.7 + i * 0.12)}>{safe_text(fit_text(label, 200, 20))}</text>\n    ')
+            f'<text x="{W - 44}" y="{104 + i * 34}" text-anchor="end" font-size="22" '
+            f'fill="{P["gold"]}" opacity="0.9" font-family="{HAND}" '
+            f'class="rise"{_d(0.75 + i * 0.12)}>{safe_text(fit_text(label, 210, 22))}</text>\n    ')
     if side_svg:
-        side_svg = f'<g transform="rotate(-7 {W - 34} 110)">\n    {side_svg}</g>'
+        # …with the little underline flourish under the last line
+        flourish_y = 104 + (len(lines) - 1) * 34 + 12
+        side_svg += (f'<path d="M{W - 150} {flourish_y} C{W - 116} {flourish_y + 5}, '
+                     f'{W - 82} {flourish_y + 4}, {W - 46} {flourish_y - 2}" '
+                     f'stroke="{P["gold"]}" stroke-width="1.4" fill="none" opacity="0.65" '
+                     f'stroke-linecap="round" class="fade"{_d(1.25)}/>')
+        side_svg = f'<g transform="rotate(-8 {W - 44} 150)">\n    {side_svg}</g>'
+
+    # The subtitle crosses the bright horizon, so it gets its own soft scrim
+    sub_w = text_width(subtitle_raw, 15) + 34
+    sub_scrim = (f'<rect x="36" y="166" width="{sub_w:.1f}" height="30" rx="15" '
+                 f'fill="{P["bg_darkest"]}" opacity="0.42" filter="url(#scrimBlur)"/>'
+                 if subtitle_raw else "")
 
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
   {ANIM_CSS}
   <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="sky" x1="0" y1="0" x2="0.12" y2="1">
       <stop offset="0%" stop-color="{P["sky_top"]}"/>
-      <stop offset="45%" stop-color="{P["sky_mid"]}"/>
-      <stop offset="78%" stop-color="{P["sky_low"]}"/>
-      <stop offset="100%" stop-color="{P["bg_darkest"]}"/>
+      <stop offset="34%" stop-color="{P["sky_mid"]}"/>
+      <stop offset="60%" stop-color="{P["sky_haze"]}"/>
+      <stop offset="78%" stop-color="{P["sky_horizon"]}"/>
+      <stop offset="100%" stop-color="{P["sky_ground"]}"/>
     </linearGradient>
-    <radialGradient id="horizonGlow" cx="0.42" cy="0.82" r="0.62">
-      <stop offset="0%" stop-color="{P["gold"]}" stop-opacity="0.30"/>
-      <stop offset="42%" stop-color="{P["amber"]}" stop-opacity="0.11"/>
-      <stop offset="100%" stop-color="{P["amber"]}" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="goldText" x1="0" y1="0" x2="0.6" y2="1">
+    <linearGradient id="cloudLit" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="{P["cloud_lit"]}"/>
+      <stop offset="100%" stop-color="{P["cloud_lit2"]}"/>
+    </linearGradient>
+    <linearGradient id="cloudShade" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="{P["cloud_shade"]}"/>
+      <stop offset="100%" stop-color="{P["cloud_shade2"]}"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0" y1="0" x2="0.5" y2="1">
       <stop offset="0%" stop-color="{P["gold_bright"]}"/>
       <stop offset="55%" stop-color="{P["gold"]}"/>
       <stop offset="100%" stop-color="{P["amber"]}"/>
     </linearGradient>
-    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0.5">
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="0.6">
       <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#FFF6DF" stop-opacity="0.95"/>
+      <stop offset="70%" stop-color="#FFF6DF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="1"/>
     </linearGradient>
-    <linearGradient id="groundLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="{P["emerald"]}" stop-opacity="0"/>
-      <stop offset="25%" stop-color="{P["emerald"]}" stop-opacity="0.55"/>
-      <stop offset="70%" stop-color="{P["gold"]}" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="{P["gold"]}" stop-opacity="0"/>
+    <linearGradient id="bandFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="{P["band"]}" stop-opacity="0"/>
+      <stop offset="55%" stop-color="{P["band"]}" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="{P["band"]}" stop-opacity="1"/>
     </linearGradient>
-    <radialGradient id="textScrim" cx="0.34" cy="0.5" r="0.62">
-      <stop offset="0%" stop-color="{P["bg_darkest"]}" stop-opacity="0.92"/>
-      <stop offset="55%" stop-color="{P["bg_darkest"]}" stop-opacity="0.7"/>
+    <linearGradient id="horizonHaze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="{P["sky_horizon"]}" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="{P["sky_horizon"]}" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="{P["sky_horizon"]}" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="0.62" cy="0.66" r="0.42">
+      <stop offset="0%" stop-color="{P["cloud_lit"]}" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="{P["cloud_lit"]}" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="textScrim" cx="0.26" cy="0.44" r="0.55">
+      <stop offset="0%" stop-color="{P["bg_darkest"]}" stop-opacity="0.55"/>
+      <stop offset="40%" stop-color="{P["bg_darkest"]}" stop-opacity="0.36"/>
+      <stop offset="72%" stop-color="{P["bg_darkest"]}" stop-opacity="0.15"/>
+      <stop offset="88%" stop-color="{P["bg_darkest"]}" stop-opacity="0.05"/>
       <stop offset="100%" stop-color="{P["bg_darkest"]}" stop-opacity="0"/>
     </radialGradient>
+    <filter id="cloudSoft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="1.7"/>
+    </filter>
+    <filter id="scrimBlur" x="-15%" y="-60%" width="130%" height="220%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
     <filter id="textGlow" x="-25%" y="-25%" width="150%" height="150%">
-      <feGaussianBlur stdDeviation="4.5"/>
+      <feGaussianBlur stdDeviation="5"/>
     </filter>
   </defs>
 
   <!-- Sky -->
   <rect width="{W}" height="{H}" fill="url(#sky)"/>
-
-  <!-- Stars -->
   <g>
-    {_generate_stars_svg(58, W, 190)}
+    {_generate_stars_svg(26, W, 110)}
   </g>
+  <rect width="{W}" height="{H}" fill="url(#sunGlow)"/>
 
-  <!-- Shooting star: a tail that streaks the sky every 12s -->
-  <g transform="translate(430,18)">
+  <!-- A meteor crosses every 12s -->
+  <g transform="translate(430,4)">
     <g class="shoot">
-      <line x1="0" y1="0" x2="46" y2="24" stroke="url(#trail)" stroke-width="1.6" stroke-linecap="round"/>
-      <circle cx="46" cy="24" r="1.7" fill="#FFF6DF"/>
+      <line x1="0" y1="0" x2="96" y2="58" stroke="url(#trail)" stroke-width="1.7"
+            stroke-linecap="round"/>
+      <circle cx="96" cy="58" r="1.9" fill="#FFFDF4"/>
     </g>
   </g>
-
-  <!-- Horizon glow -->
-  <rect width="{W}" height="{H}" fill="url(#horizonGlow)"/>
 
   <!-- Clouds -->
   <g>
     {_generate_clouds_svg()}
   </g>
 
-  <!-- Skyline -->
+  <!-- Ridgelines, town, treeline -->
   <g>
-    {_generate_buildings_svg(W, 245)}
+    {_generate_mountains_svg(W)}
   </g>
-  <rect x="0" y="244" width="{W}" height="1.5" fill="url(#groundLine)"/>
+  <g>
+    {_generate_town_svg(W)}
+  </g>
+  <rect x="0" y="196" width="{W}" height="48" fill="url(#horizonHaze)"/>
+  <g>
+    {_generate_treeline_svg(W)}
+  </g>
 
-  <!-- Scrim: keeps the headline legible where the skyline rises behind it.
+  <!-- Scrim: keeps the headline legible against the bright horizon.
        Soft-edged on every side so it reads as vignetting, not a panel. -->
-  <ellipse cx="280" cy="132" rx="430" ry="126" fill="url(#textScrim)"/>
+  <ellipse cx="250" cy="130" rx="360" ry="118" fill="url(#textScrim)"/>
+  {sub_scrim}
 
   <!-- Foliage frame -->
   <g>
@@ -1163,22 +1282,23 @@ def generate_hero_svg(config):
   </g>
 
   <!-- Headline -->
-  <text x="35" y="96" font-size="21" fill="{P["text_secondary"]}" font-family="{SANS}"
+  <text x="46" y="96" font-size="22" fill="{P["text_bright"]}" font-family="{SANS}"
         class="fade">Hi there,</text>
-  <text x="35" y="146" font-size="44" font-weight="800" fill="{P["gold"]}" opacity="0.5"
-        font-family="{SANS}" filter="url(#textGlow)" class="glow">I&#39;m {name}</text>
-  <text x="35" y="146" font-size="44" font-weight="800" fill="url(#goldText)"
-        font-family="{SANS}" class="rise"{_d(0.1)}>I&#39;m {name}</text>
-  <text x="35" y="180" font-size="14" fill="{P["text_secondary"]}" font-family="{SANS}"
+  <text x="46" y="150" font-size="46" font-weight="800" fill="{P["gold"]}" opacity="0.45"
+        font-family="{SANS}" filter="url(#textGlow)" class="glow"
+        >I&#39;m<tspan dx="14">{name}</tspan></text>
+  <text x="46" y="150" font-size="46" font-weight="800" font-family="{SANS}"
+        class="rise"{_d(0.1)}><tspan fill="url(#goldText)">I&#39;m</tspan><tspan
+        dx="14" fill="{P["headline_mint"]}">{name}</tspan></text>
+  <text x="46" y="188" font-size="15" fill="{P["text_bright"]}" font-family="{SANS}"
         class="rise"{_d(0.28)}>{subtitle}</text>
 
   <!-- Handwritten margin note -->
   {side_svg}
 
-  <!-- Interest tags -->
+  <!-- Dark band the interest tags sit on -->
+  <rect x="0" y="{BAND_Y - 16}" width="{W}" height="{H - BAND_Y + 16}" fill="url(#bandFade)"/>
   {tags_svg}
-
-  <rect x="0" y="{H-2}" width="{W}" height="2" fill="url(#groundLine)"/>
 </svg>'''
 
 # ============================================================

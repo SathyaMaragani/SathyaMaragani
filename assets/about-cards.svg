@@ -7,7 +7,7 @@
     .glow{animation:glow 4.5s ease-in-out infinite}
     .spin{animation:spin 11s linear infinite;transform-box:fill-box;transform-origin:center}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
-    .drift{animation:drift 90s linear infinite}
+    .float{animation:float 44s ease-in-out infinite}
     .twinkle{animation:twinkle 4s ease-in-out infinite}
     .blink{animation:blink 5s ease-in-out infinite}
     .shoot{animation:shoot 12s ease-in infinite;opacity:0}
@@ -20,7 +20,7 @@
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
     @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
-    @keyframes drift{to{transform:translateX(1160px)}}
+    @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
