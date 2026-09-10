@@ -700,13 +700,22 @@ SANS = "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,Consolas,Monaco,monospace"
 HAND = "Segoe Script,Bradley Hand,Brush Script MT,Snell Roundhand,cursive"
 
-# One stylesheet, inlined into every asset. Animations are CSS rather than
-# SMIL for two reasons: staggering 400 contribution cells costs one inline
-# `animation-delay` instead of 400 <animate> elements, and CSS is the only
-# form `prefers-reduced-motion` can switch off. Every animated element is
-# authored so its *static* state is the finished state — if animation never
-# runs (reduced motion, an old renderer, a feed reader), the image still
-# reads correctly.
+# One stylesheet, inlined into every asset.
+#
+# NOTE ON prefers-reduced-motion: this profile deliberately does NOT honour
+# it. That is the owner's explicit decision — the profile should animate for
+# every visitor, the way most animated GitHub READMEs do. Browsers never
+# disable CSS animation on their own; the media query an author writes is the
+# only thing that would, so there simply isn't one here. Restoring the
+# behaviour is one line:
+#
+#     @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+#
+# Every animated element is still authored so its *static* state is the
+# finished state, so a renderer with no CSS-in-SVG support shows the
+# completed image rather than a blank box — the failure mode of the more
+# common SMIL pattern, which parks content at opacity="0" and depends on the
+# animation to reveal it.
 ANIM_CSS = """<style>
     .fade{animation:fade .9s ease-out both}
     .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
@@ -736,7 +745,6 @@ ANIM_CSS = """<style>
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   </style>"""
 
 def _d(seconds):

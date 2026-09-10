@@ -28,7 +28,6 @@
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   </style>
   <rect width="840" height="150" fill="transparent"/>
   <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#2DD4BF"><path d="M15.22 4.97a.75.75 0 0 1 1.06 0l6.5 6.5a.75.75 0 0 1 0 1.06l-6.5 6.5a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L21.19 12l-5.97-5.97a.75.75 0 0 1 0-1.06Zm-6.44 0a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">Tech Stack</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">9 detected from repository languages and topics</text><g class="breathe" style="animation-duration:7.0s;animation-delay:1.35s"><line x1="25" y1="38.5" x2="815" y2="38.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.15s"/></g>

@@ -375,11 +375,32 @@ stroke vanishes (use a flat colour or `gradientUnits="userSpaceOnUse"`); and
 CSS `transform` overrides the `transform` *attribute*, so anything animated
 with a transform needs a plain positioning `<g>` wrapped around it.
 
-CSS rather than SMIL for two reasons: staggering entrance delays costs one
-inline `animation-delay` each instead of an `<animate>` element per target,
-and CSS is the only form `prefers-reduced-motion` can switch off — every
-asset ends with
-`@media (prefers-reduced-motion:reduce){*{animation:none!important}}`.
+### prefers-reduced-motion is deliberately not honoured
+
+This profile animates for every visitor, including those whose OS asks for
+reduced motion. That is a considered decision by the owner, matching what
+most animated GitHub READMEs do.
+
+It works because browsers never disable CSS animation on their own —
+`prefers-reduced-motion` only *exposes* the preference, and the media query
+an author writes is the only thing that acts on it. There simply isn't one
+here. To restore the behaviour, add one line to `ANIM_CSS`:
+
+```css
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+```
+
+The trade-off, stated plainly: for a small number of people, perpetual
+motion causes nausea or triggers migraine, and this page gives them no way
+to opt out. The loops are slow and low-amplitude, which limits the harm, but
+does not remove it.
+
+CSS rather than SMIL: staggering entrance delays costs one inline
+`animation-delay` each instead of an `<animate>` element per target, and
+every element's *static* state is still the finished one — a renderer with
+no CSS-in-SVG support shows the completed image rather than a blank box.
+That is the failure mode of the common SMIL pattern, which parks content at
+`opacity="0"` and depends on the animation to reveal it.
 
 Every animated element is authored so its **static** state is the finished
 state. If animation never runs — reduced motion, an old renderer, a feed
@@ -560,20 +581,18 @@ omitted from the card rather than invented.
 
 ### If nothing appears to animate
 
-Check the viewer's own motion setting before suspecting the assets. On
-Windows, **Settings → Accessibility → Visual effects → Animation effects**
-off sets `prefers-reduced-motion: reduce`, which every asset here honours by
-switching all animation off — the images then render complete and static,
-which looks identical to "the animations are broken". macOS has the same
-switch under **Accessibility → Display → Reduce motion**.
-
-To confirm, open any asset directly and run in the console:
+The one-time reveals are over about two seconds after an image renders, so
+scrolling down to a panel means its entrance has already finished — that is
+why the loops exist. To check whether animation is running at all, open an
+asset directly and run in the console:
 
 ```js
-matchMedia('(prefers-reduced-motion: reduce)').matches
+document.getAnimations().length
 ```
 
-`true` means the profile is deliberately holding still.
+Zero on a freshly loaded asset means CSS animation is genuinely not running;
+a non-zero count with everything looking still means you are past the
+entrances and watching the loops, which are deliberately slow.
 
 Also unavailable inside a README, by GitHub's HTML sanitiser: `<style>`
 blocks, `class`/`style` attributes, JavaScript, and hover states. CSS works

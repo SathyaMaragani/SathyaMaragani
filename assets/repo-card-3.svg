@@ -28,7 +28,6 @@
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
-    @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   </style>
   <defs>
     <linearGradient id="cardEdge3" x1="0" y1="0" x2="1" y2="1">
