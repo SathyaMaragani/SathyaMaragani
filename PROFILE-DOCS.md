@@ -43,15 +43,20 @@ SathyaMaragani/
 ├── PROFILE-DOCS.md                 # this file
 ├── scripts/
 │   ├── update-profile.py           # fetch → validate → generate → validate → write
+│   ├── fetch-icons.py              # vendors real icon sets into assets/icons/
 │   └── test_update_profile.py      # self-check, no network, no framework
 ├── assets/                         # generated; do not edit by hand
 │   ├── hero-banner.svg
+│   ├── identity-card.svg
 │   ├── about-cards.svg
 │   ├── tech-stack.svg
 │   ├── stats-card.svg
+│   ├── activity-card.svg
 │   ├── contribution-graph.svg
 │   ├── repo-card-0.svg … repo-card-5.svg
-│   └── footer.svg
+│   ├── social-*.svg                # one per configured link
+│   ├── footer.svg
+│   └── icons/                      # vendored icon sets + NOTICE.md
 └── .github/workflows/update-profile.yml
 ```
 
@@ -246,8 +251,12 @@ Generated content lives strictly between:
 <!-- PROFILE:SECTION:END -->
 ```
 
-Sections: `HERO`, `ABOUT`, `TECHSTACK`, `STATS`, `CONTRIBUTIONS`, `REPOS`,
-`CONNECT`, `FOOTER`.
+Sections, in render order: `HERO`, `IDENTITY`, `ABOUT`, `TECHSTACK`,
+`STATS`, `ACTIVITY`, `CONTRIBUTIONS`, `REPOS`, `CONNECT`, `FOOTER`.
+
+`ACTIVITY` and `CONNECT` render empty when there is nothing real to show —
+no contribution data, or no links configured. The markers still exist, so a
+later run fills them in without touching anything else.
 
 Everything outside the markers is preserved byte for byte — add your own
 sections freely.
@@ -315,12 +324,24 @@ not assumed: `validate_svg()` parses each file and fails the run on any
 violation, and the self-check verifies the validator itself catches script
 tags, `foreignObject`, `onclick`, malformed XML and a missing `viewBox`.
 
-Motion is CSS `@keyframes` in an inline `<style>` block — twinkling stars,
-drifting clouds, a shooting star, swaying foliage, cards and tiles easing in,
-stat bars growing, the contribution grid filling as a wave. CSS rather than
-SMIL for two reasons: staggering ~370 contribution cells costs one inline
-`animation-delay` each instead of 370 `<animate>` elements, and CSS is the
-only form `prefers-reduced-motion` can switch off — every asset ends with
+Motion is CSS `@keyframes` in an inline `<style>` block, and it is
+deliberately rationed:
+
+| Where | What moves |
+|---|---|
+| Hero | stars twinkle, clouds breathe ~15px, foliage sways, a meteor crosses every 12s, town windows blink |
+| Hero, identity, cards, tiles | one-time entrance fade / rise on load |
+| Stats | language bars grow from zero, once |
+| Tech marks, contribution calendar, repo cards, footer | **nothing** |
+
+Brand marks hold still — a spinning logo is decoration, not information —
+and the contribution calendar is the one panel that is pure data, so it does
+not animate at all. Nothing loops forever outside the hero.
+
+CSS rather than SMIL for two reasons: staggering entrance delays costs one
+inline `animation-delay` each instead of an `<animate>` element per target,
+and CSS is the only form `prefers-reduced-motion` can switch off — every
+asset ends with
 `@media (prefers-reduced-motion:reduce){*{animation:none!important}}`.
 
 Every animated element is authored so its **static** state is the finished
@@ -451,3 +472,56 @@ drawn mark falls back to a tinted monogram tile, so adding a language to
 The palette is deliberately dark-only. GitHub renders README images
 identically in both themes, and a light-theme variant would double every
 asset for no gain.
+
+---
+
+## 18. Icons
+
+No icon in this profile is drawn by hand or typed as an emoji. A README
+image renders with the *viewer's* fonts, so an emoji codepoint is a coin
+toss between colour, monochrome and tofu — and a hand-approximated brand
+mark is worse than no mark at all.
+
+`scripts/fetch-icons.py` vendors real sets into `assets/icons/`:
+
+| Set | Licence | Used for |
+|---|---|---|
+| [Simple Icons](https://github.com/simple-icons/simple-icons) | CC0-1.0 | technology brand marks |
+| [Devicon](https://github.com/devicons/devicon) | MIT | marks Simple Icons has dropped (Java, the CSS3 shield, LinkedIn) |
+| [Octicons](https://github.com/primer/octicons) | MIT | GitHub's own UI glyphs — section headers, metadata rows, star/fork counts |
+
+They are **committed to the repository**, not hot-linked. A README that
+depends on a CDN breaks silently the day that CDN moves a path, and the
+daily workflow makes no network call for icons at all.
+
+Re-run the vendor script only when adding a technology:
+
+```bash
+python scripts/fetch-icons.py
+```
+
+Anything the sets do not carry falls back to a clean wordmark chip — a
+label, never a guessed logo. Brand colours come from Simple Icons' own
+data, passed through `readable()`, which lifts a colour that would vanish
+against the dark card while keeping its hue (Lua's navy, the several
+pure-black marks). Colour is never the only carrier of meaning: every mark
+is labelled in text beside it.
+
+---
+
+## 19. What a README cannot do
+
+The profile **sidebar** — avatar, bio, location, website, social links,
+"Joined", achievements — is GitHub's own page chrome, rendered from account
+settings. No README markup can reach it, and nothing in this repository
+controls it. To fill it in: **Settings → Public profile**, and the
+`social_accounts` API for the link icons.
+
+The generator reads those same fields back through the API, so anything set
+there also appears in `identity-card.svg`. Fields left unset are simply
+omitted from the card rather than invented.
+
+Also unavailable inside a README, by GitHub's HTML sanitiser: `<style>`
+blocks, `class`/`style` attributes, JavaScript, and hover states. CSS works
+only *inside* an SVG file, which is why every panel here is an SVG rather
+than styled HTML.

@@ -85,6 +85,7 @@ P = {
     # Ground — a deep forest-night green rather than GitHub's neutral slate
     "bg_darkest":     "#050D0A",
     "bg_card":        "#0D211A",
+    "bg_surface":     "#0A1B15",
     "pill":           "#102A21",
     "track":          "#12291F",
     "border":         "#1E4034",
@@ -710,29 +711,21 @@ ANIM_CSS = """<style>
     .fade{animation:fade .9s ease-out both}
     .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
     .grow{animation:grow 1.3s cubic-bezier(.2,.8,.3,1) both;transform-box:fill-box;transform-origin:left center}
-    .pop{animation:pop .7s cubic-bezier(.2,1.5,.5,1) both;transform-box:fill-box;transform-origin:center}
     .glow{animation:glow 4.5s ease-in-out infinite}
-    .spin{animation:spin 11s linear infinite;transform-box:fill-box;transform-origin:center}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
     .float{animation:float 44s ease-in-out infinite}
     .twinkle{animation:twinkle 4s ease-in-out infinite}
     .blink{animation:blink 5s ease-in-out infinite}
     .shoot{animation:shoot 12s ease-in infinite;opacity:0}
-    .sweep{animation:sweep 5s ease-in-out infinite}
-    .beat{animation:beat 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
     @keyframes fade{from{opacity:0}}
     @keyframes rise{from{opacity:0;transform:translateY(14px)}}
     @keyframes grow{from{transform:scaleX(0)}}
-    @keyframes pop{from{opacity:0;transform:scale(.72)}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
-    @keyframes spin{to{transform:rotate(360deg)}}
     @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
     @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
     @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.18}}
     @keyframes blink{0%,100%{opacity:1}42%{opacity:.12}}
     @keyframes shoot{0%{opacity:0;transform:translate(0,0)}3%{opacity:1}13%{opacity:0;transform:translate(330px,175px)}100%{opacity:0;transform:translate(330px,175px)}}
-    @keyframes sweep{0%,100%{opacity:.2}50%{opacity:.9}}
-    @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   </style>"""
 
@@ -741,203 +734,112 @@ def _d(seconds):
     return f' style="animation-delay:{seconds:.2f}s"'
 
 # ============================================================
-# ICONS — drawn as paths, never emoji. A README image is rendered with the
-# *viewer's* fonts, so an emoji codepoint is a coin toss between colour,
-# monochrome and tofu. Every glyph here is geometry, on a 16x16 box.
+# ICONS — vendored from real icon sets, never drawn by hand and never
+# emoji. `scripts/fetch-icons.py` writes assets/icons/*.json from Simple
+# Icons (CC0), Devicon (MIT) and Octicons (MIT); see assets/icons/NOTICE.md.
+#
+# A README image renders with the *viewer's* fonts, so an emoji codepoint is
+# a coin toss between colour, monochrome and tofu — and a hand-drawn
+# approximation of a brand mark is worse than no mark at all. Anything the
+# icon sets do not carry falls back to a clean text label.
 # ============================================================
 
-def _icon_leaf(color):
-    return (f'<path d="M1 15 C1 6 8 1 16 1 C16 9 10 15 1 15 Z" fill="{color}" opacity="0.9"/>'
-            f'<path d="M2.5 14.5 C6 11 10.5 7 15 2.5" stroke="{color}" stroke-width="1.1" '
-            f'fill="none" opacity="0.45" stroke-linecap="round"/>')
+ICON_DIR = ROOT_DIR / "assets" / "icons"
 
-def _icon_brain(color):
-    # Two lobes plus folds carved back out in the card colour — at 16px a
-    # smooth blob reads as a cloud, the folds are what make it a brain.
-    return (f'<path d="M7.5 1.6 C4.4 1.6 2.4 3.4 2.6 5.6 C1 6.6 1 9.2 2.8 10.2 '
-            f'C2.6 12.6 5 14.6 7.5 13.8 Z" fill="{color}" opacity="0.92"/>'
-            f'<path d="M8.5 1.6 C11.6 1.6 13.6 3.4 13.4 5.6 C15 6.6 15 9.2 13.2 10.2 '
-            f'C13.4 12.6 11 14.6 8.5 13.8 Z" fill="{color}" opacity="0.6"/>'
-            f'<path d="M5.2 3.8 C6.6 4.8 6.6 6.2 5 7.2 M5.4 9.2 C6.8 9.9 6.8 11.4 5.2 12.2 '
-            f'M10.8 3.8 C9.4 4.8 9.4 6.2 11 7.2" stroke="{P["bg_card"]}" stroke-width="1" '
-            f'fill="none" stroke-linecap="round"/>')
+def _load_icons(filename):
+    path = ICON_DIR / filename
+    if not path.exists():
+        log(f"Warning: {path.name} missing — run scripts/fetch-icons.py; "
+            f"labels will stand in for icons")
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as e:
+        log(f"Warning: {path.name} unreadable ({e}); labels will stand in for icons")
+        return {}
 
-def _icon_bulb(color):
-    return (f'<path d="M8 1 C4.7 1 2.4 3.4 2.4 6.3 C2.4 8.3 3.6 9.6 4.5 10.7 L4.9 12 H11.1 L11.5 10.7 '
-            f'C12.4 9.6 13.6 8.3 13.6 6.3 C13.6 3.4 11.3 1 8 1 Z" fill="{color}" opacity="0.9"/>'
-            f'<rect x="5.2" y="12.8" width="5.6" height="1.5" rx="0.75" fill="{color}" opacity="0.55"/>'
-            f'<rect x="6" y="15" width="4" height="1.4" rx="0.7" fill="{color}" opacity="0.4"/>')
+TECH_ICONS = _load_icons("tech-icons.json")
+UI_ICONS = _load_icons("ui-icons.json")
 
-def _icon_quote(color):
-    return (f'<path d="M1 13 C1 8 2.6 4.4 6.4 2.6 L7.2 4.4 C5 5.7 4.2 7.2 4.1 8.4 H6.6 V13 Z" fill="{color}"/>'
-            f'<path d="M9 13 C9 8 10.6 4.4 14.4 2.6 L15.2 4.4 C13 5.7 12.2 7.2 12.1 8.4 H14.6 V13 Z" fill="{color}"/>')
+def _place(icon, size, color=None, opacity=None):
+    """Render a vendored icon scaled into a `size`x`size` box at the origin.
 
-def _icon_chart(color):
-    return (f'<rect x="1" y="9" width="3.6" height="6" rx="1" fill="{color}" opacity="0.55"/>'
-            f'<rect x="6.2" y="5" width="3.6" height="10" rx="1" fill="{color}" opacity="0.8"/>'
-            f'<rect x="11.4" y="1.5" width="3.6" height="13.5" rx="1" fill="{color}"/>')
+    Monochrome sets (Simple Icons, Octicons) are painted in `color`;
+    multi-colour Devicon originals keep their own fills.
+    """
+    if not icon:
+        return ""
+    try:
+        _, _, vw, vh = (float(v) for v in icon["viewBox"].split())
+    except (KeyError, ValueError):
+        vw = vh = 24.0
+    scale = size / max(vw, vh, 1)
+    fill = f' fill="{color}"' if icon.get("mono", True) and color else ""
+    op = f' opacity="{opacity}"' if opacity else ""
+    return (f'<g transform="scale({scale:.4f})"{fill}{op}>{icon["body"]}</g>'
+            if scale != 1 else f'<g{fill}{op}>{icon["body"]}</g>')
 
-def _icon_code(color):
-    return (f'<path d="M5.6 3.5 L1 8 L5.6 12.5" stroke="{color}" stroke-width="1.8" fill="none" '
-            f'stroke-linecap="round" stroke-linejoin="round"/>'
-            f'<path d="M10.4 3.5 L15 8 L10.4 12.5" stroke="{color}" stroke-width="1.8" fill="none" '
-            f'stroke-linecap="round" stroke-linejoin="round"/>')
+def ui_icon(name, size=16, color=None, opacity=None):
+    """One Octicon, sized and coloured. Empty string if the set is missing."""
+    return _place(UI_ICONS.get(name), size, color, opacity)
 
-def _icon_star_badge(color):
-    return (f'<path d="M8 0.8 L10.2 5.6 L15.4 6.2 L11.5 9.8 L12.6 15 L8 12.4 L3.4 15 L4.5 9.8 '
-            f'L0.6 6.2 L5.8 5.6 Z" fill="{color}"/>')
+def _text_chip(label, size, color):
+    """The fallback when no real mark exists: a clean wordmark, not a
+    guessed logo."""
+    label = str(label)[:4].upper()
+    fs = size * (0.42 if len(label) > 2 else 0.5)
+    return (f'<rect x="{size*0.06:.1f}" y="{size*0.06:.1f}" width="{size*0.88:.1f}" '
+            f'height="{size*0.88:.1f}" rx="{size*0.22:.1f}" fill="{color}" opacity="0.14"/>'
+            f'<rect x="{size*0.06:.1f}" y="{size*0.06:.1f}" width="{size*0.88:.1f}" '
+            f'height="{size*0.88:.1f}" rx="{size*0.22:.1f}" fill="none" stroke="{color}" '
+            f'stroke-width="1" opacity="0.45"/>'
+            f'<text x="{size/2:.1f}" y="{size*0.5 + fs*0.36:.1f}" text-anchor="middle" '
+            f'font-size="{fs:.1f}" font-weight="700" fill="{color}" '
+            f'font-family="{MONO}">{safe_text(label)}</text>')
 
-CARD_ICONS = {
-    "focus": _icon_leaf,
-    "mindset": _icon_brain,
-    "interests_card": _icon_bulb,
-    "quote": _icon_quote,
-}
+def readable(color, floor=0.30):
+    """Lift a brand colour that would vanish into the dark card, keeping its
+    hue. Lua's navy and the several pure-black marks are invisible otherwise,
+    and colour is never the only carrier of meaning here — every mark is
+    labelled — but an unreadable logo is still a broken logo.
+    """
+    try:
+        h = str(color).lstrip("#")
+        if len(h) == 3:
+            h = "".join(c * 2 for c in h)
+        r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    except (ValueError, TypeError):
+        return color
+    lum = 0.2126 * r + 0.7152 * g + 0.0722 * b
+    if lum >= floor:
+        return color
+    t = (floor - lum) / (1 - lum)          # blend toward white, hue preserved
+    return "#" + "".join(f"{round((c + (1 - c) * t) * 255):02X}" for c in (r, g, b))
+
+def tech_icon(name, size=32, color=None, fallback_label=""):
+    """One technology mark at `size`, or a wordmark chip if none is vendored."""
+    icon = TECH_ICONS.get(str(name).strip())
+    if not icon:
+        return _text_chip(fallback_label or name, size, readable(color or P["text_secondary"]))
+    return _place(icon, size, readable(icon.get("color") or color or P["text_secondary"]))
+
+def tech_color(name, default):
+    """The official brand colour for `name`, when the icon set carries one."""
+    return readable(TECH_ICONS.get(str(name).strip(), {}).get("color") or default)
 
 def _star_icon(x, y, color):
-    """A 5-point star drawn as a path — no emoji font dependency."""
-    return (f'<path transform="translate({x},{y}) scale(0.55)" fill="{color}" '
-            f'd="M10 0 L12.9 6.5 L20 7.3 L14.7 12.1 L16.2 19.2 L10 15.6 '
-            f'L3.8 19.2 L5.3 12.1 L0 7.3 L7.1 6.5 Z"/>')
+    return f'<g transform="translate({x},{y})">{ui_icon("star-fill", 12, color)}</g>'
 
 def _fork_icon(x, y, color):
-    """GitHub-style fork glyph: two parents joining a child, drawn as shapes."""
-    return (f'<g transform="translate({x},{y})" stroke="{color}" fill="{color}" '
-            f'stroke-width="1.2">'
-            f'<circle cx="1.5" cy="1.5" r="1.5" stroke="none"/>'
-            f'<circle cx="9.5" cy="1.5" r="1.5" stroke="none"/>'
-            f'<circle cx="5.5" cy="10" r="1.5" stroke="none"/>'
-            f'<path d="M1.5 3 v1.5 a2 2 0 0 0 2 2 h4 a2 2 0 0 0 2 -2 V3" fill="none"/>'
-            f'<path d="M5.5 6.5 v2" fill="none"/>'
-            f'</g>')
+    return f'<g transform="translate({x},{y})">{ui_icon("repo-forked", 12, color)}</g>'
 
-# ============================================================
-# BRAND MARKS — geometric recreations on a 32x32 box, drawn in the brand
-# colour. Anything without a mark falls back to a tinted monogram tile, so
-# adding a language to TECH_DB never leaves a hole in the grid.
-# ============================================================
-
-def _hexagon(cx, cy, r, **kw):
-    pts = " ".join(f"{cx + r*math.cos(math.radians(a)):.1f},{cy + r*math.sin(math.radians(a)):.1f}"
-                   for a in range(-90, 270, 60))
-    attrs = " ".join(f'{k.replace("_", "-")}="{v}"' for k, v in kw.items())
-    return f'<polygon points="{pts}" {attrs}/>'
-
-def _mark_javascript(c):
-    return (f'<rect x="2" y="2" width="28" height="28" rx="5" fill="{c}"/>'
-            f'<text x="16" y="24" text-anchor="middle" font-size="15" font-weight="800" '
-            f'fill="#0B1F17" font-family="{MONO}">JS</text>')
-
-def _mark_typescript(c):
-    return (f'<rect x="2" y="2" width="28" height="28" rx="5" fill="{c}"/>'
-            f'<text x="16" y="24" text-anchor="middle" font-size="15" font-weight="800" '
-            f'fill="#FFFFFF" font-family="{MONO}">TS</text>')
-
-def _mark_python(_c):
-    blue, yellow = "#4B8BBE", "#FFD343"
-    return (f'<path d="M16 2 C10.5 2 10.8 4.6 10.8 4.6 L10.8 8 H16.2 V9 H8.6 C8.6 9 4.8 8.6 4.8 15 '
-            f'C4.8 21.4 8.1 21.2 8.1 21.2 H10.2 V17.6 C10.2 17.6 10.1 14.2 13.5 14.2 H18.9 '
-            f'C18.9 14.2 22 14.3 22 11.2 V5.2 C22 5.2 22.4 2 16 2 Z" fill="{blue}"/>'
-            f'<circle cx="13" cy="5.8" r="1.4" fill="#FFFFFF"/>'
-            f'<path d="M16 30 C21.5 30 21.2 27.4 21.2 27.4 L21.2 24 H15.8 V23 H23.4 C23.4 23 27.2 23.4 27.2 17 '
-            f'C27.2 10.6 23.9 10.8 23.9 10.8 H21.8 V14.4 C21.8 14.4 21.9 17.8 18.5 17.8 H13.1 '
-            f'C13.1 17.8 10 17.7 10 20.8 V26.8 C10 26.8 9.6 30 16 30 Z" fill="{yellow}"/>'
-            f'<circle cx="19" cy="26.2" r="1.4" fill="#FFFFFF"/>')
-
-def _mark_java(c):
-    return (f'<path d="M13 3 C13 3 10.4 5.6 13.6 8 C16.8 10.4 15.2 12.4 15.2 12.4" stroke="{c}" '
-            f'stroke-width="1.6" fill="none" stroke-linecap="round"/>'
-            f'<path d="M18.4 5.4 C18.4 5.4 16.6 7.4 19 9.2 C21.4 11 20.2 12.6 20.2 12.6" stroke="{c}" '
-            f'stroke-width="1.3" fill="none" opacity="0.6" stroke-linecap="round"/>'
-            f'<path d="M8.5 15 H21.5 L20.4 24 C20.2 25.4 19 26.4 17.6 26.4 H12.4 C11 26.4 9.8 25.4 9.6 24 Z" '
-            f'fill="{c}"/>'
-            f'<path d="M21.8 17 C24.8 17 26 18.4 26 19.8 C26 21.2 24.6 22.2 22.6 22.6" stroke="{c}" '
-            f'stroke-width="1.6" fill="none" stroke-linecap="round"/>'
-            f'<ellipse cx="15" cy="28.4" rx="9" ry="1.8" fill="{c}" opacity="0.45"/>')
-
-def _mark_hex_text(c, label, size=11):
-    return (_hexagon(16, 16, 14, fill=c, opacity="0.95") +
-            f'<text x="16" y="{16 + size*0.36:.1f}" text-anchor="middle" font-size="{size}" '
-            f'font-weight="800" fill="#08160F" font-family="{MONO}">{label}</text>')
-
-def _mark_shield(c, label):
-    return (f'<path d="M5 3 H27 L25 27 L16 30 L7 27 Z" fill="{c}"/>'
-            f'<path d="M16 5 V28.2 L23.2 25.6 L24.9 5 Z" fill="#FFFFFF" opacity="0.18"/>'
-            f'<text x="16" y="21" text-anchor="middle" font-size="12" font-weight="800" '
-            f'fill="#FFFFFF" font-family="{MONO}">{label}</text>')
-
-def _mark_react(c):
-    ell = "".join(f'<ellipse cx="16" cy="16" rx="13.5" ry="5.2" fill="none" stroke="{c}" '
-                  f'stroke-width="1.5" transform="rotate({a} 16 16)"/>' for a in (0, 60, 120))
-    return (f'<g class="spin">{ell}</g><circle cx="16" cy="16" r="2.8" fill="{c}"/>')
-
-def _mark_node(c):
-    return (_hexagon(16, 16, 14, fill="none", stroke=c, stroke_width="2") +
-            _hexagon(16, 16, 9, fill=c, opacity="0.18") +
-            f'<text x="16" y="20" text-anchor="middle" font-size="10" font-weight="800" '
-            f'fill="{c}" font-family="{MONO}">JS</text>')
-
-def _mark_git(c):
-    return (f'<g transform="rotate(45 16 16)">'
-            f'<rect x="4" y="4" width="24" height="24" rx="4" fill="{c}"/>'
-            f'<circle cx="11" cy="21" r="2.6" fill="#0B1F17"/>'
-            f'<circle cx="21" cy="21" r="2.6" fill="#0B1F17"/>'
-            f'<circle cx="21" cy="11" r="2.6" fill="#0B1F17"/>'
-            f'<path d="M11 21 H21 V11" stroke="#0B1F17" stroke-width="2" fill="none"/>'
-            f'</g>')
-
-def _mark_go(c):
-    return (f'<rect x="1" y="8" width="30" height="16" rx="8" fill="{c}" opacity="0.18"/>'
-            f'<text x="16" y="21" text-anchor="middle" font-size="13" font-weight="800" '
-            f'fill="{c}" font-family="{MONO}">GO</text>')
-
-def _mark_rust(c):
-    spokes = "".join(f'<rect x="15" y="1" width="2" height="5" rx="1" fill="{c}" '
-                     f'transform="rotate({a} 16 16)"/>' for a in range(0, 360, 45))
-    return (spokes +
-            f'<circle cx="16" cy="16" r="11" fill="none" stroke="{c}" stroke-width="2"/>'
-            f'<text x="16" y="20.5" text-anchor="middle" font-size="12" font-weight="800" '
-            f'fill="{c}" font-family="{MONO}">R</text>')
-
-def _mark_docker(c):
-    boxes = "".join(f'<rect x="{7 + col*5}" y="{16 - row*5}" width="4.2" height="4.2" rx="0.6" '
-                    f'fill="{c}"/>'
-                    for col, rows in enumerate((2, 3, 3, 2)) for row in range(rows))
-    return (boxes +
-            f'<path d="M4 21 H27 C27 25 24 27.5 19 27.5 H11 C7 27.5 4 25 4 21 Z" fill="{c}" opacity="0.85"/>'
-            f'<path d="M24 15 C26 13 28.5 14 29 15.6 C27.6 16.6 25.6 16.4 24.6 15.6 Z" fill="{c}" opacity="0.7"/>')
-
-def _mark_monogram(c, label):
-    return (f'<rect x="2" y="2" width="28" height="28" rx="8" fill="{c}" opacity="0.16"/>'
-            f'<rect x="2" y="2" width="28" height="28" rx="8" fill="none" stroke="{c}" '
-            f'stroke-width="1" opacity="0.45"/>'
-            f'<text x="16" y="21" text-anchor="middle" font-size="12.5" font-weight="800" '
-            f'fill="{c}" font-family="{MONO}">{label}</text>')
-
-BRAND_MARKS = {
-    "javascript": _mark_javascript,
-    "typescript": _mark_typescript,
-    "python":     _mark_python,
-    "java":       _mark_java,
-    "html":       lambda c: _mark_shield(c, "5"),
-    "css":        lambda c: _mark_shield(c, "3"),
-    "scss":       lambda c: _mark_shield(c, "S"),
-    "sass":       lambda c: _mark_shield(c, "S"),
-    "c++":        lambda c: _mark_hex_text(c, "C++", 10),
-    "c#":         lambda c: _mark_hex_text(c, "C#", 11),
-    "c":          lambda c: _mark_hex_text(c, "C", 13),
-    "react":      _mark_react,
-    "node.js":    _mark_node,
-    "git":        _mark_git,
-    "go":         _mark_go,
-    "rust":       _mark_rust,
-    "docker":     _mark_docker,
+# Personality cards -> Octicon names. Chosen for meaning, not decoration.
+CARD_ICONS = {
+    "focus": "goal",
+    "mindset": "flame",
+    "interests_card": "telescope",
+    "quote": "quote",
 }
-
-def _brand_mark(name, color, fallback_label):
-    """SVG markup for one 32x32 brand mark, drawn in the brand colour."""
-    draw = BRAND_MARKS.get(str(name).strip().lower())
-    return draw(color) if draw else _mark_monogram(color, safe_text(fallback_label))
 
 # ============================================================
 # SVG GENERATION — Hero Banner
@@ -1338,7 +1240,7 @@ def generate_about_svg(config):
         items = card.get("items", [])
 
         def body(accent, key=key, title=title, items=items, idx=idx):
-            icon = CARD_ICONS.get(key, _icon_leaf)(accent)
+            icon = ui_icon(CARD_ICONS.get(key, "goal"), 17, accent)
             lines = ""
             for i, item in enumerate(items[:5]):
                 lines += (f'<text x="21" y="{74 + i*22}" font-size="12.5" fill="{P["text_primary"]}" '
@@ -1367,13 +1269,15 @@ def generate_about_svg(config):
         quote_lines.append(line)
 
     def quote_body(accent):
-        out = f'<g transform="translate(20,24)">{_icon_quote(accent)}</g>'
+        out = (f'<text x="20" y="52" font-size="42" fill="{accent}" opacity="0.45" '
+               f'font-family="Georgia,Times New Roman,serif">&#8220;</text>')
         for i, ql in enumerate(quote_lines[:5]):
             out += (f'<text x="21" y="{72 + i*20}" font-size="12.5" fill="{P["text_primary"]}" '
                     f'font-style="italic" font-family="{SANS}" class="fade"{_d(0.65 + 0.06*i)}>'
                     f'{safe_text(ql)}</text>')
-        out += (f'<g transform="translate({card_w - 20},{card_h - 22}) rotate(180)" '
-                f'opacity="0.45">{_icon_quote(accent)}</g>')
+        out += (f'<text x="{card_w - 20}" y="{card_h - 16}" text-anchor="end" font-size="42" '
+                f'fill="{accent}" opacity="0.28" '
+                f'font-family="Georgia,Times New Roman,serif">&#8221;</text>')
         return out
 
     cards_svg += card_frame(start_x + 3 * (card_w + gap), 3, quote_body)
@@ -1388,7 +1292,7 @@ def generate_about_svg(config):
 # SVG GENERATION — Section header
 # ============================================================
 
-def _section_header(icon, title, note, w=840, accent=None):
+def _section_header(icon_name, title, note, w=840, accent=None):
     """Icon + title on the left, a muted note on the right, over a hairline."""
     accent = accent or P["emerald"]
     note_svg = ""
@@ -1396,7 +1300,7 @@ def _section_header(icon, title, note, w=840, accent=None):
         note_svg = (f'<text x="{w - 25}" y="26" text-anchor="end" font-size="10.5" '
                     f'fill="{P["text_muted"]}" font-family="{SANS}" class="fade"{_d(0.35)}>'
                     f'{note}</text>')
-    return (f'<g transform="translate(25,10)">{icon(accent)}</g>'
+    return (f'<g transform="translate(25,10)">{ui_icon(icon_name, 17, accent)}</g>'
             f'<text x="49" y="27" font-size="17" font-weight="700" fill="{P["text_bright"]}" '
             f'font-family="{SANS}" class="fade">{safe_text(title)}</text>'
             f'{note_svg}'
@@ -1429,28 +1333,24 @@ def generate_tech_svg(tech_stack):
     for i, tech in enumerate(all_techs):
         x = start_x + (i % cols) * (tile_w + gap_x)
         y = 54 + (i // cols) * (tile_h + gap_y)
-        color = tech["color"]
-        # Ensure contrast on the dark ground
-        if color.upper() in ("#FFFFFF", "#FFF", "#EEEEEE", "#CCCCCC"):
-            color = "#C8D6CF"
+        color = tech_color(tech["name"], tech["color"])
         label = safe_text(fit_text(tech["name"], tile_w - 10, 9.5))
         tiles += f'''
       <g transform="translate({x:.1f},{y})">
-        <g class="pop"{_d(0.1 + i * 0.055)}>
+        <g class="fade"{_d(0.06 + i * 0.03)}>
           <rect width="{tile_w}" height="{tile_h}" rx="12" fill="{P["bg_card"]}"
                 stroke="{P["border"]}" stroke-width="0.8"/>
-          <rect width="{tile_w}" height="{tile_h}" rx="12" fill="{color}" opacity="0.05"/>
-          <g transform="translate({(tile_w - 32) / 2},14)">{_brand_mark(tech["name"], color, tech["icon"])}</g>
+          <g transform="translate({(tile_w - 30) / 2},15)">{tech_icon(tech["name"], 30, color, tech["icon"])}</g>
           <text x="{tile_w / 2}" y="66" text-anchor="middle" font-size="9.5"
                 fill="{P["text_secondary"]}" font-family="{SANS}">{label}</text>
         </g>
       </g>'''
 
-    note = f'{len(all_techs)} detected from repo languages &#183; topics'
+    note = f'{len(all_techs)} detected from repository languages and topics'
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
   {ANIM_CSS}
   <rect width="{W}" height="{H}" fill="transparent"/>
-  {_section_header(_icon_code, "Tech Stack", note, W, P["teal"])}
+  {_section_header("code", "Tech Stack", note, W, P["teal"])}
   {tiles}
 </svg>'''
 
@@ -1535,7 +1435,7 @@ def generate_stats_svg(user_data, stats):
     </linearGradient>
   </defs>
   <rect width="{W}" height="{H}" fill="transparent"/>
-  {_section_header(_icon_chart, "GitHub Stats", composition, W, P["emerald"])}
+  {_section_header("graph", "GitHub Stats", composition, W, P["emerald"])}
 
   <g class="rise"{_d(0.12)}>
     <rect x="{L_X}" y="{C_Y}" width="{L_W}" height="{C_H}" rx="12"
@@ -1556,6 +1456,270 @@ def generate_stats_svg(user_data, stats):
     <rect x="{R_X + 15}" y="{C_Y + 40}" width="{R_W - 30}" height="1" fill="{P["border"]}"/>
     {lang_svg}
   </g>
+</svg>'''
+
+# ============================================================
+# SVG GENERATION — Identity Card
+# ============================================================
+
+def _joined_label(created_at):
+    """'Joined March 2021' from the API's ISO timestamp, or '' if absent."""
+    if not created_at:
+        return ""
+    try:
+        dt = datetime.strptime(str(created_at)[:10], "%Y-%m-%d")
+    except ValueError:
+        return ""
+    return f"Joined {dt.strftime('%B %Y')}"
+
+def generate_identity_svg(user_data, config, stats):
+    """
+    The identity strip: who this is, since when, and where to find them.
+
+    Every field is either GitHub's own answer or the owner's own words from
+    profile.config.json. Nothing is inferred: an unset bio, location or
+    website simply does not render, rather than being filled in with a guess.
+    """
+    W, H = 840, 122
+    name = safe_text(fit_text(
+        user_data.get("name") or config.get("name") or user_data.get("login", ""),
+        360, 23, bold=True))
+    handle = safe_text(fit_text("@" + (user_data.get("login") or ""), 200, 13))
+    tagline = safe_text(fit_text(
+        user_data.get("bio") or config.get("tagline") or "", 700, 13))
+
+    # (octicon, text) — only entries GitHub actually has an answer for
+    meta = [("repo", f'{fmt_num(user_data.get("public_repos", 0))} public repositories')]
+    if stats.get("total_stars"):
+        meta.append(("star", f'{fmt_num(stats["total_stars"])} stars earned'))
+    if user_data.get("location"):
+        meta.append(("location", str(user_data["location"])))
+    if user_data.get("blog"):
+        meta.append(("link", str(user_data["blog"]).replace("https://", "").replace("http://", "")))
+    joined = _joined_label(user_data.get("created_at"))
+    if joined:
+        meta.append(("calendar", joined))
+
+    meta_svg, mx = "", 50.0
+    for i, (icon, label) in enumerate(meta):
+        label = fit_text(label, 210, 11.5)
+        width = 18 + text_width(label, 11.5)
+        if mx + width > W - 40:
+            break
+        meta_svg += (
+            f'<g transform="translate({mx:.1f},92)" class="fade"{_d(0.3 + i * 0.06)}>'
+            f'<g transform="translate(0,-10)">{ui_icon(icon, 13, P["text_muted"])}</g>'
+            f'<text x="18" y="0" font-size="11.5" fill="{P["text_secondary"]}" '
+            f'font-family="{SANS}">{safe_text(label)}</text></g>')
+        mx += width + 22
+
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
+  <defs>
+    <linearGradient id="idPanel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="{P["bg_card"]}"/>
+      <stop offset="100%" stop-color="{P["bg_surface"]}"/>
+    </linearGradient>
+    <linearGradient id="idEdge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="{P["border_glow"]}" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="{P["border"]}" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  <rect width="{W}" height="{H}" fill="transparent"/>
+  <g class="rise">
+    <rect x="25" y="8" width="{W - 50}" height="{H - 22}" rx="14"
+          fill="url(#idPanel)" stroke="url(#idEdge)" stroke-width="0.9"/>
+    <rect x="25" y="8" width="4" height="{H - 22}" rx="2" fill="{P["gold"]}" opacity="0.6"/>
+    <text x="50" y="46" font-size="23" font-weight="700" fill="{P["text_bright"]}"
+          font-family="{SANS}">{name}<tspan dx="10" font-size="13" font-weight="400"
+          fill="{P["text_muted"]}">{handle}</tspan></text>
+    <text x="50" y="70" font-size="13" fill="{P["text_secondary"]}"
+          font-family="{SANS}">{tagline}</text>
+    {meta_svg}
+  </g>
+</svg>'''
+
+# ============================================================
+# SVG GENERATION — Social Links
+# ============================================================
+
+# key -> (label, icon name, icon set). Brand marks for the platforms that
+# have one, Octicons for the generic destinations.
+SOCIAL_ICONS = {
+    "github":    ("GitHub",    "mark-github", "ui"),
+    "linkedin":  ("LinkedIn",  "LinkedIn",    "tech"),
+    "x":         ("X",         "X",           "tech"),
+    "portfolio": ("Website",   "link",        "ui"),
+    "email":     ("Email",     "mail",        "ui"),
+}
+
+def collect_socials(config, user_data):
+    """Real destinations only: the owner's config, plus anything GitHub
+    itself knows. Returns [(key, label, url)]."""
+    socials = config.get("socials", {}) or {}
+    login = str(user_data.get("login") or "").lower()
+    out = []
+    for key, (label, _, _) in SOCIAL_ICONS.items():
+        url = str(socials.get(key) or "").strip()
+        # Don't link to the page the reader is already standing on.
+        if key == "github" and url.rstrip("/").rsplit("/", 1)[-1].lower() == login:
+            continue
+        if not url and key == "portfolio" and user_data.get("blog"):
+            url = str(user_data["blog"]).strip()
+        if not url and key == "x" and user_data.get("twitter_username"):
+            url = f'https://x.com/{user_data["twitter_username"]}'
+        if not url:
+            continue
+        if key == "email" and not url.startswith("mailto:"):
+            url = f"mailto:{url}"
+        if key == "portfolio" and not url.startswith(("http://", "https://")):
+            url = f"https://{url}"
+        out.append((key, label, url))
+    return out
+
+def generate_social_svg(key, label):
+    """One link pill: brand mark plus a text label — never the icon alone."""
+    icon_name, icon_set = SOCIAL_ICONS[key][1], SOCIAL_ICONS[key][2]
+    icon = (ui_icon(icon_name, 15, P["text_primary"]) if icon_set == "ui"
+            else tech_icon(icon_name, 15, P["text_primary"], label))
+    text_w = text_width(label, 12)
+    W, H = 15 + text_w + 42, 34
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W:.0f} {H}" width="{W:.0f}" height="{H}">
+  <rect x="0.5" y="0.5" width="{W - 1:.0f}" height="{H - 1}" rx="{(H - 1) / 2}"
+        fill="{P["pill"]}" stroke="{P["border_glow"]}" stroke-width="1"/>
+  <g transform="translate(15,9.5)">{icon}</g>
+  <text x="38" y="22" font-size="12" fill="{P["text_primary"]}"
+        font-family="{SANS}">{safe_text(label)}</text>
+</svg>'''
+
+# ============================================================
+# SVG GENERATION — Activity
+# ============================================================
+
+def contribution_streaks(weeks, today=None):
+    """
+    (current, longest, active_days, counted_days) from the real calendar.
+
+    Today is excluded from breaking a streak — a day that has not finished
+    yet is not a gap — but it does extend one if it already has activity.
+    """
+    today = (today or datetime.now(timezone.utc)).strftime("%Y-%m-%d")
+    days = []
+    for week in weeks:
+        for day in week.get("contributionDays", []):
+            date_str = day.get("date", "")
+            if date_str and date_str <= today:
+                days.append((date_str, day.get("contributionCount", 0) or 0))
+    days.sort()
+    if not days:
+        return 0, 0, 0, 0
+
+    longest = run = 0
+    for _, count in days:
+        run = run + 1 if count else 0
+        longest = max(longest, run)
+
+    tail = days[:-1] if days[-1][1] == 0 else days
+    current = 0
+    for _, count in reversed(tail):
+        if not count:
+            break
+        current += 1
+
+    return current, longest, sum(1 for _, c in days if c), len(days)
+
+def activity_summary(contribution_data):
+    """One plain sentence of the same numbers the activity card shows, for
+    alt text and for anything that cannot render the image."""
+    if not contribution_data:
+        return ""
+    weeks = (contribution_data.get("contributionCalendar") or {}).get("weeks", [])
+    current, longest, active, counted = contribution_streaks(weeks)
+    parts = []
+    for value, label in ((contribution_data.get("totalCommitContributions", 0), "commits"),
+                         (contribution_data.get("totalPullRequestContributions", 0),
+                          "pull requests"),
+                         (contribution_data.get("totalIssueContributions", 0),
+                          "issues opened")):
+        if value:
+            parts.append(f"{fmt_num(value)} {label}")
+    if counted:
+        parts.append(f"active on {active} of the last {counted} days")
+    def days(n):
+        return f"{n} day" if n == 1 else f"{n} days"
+    if longest:
+        parts.append(f"longest streak {days(longest)}")
+    if current:
+        parts.append(f"current streak {days(current)}")
+    return ", ".join(parts)
+
+def generate_activity_svg(contribution_data):
+    """
+    Up to four real measures of the rolling year, in priority order, with
+    anything sitting at zero left out entirely. Returns None when there is no
+    contribution data at all, so the section is dropped rather than shown
+    empty — and the caption says plainly that private work is not counted.
+    """
+    if not contribution_data:
+        return None
+    calendar = contribution_data.get("contributionCalendar", {})
+    weeks = calendar.get("weeks", [])
+    if not weeks:
+        return None
+
+    current, longest, active, counted = contribution_streaks(weeks)
+
+    # Candidates in priority order; only the ones with something to report
+    # are shown. A wall of zeroes says less than three honest numbers, and
+    # padding the row out would be advertising an absence.
+    candidates = [
+        ("git-commit", contribution_data.get("totalCommitContributions", 0),
+         "Commits", P["emerald"]),
+        ("git-pull-request", contribution_data.get("totalPullRequestContributions", 0),
+         "Pull requests", P["teal"]),
+        ("issue-opened", contribution_data.get("totalIssueContributions", 0),
+         "Issues opened", P["sky"]),
+        ("flame", current, "Day streak", P["gold"]),
+        ("git-branch", longest, "Longest streak", P["lime"]),
+        ("calendar", active, "Active days", P["amber"]),
+    ]
+    tiles = [c for c in candidates if c[1]][:4]
+    if not tiles:
+        return None
+
+    W, H = 840, 152
+    gap = 10
+    span = W - 50
+    tile_w = (span - gap * (len(tiles) - 1)) / len(tiles)
+    start_x = 25
+
+    tiles_svg = ""
+    for i, (icon, value, label, accent) in enumerate(tiles):
+        x = start_x + i * (tile_w + gap)
+        tiles_svg += f'''
+      <g transform="translate({x:.1f},52)">
+        <g class="rise"{_d(0.08 * i)}>
+          <rect width="{tile_w:.1f}" height="76" rx="12" fill="{P["bg_card"]}"
+                stroke="{P["border"]}" stroke-width="0.9"/>
+          <g transform="translate(20,22)">{ui_icon(icon, 16, accent)}</g>
+          <text x="20" y="62" font-size="24" font-weight="700" fill="{P["text_bright"]}"
+                font-family="{SANS}">{fmt_num(value)}</text>
+          <text x="{tile_w - 18:.1f}" y="34" text-anchor="end" font-size="11.5"
+                fill="{P["text_secondary"]}" font-family="{SANS}">{label}</text>
+        </g>
+      </g>'''
+
+    pct = (100.0 * active / counted) if counted else 0.0
+    summary = (f'Public contributions GitHub can see &#183; active on {active} of the last '
+               f'{counted} days ({pct:.0f}%) &#183; private work is not counted')
+
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
+  {ANIM_CSS}
+  <rect width="{W}" height="{H}" fill="transparent"/>
+  {_section_header("zap", "Activity", "rolling 12 months", W, P["gold"])}
+  {tiles_svg}
+  <text x="{W / 2}" y="145" text-anchor="middle" font-size="11.5" fill="{P["text_muted"]}"
+        font-family="{SANS}" class="fade"{_d(0.4)}>{summary}</text>
 </svg>'''
 
 # ============================================================
@@ -1664,7 +1828,7 @@ def generate_contribution_svg(contribution_data):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
   {ANIM_CSS}
   <rect width="{W}" height="{H}" fill="transparent"/>
-  <g transform="translate(25,8)">{_icon_leaf(P["lime"])}</g>
+  <g transform="translate(25,9)">{ui_icon("calendar", 17, P["lime"])}</g>
   <text x="49" y="25" font-size="15" font-weight="700" fill="{P["text_bright"]}"
         font-family="{SANS}" class="fade">{total} contributions in the last year</text>
   <text x="{W - 25}" y="25" text-anchor="end" font-size="10.5" fill="{P["text_muted"]}"
@@ -1714,7 +1878,7 @@ def wrap_text(text, max_px, font_size, max_lines=2, bold=False):
                              max_px, font_size, bold)
     return [l for l in lines if l]
 
-def generate_repo_card_svg(repo, index=0, with_topics=True):
+def generate_repo_card_svg(repo, index=0, with_topics=True, with_desc=True):
     """
     Generate one repository card.
 
@@ -1722,13 +1886,16 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
     character count — a 200-char name, a CJK description or an emoji-heavy
     topic all stay inside the box.
 
-    `with_topics` is decided once for the whole set so all cards tile at the
-    same height; when no featured repo has topics the row is dropped entirely
-    rather than leaving a band of dead space on every card.
+    `with_topics` and `with_desc` are decided once for the whole set so all
+    cards tile at the same height; when no featured repo has topics (or none
+    has a description) that row is dropped entirely rather than leaving a
+    band of dead space on every card.
     """
     W = 380
-    H = 150 if with_topics else 122
     PAD = 18
+    LANG_Y = 100 if with_desc else 66
+    TOPIC_Y = LANG_Y + 18
+    H = (TOPIC_Y + 32) if with_topics else (LANG_Y + 22)
 
     raw_name = repo.get("name", "")
     raw_desc = repo.get("description") or "No description provided"
@@ -1738,15 +1905,16 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
     topics = (repo.get("topics") or [])[:3]
     badge = "Archived" if repo.get("archived") else ("Fork" if repo.get("fork") else "Public")
 
-    accents = [P["emerald"], P["teal"], P["gold"], P["lime"], P["sky"], P["amber"]]
-    accent = accents[index % len(accents)]
+    # One accent for the whole set: six differently-tinted cards read as a
+    # colour swatch, not a collection.
+    accent = P["emerald"]
 
     badge_w = max(44, text_width(badge, 9) + 18)
     name = safe_text(fit_text(raw_name, W - PAD * 2 - badge_w - 10, 15, bold=True))
 
     # Two description lines instead of one truncated line — GitHub blurbs are
     # usually longer than a single 380px row can hold.
-    desc_lines = wrap_text(raw_desc, W - PAD * 2, 12, max_lines=2)
+    desc_lines = wrap_text(raw_desc, W - PAD * 2, 12, max_lines=2) if with_desc else []
     desc_svg = "".join(
         f'<text x="{PAD}" y="{56 + i * 17}" font-size="12" fill="{P["text_secondary"]}" '
         f'font-family="{SANS}" class="fade"{_d(0.2 + i * 0.07)}>{safe_text(line)}</text>'
@@ -1757,18 +1925,18 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
     lang_svg = ""
     if lang:
         lang_svg = (
-            f'<circle cx="{PAD + 5}" cy="100" r="5" fill="{lang_color}" class="beat"/>'
-            f'<text x="{PAD + 16}" y="104" font-size="11" fill="{P["text_secondary"]}" '
+            f'<circle cx="{PAD + 5}" cy="{LANG_Y}" r="5" fill="{lang_color}"/>'
+            f'<text x="{PAD + 16}" y="{LANG_Y + 4}" font-size="11" fill="{P["text_secondary"]}" '
             f'font-family="{SANS}">{lang_display}</text>')
 
     # Stars / forks share the language row, right-aligned — no dead band when
     # a repo has no topics.
     counts_svg = (
-        _star_icon(W - 108, 93, P["gold"]) +
-        f'<text x="{W - 94}" y="104" font-size="11" fill="{P["text_secondary"]}" '
+        _star_icon(W - 108, LANG_Y - 7, P["gold"]) +
+        f'<text x="{W - 92}" y="{LANG_Y + 4}" font-size="11" fill="{P["text_secondary"]}" '
         f'font-family="{SANS}">{stars}</text>' +
-        _fork_icon(W - 60, 94, P["text_muted"]) +
-        f'<text x="{W - 44}" y="104" font-size="11" fill="{P["text_secondary"]}" '
+        _fork_icon(W - 60, LANG_Y - 7, P["text_muted"]) +
+        f'<text x="{W - 44}" y="{LANG_Y + 4}" font-size="11" fill="{P["text_secondary"]}" '
         f'font-family="{SANS}">{forks}</text>')
 
     topics_svg = ""
@@ -1780,9 +1948,9 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
             break
         topics_svg += (
             f'<g class="fade"{_d(0.4 + i * 0.08)}>'
-            f'<rect x="{tx:.1f}" y="118" width="{tw:.1f}" height="19" rx="9.5" '
+            f'<rect x="{tx:.1f}" y="{TOPIC_Y}" width="{tw:.1f}" height="19" rx="9.5" '
             f'fill="{P["pill"]}" stroke="{P["border"]}" stroke-width="0.5"/>'
-            f'<text x="{tx + tw / 2:.1f}" y="131" text-anchor="middle" font-size="9" '
+            f'<text x="{tx + tw / 2:.1f}" y="{TOPIC_Y + 13}" text-anchor="middle" font-size="9" '
             f'fill="{P["text_muted"]}" font-family="{SANS}">{safe_text(label)}</text></g>')
         tx += tw + 5
 
@@ -1802,8 +1970,7 @@ def generate_repo_card_svg(repo, index=0, with_topics=True):
   <g class="rise">
     <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="12"
           fill="{P["bg_card"]}" stroke="url(#cardEdge{index})" stroke-width="0.9"/>
-    <rect x="1" y="1" width="{W-2}" height="2.5" rx="1.25" fill="url(#cardTop{index})"
-          class="sweep"/>
+    <rect x="1" y="1" width="{W-2}" height="2.5" rx="1.25" fill="url(#cardTop{index})"/>
 
     <text x="{PAD}" y="32" font-size="15" font-weight="700" fill="{P["text_bright"]}"
           font-family="{SANS}">{name}</text>
@@ -1840,8 +2007,8 @@ def generate_footer_svg(config):
     </linearGradient>
   </defs>
   <rect width="{W}" height="{H}" fill="transparent"/>
-  <rect x="90" y="14" width="{W - 180}" height="1.4" fill="url(#footerLine)" class="sweep"/>
-  <g transform="translate({W/2 - 88},32)">{_icon_leaf(P["lime"])}</g>
+  <rect x="90" y="14" width="{W - 180}" height="1.4" fill="url(#footerLine)"/>
+  <g transform="translate({W/2 - 90},32)">{ui_icon("heart", 16, P["lime"])}</g>
   <text x="{W/2 + 10}" y="45" text-anchor="middle" font-size="15" font-weight="700"
         fill="{P["text_bright"]}" font-family="{SANS}" class="rise">Thanks for visiting</text>
   <text x="{W/2}" y="70" text-anchor="middle" font-size="13" fill="{P["emerald"]}"
@@ -1855,8 +2022,8 @@ def generate_footer_svg(config):
 # README GENERATION
 # ============================================================
 
-SECTION_NAMES = ["HERO", "ABOUT", "TECHSTACK", "STATS",
-                 "CONTRIBUTIONS", "REPOS", "CONNECT", "FOOTER"]
+SECTION_NAMES = ["HERO", "IDENTITY", "ABOUT", "TECHSTACK", "STATS",
+                 "ACTIVITY", "CONTRIBUTIONS", "REPOS", "CONNECT", "FOOTER"]
 
 class MarkerError(Exception):
     """README markers are missing, duplicated, or unbalanced."""
@@ -1919,58 +2086,125 @@ def check_markers(readme):
             + "\n  Refusing to write. Repair the markers and re-run."
         )
 
+def _alt_about(config):
+    """Alt text that carries the cards' actual content, not just their name."""
+    cards = config.get("cards", {}) or {}
+    parts = []
+    for key in ("focus", "mindset", "interests_card"):
+        card = cards.get(key) or {}
+        items = [str(i) for i in (card.get("items") or [])]
+        if items:
+            parts.append(f'{card.get("title", key.replace("_card", "").title())}: '
+                         + ", ".join(items))
+    quote = config.get("quote")
+    if quote:
+        parts.append(f'Quote: {quote}')
+    return " · ".join(parts) or "About"
+
 def build_readme(user_data, all_repos, ranked_repos, config, allow_init=False,
-                 has_tech_svg=True):
+                 has_tech_svg=True, has_identity=False, has_activity=False,
+                 stats=None, tech_names=None, socials=None, contribution_total=None,
+                 activity_alt=""):
     """
     Build the README. Only the marked sections change; everything outside the
     PROFILE markers is preserved byte for byte.
+
+    Every section is an image plus alt text that repeats the same facts in
+    words — a screen reader, a text-only client and GitHub's own search all
+    see the content, not just "GitHub Stats".
 
     Raises MarkerError if an existing README's markers are damaged, rather
     than regenerating over the owner's hand-written content.
     """
     username = user_data.get("login", config.get("github_username", ""))
     name = config.get("name", user_data.get("name") or username)
+    full_name = user_data.get("name") or name
+    stats = stats or {}
+    socials = socials or []
 
     tagline = config.get("tagline", "")
+    subtitle = config.get("hero_subtitle", "") or tagline
 
     # ── Section content ──
     hero = f'''<div align="center">
-  <img src="assets/hero-banner.svg" alt="{safe_text(name)} - {safe_text(tagline)}" width="100%"/>
+  <img src="assets/hero-banner.svg" width="100%"
+       alt="Hi there, I&#39;m {safe_text(name)}. {safe_text(subtitle)}"/>
 </div>'''
 
+    joined = _joined_label(user_data.get("created_at"))
+    id_facts = ", ".join(filter(None, [
+        f'{fmt_num(user_data.get("public_repos", 0))} public repositories',
+        f'{fmt_num(stats.get("total_stars", 0))} stars earned' if stats.get("total_stars") else "",
+        str(user_data.get("location") or ""),
+        joined,
+    ]))
+    if has_identity:
+        identity = f'''<div align="center">
+  <img src="assets/identity-card.svg" width="100%"
+       alt="{safe_text(full_name)} (@{safe_text(username)}) — {safe_text(id_facts)}"/>
+</div>'''
+    else:
+        identity = (f'<div align="center">\n\n'
+                    f'**{safe_text(full_name)}** &nbsp;·&nbsp; `@{safe_text(username)}` '
+                    f'&nbsp;·&nbsp; {safe_text(id_facts)}\n\n</div>')
+
     about = f'''<div align="center">
-  <img src="assets/about-cards.svg" alt="About {safe_text(name)}" width="100%"/>
+  <img src="assets/about-cards.svg" width="100%"
+       alt="{safe_text(_alt_about(config))}"/>
 </div>'''
 
     # No detectable languages/topics -> say so, rather than link a missing image
+    tech_list = ", ".join(tech_names or [])
     tech = f'''<div align="center">
-  <img src="assets/tech-stack.svg" alt="Tech Stack" width="100%"/>
+  <img src="assets/tech-stack.svg" width="100%"
+       alt="Tech stack detected from repository languages and topics{": " + safe_text(tech_list) if tech_list else ""}"/>
 </div>''' if has_tech_svg else '''<div align="center">
 
 <em>No language or topic data available yet.</em>
 
 </div>'''
 
-    stats = f'''<div align="center">
-  <img src="assets/stats-card.svg" alt="GitHub Stats" width="100%"/>
+    top_langs = ", ".join(lang for lang, _ in (stats.get("top_languages") or [])[:4])
+    stats_alt = ", ".join(filter(None, [
+        f'{fmt_num(user_data.get("public_repos", 0))} public repositories',
+        f'{fmt_num(stats.get("total_stars", 0))} stars earned',
+        f'{fmt_num(user_data.get("followers", 0))} followers',
+        f'most used languages: {top_langs}' if top_langs else "",
+    ]))
+    stats_md = f'''<div align="center">
+  <img src="assets/stats-card.svg" width="100%"
+       alt="GitHub statistics — {safe_text(stats_alt)}"/>
 </div>'''
 
+    activity = f'''<div align="center">
+  <img src="assets/activity-card.svg" width="100%"
+       alt="Public activity over the last twelve months{" — " + safe_text(activity_alt) if activity_alt else ""}"/>
+</div>''' if has_activity else ""
+
+    contrib_alt = (f'Contribution calendar — {contribution_total} contributions in the last year'
+                   if contribution_total is not None
+                   else "Contribution calendar")
     contrib = f'''<div align="center">
-  <img src="assets/contribution-graph.svg" alt="Contribution Graph" width="100%"/>
+  <img src="assets/contribution-graph.svg" width="100%"
+       alt="{safe_text(contrib_alt)}"/>
 </div>'''
 
     repos_md = _build_repos_section(ranked_repos, username)
-    connect_md = _build_connect_section(config)
+    connect_md = _build_connect_section(socials)
 
+    footer_msg = config.get("footer_message", "") or "Thanks for visiting"
     footer = f'''<div align="center">
-  <img src="assets/footer.svg" alt="Footer" width="100%"/>
+  <img src="assets/footer.svg" width="100%"
+       alt="Thanks for visiting — {safe_text(footer_msg)}"/>
 </div>'''
 
     sections = {
         "HERO": hero,
+        "IDENTITY": identity,
         "ABOUT": about,
         "TECHSTACK": tech,
-        "STATS": stats,
+        "STATS": stats_md,
+        "ACTIVITY": activity,
         "CONTRIBUTIONS": contrib,
         "REPOS": repos_md,
         "CONNECT": connect_md,
@@ -1998,7 +2232,10 @@ def build_readme(user_data, all_repos, ranked_repos, config, allow_init=False,
         return readme
 
     # Generate fresh README (file absent/empty, or --init)
-    readme = f"""<!--
+    blocks = "\n\n".join(
+        f"<!-- PROFILE:{key}:START -->\n{sections[key]}\n<!-- PROFILE:{key}:END -->"
+        for key in SECTION_NAMES)
+    return f"""<!--
   =====================================================
   {name}'s GitHub Profile
   Auto-updated daily via GitHub Actions
@@ -2007,39 +2244,8 @@ def build_readme(user_data, all_repos, ranked_repos, config, allow_init=False,
   =====================================================
 -->
 
-<!-- PROFILE:HERO:START -->
-{hero}
-<!-- PROFILE:HERO:END -->
-
-<!-- PROFILE:ABOUT:START -->
-{about}
-<!-- PROFILE:ABOUT:END -->
-
-<!-- PROFILE:TECHSTACK:START -->
-{tech}
-<!-- PROFILE:TECHSTACK:END -->
-
-<!-- PROFILE:STATS:START -->
-{stats}
-<!-- PROFILE:STATS:END -->
-
-<!-- PROFILE:CONTRIBUTIONS:START -->
-{contrib}
-<!-- PROFILE:CONTRIBUTIONS:END -->
-
-<!-- PROFILE:REPOS:START -->
-{repos_md}
-<!-- PROFILE:REPOS:END -->
-
-<!-- PROFILE:CONNECT:START -->
-{connect_md}
-<!-- PROFILE:CONNECT:END -->
-
-<!-- PROFILE:FOOTER:START -->
-{footer}
-<!-- PROFILE:FOOTER:END -->
+{blocks}
 """
-    return readme
 
 def _build_repos_section(repos, username):
     """
@@ -2059,48 +2265,42 @@ def _build_repos_section(repos, username):
     for idx, repo in enumerate(repos):
         repo_name = repo.get("name", "")
         repo_url = repo.get("html_url") or f"https://github.com/{username}/{repo_name}"
-        alt = safe_text(repo_name)
+        facts = ", ".join(filter(None, [
+            repo.get("language") or "",
+            f'{repo.get("stargazers_count", 0) or 0} stars',
+            f'{repo.get("forks_count", 0) or 0} forks',
+        ]))
+        desc = (repo.get("description") or "").strip()
+        alt = safe_text(" — ".join(filter(None, [repo_name, desc, facts])))
         lines.append(
             f'<a href="{safe_text(repo_url)}">'
-            f'<img src="assets/repo-card-{idx}.svg" alt="{alt}" width="48%"/></a>'
-        )
+            f'<img src="assets/repo-card-{idx}.svg" alt="{alt}" width="48%"/></a>')
     lines += ['', '</div>']
     return '\n'.join(lines)
 
-def _build_connect_section(config):
-    """Build the social/connect section. Only shows links that exist."""
-    socials = config.get("socials", {})
-    links = []
+def _build_connect_section(socials):
+    """
+    Build the connect row from real destinations only.
 
-    label_map = {
-        "github":    "GitHub",
-        "linkedin":  "LinkedIn",
-        "x":         "X / Twitter",
-        "portfolio": "Portfolio",
-        "email":     "Email",
-    }
-
-    for key, label in label_map.items():
-        url = (socials.get(key) or "").strip()
-        if url:
-            if key == "email" and not url.startswith("mailto:"):
-                url = f"mailto:{url}"
-            links.append(f'<a href="{safe_text(url)}"><strong>{label}</strong></a>')
-
-    if not links:
+    Each badge is a link with a text label baked into the image *and* into
+    its alt text, so the row is never a line of unlabelled icons.
+    """
+    if not socials:
         return ''
-
-    separator = ' &nbsp; | &nbsp; '
-    lines = [
+    links = [
+        f'<a href="{safe_text(url)}">'
+        f'<img src="assets/social-{key}.svg" height="34" alt="{safe_text(label)}"/></a>'
+        for key, label, url in socials
+    ]
+    return '\n'.join([
         '<div align="center">',
         '',
         '<h3>Connect</h3>',
         '',
-        f'<p>{separator.join(links)}</p>',
+        '&nbsp;\n'.join(links),
         '',
         '</div>',
-    ]
-    return '\n'.join(lines)
+    ])
 
 # ============================================================
 # OUTPUT VALIDATION
@@ -2167,18 +2367,19 @@ def validate_readme(readme, expected_assets):
 # WRITING
 # ============================================================
 
-def cleanup_stale_repo_cards(num_current):
-    """Remove repo card SVGs from previous runs that are no longer needed."""
+def cleanup_stale_assets(generated):
+    """
+    Remove generated SVGs from previous runs that this run did not produce —
+    a repo that dropped out of the featured set, or a social link removed
+    from the config. Only files this script owns are considered.
+    """
     if not ASSETS_DIR.exists():
         return
-    for f in sorted(ASSETS_DIR.glob("repo-card-*.svg")):
-        try:
-            idx = int(f.stem.rsplit("-", 1)[-1])
-        except ValueError:
-            continue
-        if idx >= num_current:
-            f.unlink()
-            log(f"Removed stale asset: {f.name}")
+    for pattern in ("repo-card-*.svg", "social-*.svg"):
+        for f in sorted(ASSETS_DIR.glob(pattern)):
+            if f.name not in generated:
+                f.unlink()
+                log(f"Removed stale asset: {f.name}")
 
 def write_if_changed(path, content):
     """Write only when content differs. Returns True if the file changed."""
@@ -2302,24 +2503,46 @@ def main(argv=None):
     log_section("Generating Assets")
     assets = {
         "hero-banner.svg": generate_hero_svg(config),
+        "identity-card.svg": generate_identity_svg(user_data, config, stats),
         "about-cards.svg": generate_about_svg(config),
         "stats-card.svg": generate_stats_svg(user_data, stats),
+        "activity-card.svg": generate_activity_svg(contribution_data),
         "contribution-graph.svg": generate_contribution_svg(contribution_data),
         "footer.svg": generate_footer_svg(config),
         "tech-stack.svg": generate_tech_svg(tech_stack),
     }
-    if assets["tech-stack.svg"] is None:
-        del assets["tech-stack.svg"]
-        log("Warning: no tech stack data - tech-stack.svg not generated")
+    for name, why in (("tech-stack.svg", "no language or topic data"),
+                      ("activity-card.svg", "contribution data unavailable")):
+        if assets.get(name) is None:
+            del assets[name]
+            log(f"Warning: {why} - {name} not generated")
+
+    socials = collect_socials(config, user_data)
+    for key, label, url in socials:
+        assets[f"social-{key}.svg"] = generate_social_svg(key, label)
+    log(f"Connect row: {[k for k, _, _ in socials] or 'no links configured'}")
 
     # One height for the whole set, so the cards tile evenly
     with_topics = any(r.get("topics") for r in ranked)
+    with_desc = any((r.get("description") or "").strip() for r in ranked)
+    if not with_desc and ranked:
+        log("No featured repository has a description — that row is dropped from the cards")
     for i, repo in enumerate(ranked):
-        assets[f"repo-card-{i}.svg"] = generate_repo_card_svg(repo, i, with_topics)
+        assets[f"repo-card-{i}.svg"] = generate_repo_card_svg(
+            repo, i, with_topics, with_desc)
 
+    tech_names = [t["name"] for cat in ("Languages", "Frameworks", "Databases", "Tools")
+                  for t in tech_stack.get(cat, [])]
+    calendar = (contribution_data or {}).get("contributionCalendar") or {}
     try:
-        readme_content = build_readme(user_data, repos, ranked, config, allow_init,
-                                      has_tech_svg="tech-stack.svg" in assets)
+        readme_content = build_readme(
+            user_data, repos, ranked, config, allow_init,
+            has_tech_svg="tech-stack.svg" in assets,
+            has_identity="identity-card.svg" in assets,
+            has_activity="activity-card.svg" in assets,
+            stats=stats, tech_names=tech_names, socials=socials,
+            contribution_total=calendar.get("totalContributions"),
+            activity_alt=activity_summary(contribution_data))
     except MarkerError as e:
         print(f"\nERROR: {e}")
         return 1
@@ -2347,7 +2570,7 @@ def main(argv=None):
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
     changed = [name for name, content in assets.items()
                if write_if_changed(ASSETS_DIR / name, content)]
-    cleanup_stale_repo_cards(len(ranked))
+    cleanup_stale_assets(set(assets))
 
     if write_if_changed(README_FILE, readme_content):
         changed.append("README.md")
