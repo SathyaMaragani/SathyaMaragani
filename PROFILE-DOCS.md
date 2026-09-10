@@ -327,16 +327,42 @@ tags, `foreignObject`, `onclick`, malformed XML and a missing `viewBox`.
 Motion is CSS `@keyframes` in an inline `<style>` block, and it is
 deliberately rationed:
 
-| Where | What moves |
-|---|---|
-| Hero | stars twinkle, clouds breathe ~15px, foliage sways, a meteor crosses every 12s, town windows blink |
-| Hero, identity, cards, tiles | one-time entrance fade / rise on load |
-| Stats | language bars grow from zero, once |
-| Tech marks, contribution calendar, repo cards, footer | **nothing** |
+| Where | What moves | Kind |
+|---|---|---|
+| Hero | stars twinkle, clouds breathe ~15px, foliage sways, a meteor crosses every 12s, town windows blink | ambient loop |
+| Hero headline | letters arrive one by one, then a gold rule draws itself underneath | once |
+| Panels and cards | the border strokes draw themselves, then contents fade or rise in | once |
+| Section rules | hairlines draw left to right | once |
+| Stat and activity numbers | count up, then hold | once |
+| Stats | language bars grow from zero | once |
+| Brand marks, contribution calendar, repo card contents | **nothing** | — |
+
+Three mechanics do most of the work:
+
+- **`_drawn(length, delay)`** sets `stroke-dasharray` to the path length with
+  `stroke-dashoffset: 0` — the *finished* state — and the keyframe pulls the
+  offset back to that length, carried in a `--len` custom property because a
+  shared keyframe cannot know how long any given path is. If custom
+  properties are unavailable the rule is dropped and the stroke simply
+  renders complete.
+- **`_letters()`** staggers `fill-opacity` across `<tspan>`s inside one
+  `<text>`. Staggering opacity rather than a transform means the browser
+  still lays the line out normally, so proportional fonts and long names
+  cannot end up mis-spaced — the failure mode of per-glyph `x` positions.
+- **`_count_up()`** stacks the intermediate values at the same spot and
+  cross-dissolves them. Each intermediate carries `opacity="0"` as an
+  *attribute*, so with animation off only the final value is visible.
+  Anything under ten just appears; a three-frame count to 2 is fidgeting.
 
 Brand marks hold still — a spinning logo is decoration, not information —
-and the contribution calendar is the one panel that is pure data, so it does
-not animate at all. Nothing loops forever outside the hero.
+and the contribution calendar is the one panel that is pure data. Nothing
+loops forever outside the hero.
+
+Two traps worth remembering: a horizontal `<line>` has a zero-height
+bounding box, so an `objectBoundingBox` gradient on one degenerates and the
+stroke vanishes (use a flat colour or `gradientUnits="userSpaceOnUse"`); and
+CSS `transform` overrides the `transform` *attribute*, so anything animated
+with a transform needs a plain positioning `<g>` wrapped around it.
 
 CSS rather than SMIL for two reasons: staggering entrance delays costs one
 inline `animation-delay` each instead of an `<animate>` element per target,

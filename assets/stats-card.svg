@@ -3,6 +3,9 @@
     .fade{animation:fade .9s ease-out both}
     .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
     .grow{animation:grow 1.3s cubic-bezier(.2,.8,.3,1) both;transform-box:fill-box;transform-origin:left center}
+    .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
+    .letter{animation:letter .75s ease-out both}
+    .tick{animation:tick .34s linear both}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
     .float{animation:float 44s ease-in-out infinite}
@@ -12,6 +15,9 @@
     @keyframes fade{from{opacity:0}}
     @keyframes rise{from{opacity:0;transform:translateY(14px)}}
     @keyframes grow{from{transform:scaleX(0)}}
+    @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
+    @keyframes letter{from{fill-opacity:0}}
+    @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
     @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
     @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
@@ -27,44 +33,42 @@
     </linearGradient>
   </defs>
   <rect width="840" height="204" fill="transparent"/>
-  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#34D399"><path d="M2.5 2.75a.75.75 0 0 0-1.5 0v18.5c0 .414.336.75.75.75H20a.75.75 0 0 0 0-1.5H2.5V2.75Z"/><path d="M22.28 7.78a.75.75 0 0 0-1.06-1.06l-5.72 5.72-3.72-3.72a.75.75 0 0 0-1.06 0l-6 6a.75.75 0 1 0 1.06 1.06l5.47-5.47 3.72 3.72a.75.75 0 0 0 1.06 0l6.25-6.25Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">GitHub Stats</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">33 sources &#183; 1 fork &#183; 0 archived &#183; 0 forks received</text><rect x="25" y="38" width="790" height="1" fill="#1E4034" class="grow" style="animation-delay:0.15s"/>
+  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#34D399"><path d="M2.5 2.75a.75.75 0 0 0-1.5 0v18.5c0 .414.336.75.75.75H20a.75.75 0 0 0 0-1.5H2.5V2.75Z"/><path d="M22.28 7.78a.75.75 0 0 0-1.06-1.06l-5.72 5.72-3.72-3.72a.75.75 0 0 0-1.06 0l-6 6a.75.75 0 1 0 1.06 1.06l5.47-5.47 3.72 3.72a.75.75 0 0 0 1.06 0l6.25-6.25Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">GitHub Stats</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">33 sources &#183; 1 fork &#183; 0 archived &#183; 0 forks received</text><line x1="25" y1="38.5" x2="815" y2="38.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.15s"/>
 
   <g class="rise" style="animation-delay:0.12s">
     <rect x="25" y="50" width="300" height="145" rx="12"
-          fill="#0D211A" stroke="url(#panelEdge)" stroke-width="0.9"/>
+          fill="#0D211A" stroke="url(#panelEdge)" stroke-width="0.9"
+           stroke-dasharray="890" stroke-dashoffset="0" class="draw" style="--len:890;animation-delay:0.18s"/>
     <text x="45" y="77" font-size="14" font-weight="700"
           fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">SathyaMaragani</text>
     <rect x="40" y="90" width="270" height="1" fill="#1E4034"/>
     
-      <g class="fade" style="animation-delay:0.30s">
+      <g>
         <text x="45" y="107" font-size="12.5" fill="#93B3A6"
-              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Public Repositories</text>
-        <text x="305" y="107" text-anchor="end" font-size="12.5"
-              font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">34</text>
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.30s">Public Repositories</text>
+        <text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.34s">0</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.45s">10</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.56s">20</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.67s">28</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.78s">32</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.89s">34</text>
       </g>
-      <g class="fade" style="animation-delay:0.39s">
+      <g>
         <text x="45" y="129" font-size="12.5" fill="#93B3A6"
-              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Total Stars Earned</text>
-        <text x="305" y="129" text-anchor="end" font-size="12.5"
-              font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">2</text>
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.39s">Total Stars Earned</text>
+        <text x="305" y="129" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.43s">2</text>
       </g>
-      <g class="fade" style="animation-delay:0.48s">
+      <g>
         <text x="45" y="151" font-size="12.5" fill="#93B3A6"
-              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Followers</text>
-        <text x="305" y="151" text-anchor="end" font-size="12.5"
-              font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.48s">Followers</text>
+        <text x="305" y="151" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.52s">0</text>
       </g>
-      <g class="fade" style="animation-delay:0.57s">
+      <g>
         <text x="45" y="173" font-size="12.5" fill="#93B3A6"
-              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Following</text>
-        <text x="305" y="173" text-anchor="end" font-size="12.5"
-              font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">0</text>
+              font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.57s">Following</text>
+        <text x="305" y="173" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.61s">0</text>
       </g>
   </g>
 
   <g class="rise" style="animation-delay:0.20s">
     <rect x="345" y="50" width="470" height="145" rx="12"
-          fill="#0D211A" stroke="url(#panelEdge)" stroke-width="0.9"/>
+          fill="#0D211A" stroke="url(#panelEdge)" stroke-width="0.9"
+           stroke-dasharray="1230" stroke-dashoffset="0" class="draw" style="--len:1230;animation-delay:0.26s"/>
     <text x="365" y="77" font-size="14" font-weight="700"
           fill="#34D399" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Most Used Languages</text>
     <text x="795" y="77" text-anchor="end" font-size="10"

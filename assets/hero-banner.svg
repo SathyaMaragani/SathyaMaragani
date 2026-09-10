@@ -3,6 +3,9 @@
     .fade{animation:fade .9s ease-out both}
     .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
     .grow{animation:grow 1.3s cubic-bezier(.2,.8,.3,1) both;transform-box:fill-box;transform-origin:left center}
+    .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
+    .letter{animation:letter .75s ease-out both}
+    .tick{animation:tick .34s linear both}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
     .float{animation:float 44s ease-in-out infinite}
@@ -12,6 +15,9 @@
     @keyframes fade{from{opacity:0}}
     @keyframes rise{from{opacity:0;transform:translateY(14px)}}
     @keyframes grow{from{transform:scaleX(0)}}
+    @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
+    @keyframes letter{from{fill-opacity:0}}
+    @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
     @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
     @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
@@ -340,7 +346,7 @@
   <!-- Scrim: keeps the headline legible against the bright horizon.
        Soft-edged on every side so it reads as vignetting, not a panel. -->
   <ellipse cx="250" cy="130" rx="360" ry="118" fill="url(#textScrim)"/>
-  <rect x="36" y="166" width="490.5" height="30" rx="15" fill="#050D0A" opacity="0.42" filter="url(#scrimBlur)"/>
+  <rect x="36" y="170" width="490.5" height="30" rx="15" fill="#050D0A" opacity="0.42" filter="url(#scrimBlur)"/>
 
   <!-- Foliage frame -->
   <g>
@@ -353,14 +359,21 @@
   <!-- Headline -->
   <text x="46" y="96" font-size="22" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
         class="fade">Hi there,</text>
-  <text x="46" y="150" font-size="46" font-weight="800" fill="#E9C97E" opacity="0.45"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" filter="url(#textGlow)" class="glow"
-        >I&#39;m<tspan dx="14">Sathya</tspan></text>
-  <text x="46" y="150" font-size="46" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-        class="rise" style="animation-delay:0.10s"><tspan fill="url(#goldText)">I&#39;m</tspan><tspan
-        dx="14" fill="#DCF2E4">Sathya</tspan></text>
-  <text x="46" y="188" font-size="15" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-        class="rise" style="animation-delay:0.28s">A developer, learner and builder who loves turning ideas into reality.</text>
+  <g class="fade" style="animation-delay:0.95s">
+    <text x="46" y="150" font-size="46" font-weight="800" fill="#E9C97E" opacity="0.45"
+          font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" filter="url(#textGlow)" class="glow"
+          >I&#39;m<tspan dx="14">Sathya</tspan></text>
+  </g>
+  <text x="46" y="150" font-size="46" font-weight="800" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">
+    <tspan fill="url(#goldText)"><tspan class="letter" style="animation-delay:0.12s">I</tspan><tspan class="letter" style="animation-delay:0.16s">&apos;</tspan><tspan class="letter" style="animation-delay:0.21s">m</tspan></tspan><tspan
+        dx="14" fill="#DCF2E4"><tspan class="letter" style="animation-delay:0.30s">S</tspan><tspan class="letter" style="animation-delay:0.34s">a</tspan><tspan class="letter" style="animation-delay:0.39s">t</tspan><tspan class="letter" style="animation-delay:0.43s">h</tspan><tspan class="letter" style="animation-delay:0.48s">y</tspan><tspan class="letter" style="animation-delay:0.52s">a</tspan></tspan></text>
+  <!-- A horizontal line has a zero-height bounding box, so an
+       objectBoundingBox gradient on it degenerates and the stroke vanishes;
+       this rule is painted flat. -->
+  <line x1="46" y1="166" x2="281" y2="166" stroke="#E9C97E"
+        stroke-width="2.5" stroke-linecap="round" opacity="0.85" stroke-dasharray="235" stroke-dashoffset="0" class="draw" style="--len:235;animation-delay:0.75s"/>
+  <text x="46" y="192" font-size="15" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
+        class="rise" style="animation-delay:0.50s">A developer, learner and builder who loves turning ideas into reality.</text>
 
   <!-- Handwritten margin note -->
   <g transform="rotate(-8 796 150)">

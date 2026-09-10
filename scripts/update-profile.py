@@ -711,6 +711,9 @@ ANIM_CSS = """<style>
     .fade{animation:fade .9s ease-out both}
     .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
     .grow{animation:grow 1.3s cubic-bezier(.2,.8,.3,1) both;transform-box:fill-box;transform-origin:left center}
+    .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
+    .letter{animation:letter .75s ease-out both}
+    .tick{animation:tick .34s linear both}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
     .float{animation:float 44s ease-in-out infinite}
@@ -720,6 +723,9 @@ ANIM_CSS = """<style>
     @keyframes fade{from{opacity:0}}
     @keyframes rise{from{opacity:0;transform:translateY(14px)}}
     @keyframes grow{from{transform:scaleX(0)}}
+    @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
+    @keyframes letter{from{fill-opacity:0}}
+    @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
     @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
     @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
@@ -732,6 +738,74 @@ ANIM_CSS = """<style>
 def _d(seconds):
     """Inline animation-delay attribute fragment."""
     return f' style="animation-delay:{seconds:.2f}s"'
+
+def _drawn(length, delay=0.2):
+    """
+    Attributes that make a stroke draw itself on load.
+
+    The static state is the *finished* one — dasharray covers the whole path
+    at offset 0 — and the keyframe pulls the offset back to the path length,
+    carried in a custom property because a shared keyframe cannot know how
+    long any given path is. If custom properties are unavailable the rule is
+    simply dropped and the stroke renders complete, which is the right
+    fallback either way.
+    """
+    return (f' stroke-dasharray="{length:.0f}" stroke-dashoffset="0" class="draw"'
+            f' style="--len:{length:.0f};animation-delay:{delay:.2f}s"')
+
+def _rule(x1, y, x2, color, delay=0.2, width=1):
+    """A hairline that draws itself left to right."""
+    return (f'<line x1="{x1}" y1="{y}" x2="{x2}" y2="{y}" stroke="{color}" '
+            f'stroke-width="{width}"{_drawn(abs(x2 - x1), delay)}/>')
+
+def _letters(text, base=0.18, step=0.045):
+    """
+    Per-letter reveal, as tspans inside one <text>.
+
+    Staggering `fill-opacity` rather than a transform means the browser still
+    lays the line out normally — no per-glyph x positions to guess, so
+    proportional fonts and long names cannot end up mis-spaced.
+    """
+    out = ""
+    for i, ch in enumerate(str(text)):
+        glyph = "&#160;" if ch == " " else safe_text(ch)
+        out += (f'<tspan class="letter" style="animation-delay:'
+                f'{base + i * step:.2f}s">{glyph}</tspan>')
+    return out
+
+def _count_up(value, x, y, size, fill, anchor="start", weight="700",
+              delay=0.25, family=None):
+    """
+    A number that counts up once on load, then holds.
+
+    Steps are stacked at the same spot and cross-dissolved; each intermediate
+    carries opacity="0" as an attribute, so with animation switched off only
+    the final value is visible. Anything under ten just appears — a
+    three-frame count to 2 is fidgeting, not polish.
+    """
+    family = family or SANS
+    attrs = (f'x="{x}" y="{y}" text-anchor="{anchor}" font-size="{size}" '
+             f'font-weight="{weight}" fill="{fill}" font-family="{family}"')
+    try:
+        n = int(value)
+    except (TypeError, ValueError):
+        n = 0
+    final = fmt_num(n)
+    if n < 10:
+        return f'<text {attrs} class="fade"{_d(delay)}>{safe_text(final)}</text>'
+
+    steps = []
+    for frac in (0.0, 0.28, 0.58, 0.82, 0.94):
+        label = fmt_num(int(round(n * frac)))
+        if label not in steps and label != final:
+            steps.append(label)
+    out = "".join(
+        f'<text {attrs} opacity="0" class="tick" '
+        f'style="animation-delay:{delay + i * 0.11:.2f}s">{safe_text(label)}</text>'
+        for i, label in enumerate(steps))
+    return out + (f'<text {attrs} class="fade" '
+                  f'style="animation-delay:{delay + len(steps) * 0.11:.2f}s">'
+                  f'{safe_text(final)}</text>')
 
 # ============================================================
 # ICONS — vendored from real icon sets, never drawn by hand and never
@@ -1032,7 +1106,10 @@ def generate_hero_svg(config):
     W, H = 840, 300
     BAND_Y = 262                      # dark strip the interest pills sit on
 
-    name = safe_text(fit_text(config.get("name") or "DEVELOPER", 330, 46, bold=True))
+    name_raw = fit_text(config.get("name") or "DEVELOPER", 330, 46, bold=True)
+    name = safe_text(name_raw)
+    # Where the headline ends, so the accent rule can sit exactly under it
+    head_w = text_width("I'm", 46, bold=True) + 14 + text_width(name_raw, 46, bold=True)
     subtitle_raw = fit_text(config.get("hero_subtitle", ""), 520, 15)
     subtitle = safe_text(subtitle_raw)
     side_text = config.get("side_text") or []
@@ -1076,7 +1153,7 @@ def generate_hero_svg(config):
 
     # The subtitle crosses the bright horizon, so it gets its own soft scrim
     sub_w = text_width(subtitle_raw, 15) + 34
-    sub_scrim = (f'<rect x="36" y="166" width="{sub_w:.1f}" height="30" rx="15" '
+    sub_scrim = (f'<rect x="36" y="170" width="{sub_w:.1f}" height="30" rx="15" '
                  f'fill="{P["bg_darkest"]}" opacity="0.42" filter="url(#scrimBlur)"/>'
                  if subtitle_raw else "")
 
@@ -1186,14 +1263,21 @@ def generate_hero_svg(config):
   <!-- Headline -->
   <text x="46" y="96" font-size="22" fill="{P["text_bright"]}" font-family="{SANS}"
         class="fade">Hi there,</text>
-  <text x="46" y="150" font-size="46" font-weight="800" fill="{P["gold"]}" opacity="0.45"
-        font-family="{SANS}" filter="url(#textGlow)" class="glow"
-        >I&#39;m<tspan dx="14">{name}</tspan></text>
-  <text x="46" y="150" font-size="46" font-weight="800" font-family="{SANS}"
-        class="rise"{_d(0.1)}><tspan fill="url(#goldText)">I&#39;m</tspan><tspan
-        dx="14" fill="{P["headline_mint"]}">{name}</tspan></text>
-  <text x="46" y="188" font-size="15" fill="{P["text_bright"]}" font-family="{SANS}"
-        class="rise"{_d(0.28)}>{subtitle}</text>
+  <g class="fade"{_d(0.95)}>
+    <text x="46" y="150" font-size="46" font-weight="800" fill="{P["gold"]}" opacity="0.45"
+          font-family="{SANS}" filter="url(#textGlow)" class="glow"
+          >I&#39;m<tspan dx="14">{name}</tspan></text>
+  </g>
+  <text x="46" y="150" font-size="46" font-weight="800" font-family="{SANS}">
+    <tspan fill="url(#goldText)">{_letters("I'm", 0.12)}</tspan><tspan
+        dx="14" fill="{P["headline_mint"]}">{_letters(name_raw, 0.30)}</tspan></text>
+  <!-- A horizontal line has a zero-height bounding box, so an
+       objectBoundingBox gradient on it degenerates and the stroke vanishes;
+       this rule is painted flat. -->
+  <line x1="46" y1="166" x2="{46 + head_w:.0f}" y2="166" stroke="{P["gold"]}"
+        stroke-width="2.5" stroke-linecap="round" opacity="0.85"{_drawn(head_w, 0.75)}/>
+  <text x="46" y="192" font-size="15" fill="{P["text_bright"]}" font-family="{SANS}"
+        class="rise"{_d(0.5)}>{subtitle}</text>
 
   <!-- Handwritten margin note -->
   {side_svg}
@@ -1226,7 +1310,8 @@ def generate_about_svg(config):
       <g transform="translate({x:.1f},10)">
         <g class="rise"{_d(0.08 * idx)}>
           <rect width="{card_w}" height="{card_h}" rx="12"
-                fill="{P["bg_card"]}" stroke="{P["border"]}" stroke-width="0.9"/>
+                fill="{P["bg_card"]}" stroke="{P["border"]}" stroke-width="0.9"
+                {_drawn(2 * (card_w + card_h), 0.12 + 0.08 * idx)}/>
           <rect x="14" y="0" width="{card_w - 28}" height="2" rx="1"
                 fill="{accent}" opacity="0.75" class="grow"{_d(0.3 + 0.08 * idx)}/>
           {body(accent)}
@@ -1304,8 +1389,7 @@ def _section_header(icon_name, title, note, w=840, accent=None):
             f'<text x="49" y="27" font-size="17" font-weight="700" fill="{P["text_bright"]}" '
             f'font-family="{SANS}" class="fade">{safe_text(title)}</text>'
             f'{note_svg}'
-            f'<rect x="25" y="38" width="{w - 50}" height="1" fill="{P["border"]}" '
-            f'class="grow"{_d(0.15)}/>')
+            + _rule(25, 38.5, w - 25, P["border"], 0.15))
 
 # ============================================================
 # SVG GENERATION — Tech Stack
@@ -1372,20 +1456,20 @@ def generate_stats_svg(user_data, stats):
     C_Y, C_H = 50, 145
 
     rows = [
-        ("Public Repositories", fmt_num(user_data.get("public_repos", 0))),
-        ("Total Stars Earned",  fmt_num(stats["total_stars"])),
-        ("Followers",           fmt_num(user_data.get("followers", 0))),
-        ("Following",           fmt_num(user_data.get("following", 0))),
+        ("Public Repositories", user_data.get("public_repos", 0)),
+        ("Total Stars Earned",  stats["total_stars"]),
+        ("Followers",           user_data.get("followers", 0)),
+        ("Following",           user_data.get("following", 0)),
     ]
     rows_svg = ""
     for i, (label, value) in enumerate(rows):
         y = 107 + i * 22        # starts below the divider at y=90 — no overlap
         rows_svg += f'''
-      <g class="fade"{_d(0.3 + i * 0.09)}>
+      <g>
         <text x="{L_X + 20}" y="{y}" font-size="12.5" fill="{P["text_secondary"]}"
-              font-family="{SANS}">{label}</text>
-        <text x="{L_X + L_W - 20}" y="{y}" text-anchor="end" font-size="12.5"
-              font-weight="700" fill="{P["gold"]}" font-family="{SANS}">{value}</text>
+              font-family="{SANS}" class="fade"{_d(0.3 + i * 0.09)}>{label}</text>
+        {_count_up(value, L_X + L_W - 20, y, 12.5, P["gold"], anchor="end",
+                   delay=0.34 + i * 0.09)}
       </g>'''
 
     # Language mix — share of non-fork repos whose primary language is X
@@ -1439,7 +1523,8 @@ def generate_stats_svg(user_data, stats):
 
   <g class="rise"{_d(0.12)}>
     <rect x="{L_X}" y="{C_Y}" width="{L_W}" height="{C_H}" rx="12"
-          fill="{P["bg_card"]}" stroke="url(#panelEdge)" stroke-width="0.9"/>
+          fill="{P["bg_card"]}" stroke="url(#panelEdge)" stroke-width="0.9"
+          {_drawn(2 * (L_W + C_H), 0.18)}/>
     <text x="{L_X + 20}" y="{C_Y + 27}" font-size="14" font-weight="700"
           fill="{P["text_bright"]}" font-family="{SANS}">{username}</text>
     <rect x="{L_X + 15}" y="{C_Y + 40}" width="{L_W - 30}" height="1" fill="{P["border"]}"/>
@@ -1448,7 +1533,8 @@ def generate_stats_svg(user_data, stats):
 
   <g class="rise"{_d(0.2)}>
     <rect x="{R_X}" y="{C_Y}" width="{R_W}" height="{C_H}" rx="12"
-          fill="{P["bg_card"]}" stroke="url(#panelEdge)" stroke-width="0.9"/>
+          fill="{P["bg_card"]}" stroke="url(#panelEdge)" stroke-width="0.9"
+          {_drawn(2 * (R_W + C_H), 0.26)}/>
     <text x="{R_X + 20}" y="{C_Y + 27}" font-size="14" font-weight="700"
           fill="{P["emerald"]}" font-family="{SANS}">Most Used Languages</text>
     <text x="{R_X + R_W - 20}" y="{C_Y + 27}" text-anchor="end" font-size="10"
@@ -1528,7 +1614,8 @@ def generate_identity_svg(user_data, config, stats):
   <rect width="{W}" height="{H}" fill="transparent"/>
   <g class="rise">
     <rect x="25" y="8" width="{W - 50}" height="{H - 22}" rx="14"
-          fill="url(#idPanel)" stroke="url(#idEdge)" stroke-width="0.9"/>
+          fill="url(#idPanel)" stroke="url(#idEdge)" stroke-width="0.9"
+          {_drawn(2 * (W - 50 + H - 22), 0.15)}/>
     <rect x="25" y="8" width="4" height="{H - 22}" rx="2" fill="{P["gold"]}" opacity="0.6"/>
     <text x="50" y="46" font-size="23" font-weight="700" fill="{P["text_bright"]}"
           font-family="{SANS}">{name}<tspan dx="10" font-size="13" font-weight="400"
@@ -1700,10 +1787,10 @@ def generate_activity_svg(contribution_data):
       <g transform="translate({x:.1f},52)">
         <g class="rise"{_d(0.08 * i)}>
           <rect width="{tile_w:.1f}" height="76" rx="12" fill="{P["bg_card"]}"
-                stroke="{P["border"]}" stroke-width="0.9"/>
+                stroke="{P["border"]}" stroke-width="0.9"
+                {_drawn(2 * (tile_w + 76), 0.14 + 0.08 * i)}/>
           <g transform="translate(20,22)">{ui_icon(icon, 16, accent)}</g>
-          <text x="20" y="62" font-size="24" font-weight="700" fill="{P["text_bright"]}"
-                font-family="{SANS}">{fmt_num(value)}</text>
+          {_count_up(value, 20, 62, 24, P["text_bright"], delay=0.3 + 0.08 * i)}
           <text x="{tile_w - 18:.1f}" y="34" text-anchor="end" font-size="11.5"
                 fill="{P["text_secondary"]}" font-family="{SANS}">{label}</text>
         </g>
@@ -1833,7 +1920,7 @@ def generate_contribution_svg(contribution_data):
         font-family="{SANS}" class="fade">{total} contributions in the last year</text>
   <text x="{W - 25}" y="25" text-anchor="end" font-size="10.5" fill="{P["text_muted"]}"
         font-family="{SANS}" class="fade">public activity, rolling 12 months</text>
-  <rect x="25" y="36" width="{W - 50}" height="1" fill="{P["border"]}" class="grow"/>
+  {_rule(25, 36.5, W - 25, P["border"], 0.2)}
   {months_svg}
   {day_labels_svg}
   {cells_svg}
@@ -1999,7 +2086,10 @@ def generate_footer_svg(config):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">
   {ANIM_CSS}
   <defs>
-    <linearGradient id="footerLine" x1="0" y1="0" x2="1" y2="0">
+    <!-- userSpaceOnUse: the rule is a zero-height <line>, and a bounding-box
+         gradient on one degenerates to nothing. -->
+    <linearGradient id="footerLine" gradientUnits="userSpaceOnUse"
+                    x1="90" y1="0" x2="{W - 90}" y2="0">
       <stop offset="0%" stop-color="{P["emerald"]}" stop-opacity="0"/>
       <stop offset="35%" stop-color="{P["emerald"]}" stop-opacity="0.55"/>
       <stop offset="65%" stop-color="{P["gold"]}" stop-opacity="0.5"/>
@@ -2007,7 +2097,8 @@ def generate_footer_svg(config):
     </linearGradient>
   </defs>
   <rect width="{W}" height="{H}" fill="transparent"/>
-  <rect x="90" y="14" width="{W - 180}" height="1.4" fill="url(#footerLine)"/>
+  <line x1="90" y1="14.5" x2="{W - 90}" y2="14.5" stroke="url(#footerLine)"
+        stroke-width="1.4"{_drawn(W - 180, 0.15)}/>
   <g transform="translate({W/2 - 90},32)">{ui_icon("heart", 16, P["lime"])}</g>
   <text x="{W/2 + 10}" y="45" text-anchor="middle" font-size="15" font-weight="700"
         fill="{P["text_bright"]}" font-family="{SANS}" class="rise">Thanks for visiting</text>

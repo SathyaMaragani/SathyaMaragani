@@ -3,6 +3,9 @@
     .fade{animation:fade .9s ease-out both}
     .rise{animation:rise .8s cubic-bezier(.2,.75,.3,1) both}
     .grow{animation:grow 1.3s cubic-bezier(.2,.8,.3,1) both;transform-box:fill-box;transform-origin:left center}
+    .draw{animation:draw 1.4s cubic-bezier(.25,.8,.3,1) both}
+    .letter{animation:letter .75s ease-out both}
+    .tick{animation:tick .34s linear both}
     .glow{animation:glow 4.5s ease-in-out infinite}
     .sway{animation:sway 9s ease-in-out infinite;transform-box:view-box}
     .float{animation:float 44s ease-in-out infinite}
@@ -12,6 +15,9 @@
     @keyframes fade{from{opacity:0}}
     @keyframes rise{from{opacity:0;transform:translateY(14px)}}
     @keyframes grow{from{transform:scaleX(0)}}
+    @keyframes draw{from{stroke-dashoffset:var(--len,2000)}}
+    @keyframes letter{from{fill-opacity:0}}
+    @keyframes tick{0%{opacity:0}12%{opacity:1}86%{opacity:1}100%{opacity:0}}
     @keyframes glow{0%,100%{opacity:.3}50%{opacity:.8}}
     @keyframes sway{0%,100%{transform:rotate(-1.8deg)}50%{transform:rotate(1.8deg)}}
     @keyframes float{0%,100%{transform:translateX(0)}50%{transform:translateX(15px)}}
@@ -21,7 +27,7 @@
     @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   </style>
   <rect width="840" height="150" fill="transparent"/>
-  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#2DD4BF"><path d="M15.22 4.97a.75.75 0 0 1 1.06 0l6.5 6.5a.75.75 0 0 1 0 1.06l-6.5 6.5a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L21.19 12l-5.97-5.97a.75.75 0 0 1 0-1.06Zm-6.44 0a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">Tech Stack</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">9 detected from repository languages and topics</text><rect x="25" y="38" width="790" height="1" fill="#1E4034" class="grow" style="animation-delay:0.15s"/>
+  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#2DD4BF"><path d="M15.22 4.97a.75.75 0 0 1 1.06 0l6.5 6.5a.75.75 0 0 1 0 1.06l-6.5 6.5a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L21.19 12l-5.97-5.97a.75.75 0 0 1 0-1.06Zm-6.44 0a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">Tech Stack</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">9 detected from repository languages and topics</text><line x1="25" y1="38.5" x2="815" y2="38.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.15s"/>
   
       <g transform="translate(46.0,54)">
         <g class="fade" style="animation-delay:0.06s">
