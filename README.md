@@ -31,7 +31,7 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, JavaScript, CSS, Python, Java, HTML, Lua, C, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, JavaScript, CSS, Python, Java, HTML, Lua, C, Shell, Git"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
@@ -45,14 +45,14 @@
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 76 commits, active on 35 of the last 370 days, longest streak 3 days, current streak 2 days"/>
+       alt="Public activity over the last twelve months — 85 commits, 1 pull requests, active on 36 of the last 371 days, longest streak 3 days, current streak 3 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 107 contributions in the last year"/>
+       alt="Contribution calendar — 117 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
