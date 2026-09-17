@@ -32,7 +32,7 @@
   <rect width="840" height="187" fill="transparent"/>
   <g transform="translate(25,9)"><g transform="scale(0.7083)" fill="#86EFAC"><path d="M6.75 0a.75.75 0 0 1 .75.75V3h9V.75a.75.75 0 0 1 1.5 0V3h2.75c.966 0 1.75.784 1.75 1.75v16a1.75 1.75 0 0 1-1.75 1.75H3.25a1.75 1.75 0 0 1-1.75-1.75v-16C1.5 3.784 2.284 3 3.25 3H6V.75A.75.75 0 0 1 6.75 0ZM21 9.5H3v11.25c0 .138.112.25.25.25h17.5a.25.25 0 0 0 .25-.25Zm-17.75-5a.25.25 0 0 0-.25.25V8h18V4.75a.25.25 0 0 0-.25-.25Z"/></g></g>
   <text x="49" y="25" font-size="15" font-weight="700" fill="#EAF7F0"
-        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">130 contributions in the last year</text>
+        font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">153 contributions in the last year</text>
   <text x="815" y="25" text-anchor="end" font-size="10.5" fill="#6C8C7E"
         font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">public activity, rolling 12 months</text>
   <g class="breathe" style="animation-duration:7.0s;animation-delay:1.40s"><line x1="25" y1="36.5" x2="815" y2="36.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.20s"/></g>
@@ -199,7 +199,7 @@
     <rect x="345" y="101" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.41s"/>
     <rect x="345" y="116" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.42s"/>
     <rect x="345" y="131" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.43s"/>
-    <rect x="345" y="146" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.44s"/>
+    <rect x="345" y="146" width="12" height="12" rx="2.5" fill="#15803D" class="pop" style="animation-delay:0.44s"/>
     <rect x="360" y="56" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.38s"/>
     <rect x="360" y="71" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.39s"/>
     <rect x="360" y="86" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.41s"/>
@@ -234,7 +234,7 @@
     <rect x="420" y="101" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.46s"/>
     <rect x="420" y="116" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.47s"/>
     <rect x="420" y="131" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.48s"/>
-    <rect x="420" y="146" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.50s"/>
+    <rect x="420" y="146" width="12" height="12" rx="2.5" fill="#15803D" class="pop" style="animation-delay:0.50s"/>
     <rect x="435" y="56" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.44s"/>
     <rect x="435" y="71" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.45s"/>
     <rect x="435" y="86" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.46s"/>
@@ -277,8 +277,8 @@
     <rect x="510" y="116" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.54s"/>
     <rect x="510" y="131" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.55s"/>
     <rect x="510" y="146" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.56s"/>
-    <rect x="525" y="56" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.50s"/>
-    <rect x="525" y="71" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.51s"/>
+    <rect x="525" y="56" width="12" height="12" rx="2.5" fill="#15803D" class="pop" style="animation-delay:0.50s"/>
+    <rect x="525" y="71" width="12" height="12" rx="2.5" fill="#15803D" class="pop" style="animation-delay:0.51s"/>
     <rect x="525" y="86" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.53s"/>
     <rect x="525" y="101" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.54s"/>
     <rect x="525" y="116" width="12" height="12" rx="2.5" fill="#14532D" class="pop" style="animation-delay:0.55s"/>
@@ -329,8 +329,8 @@
     <rect x="630" y="56" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.58s"/>
     <rect x="630" y="71" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.59s"/>
     <rect x="630" y="86" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.60s"/>
-    <rect x="630" y="101" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.61s"/>
-    <rect x="630" y="116" width="12" height="12" rx="2.5" fill="#FDE68A" class="pop" style="animation-delay:0.63s"/>
+    <rect x="630" y="101" width="12" height="12" rx="2.5" fill="#15803D" class="pop" style="animation-delay:0.61s"/>
+    <rect x="630" y="116" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.63s"/>
     <rect x="630" y="131" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.64s"/>
     <rect x="630" y="146" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.65s"/>
     <rect x="645" y="56" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.59s"/>
@@ -405,8 +405,8 @@
     <rect x="780" y="146" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.76s"/>
     <rect x="795" y="56" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.70s"/>
     <rect x="795" y="71" width="12" height="12" rx="2.5" fill="#FDE68A" class="pop" style="animation-delay:0.71s"/>
-    <rect x="795" y="86" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.72s"/>
-    <rect x="795" y="101" width="12" height="12" rx="2.5" fill="#FDE68A" class="pop" style="animation-delay:0.74s"/>
+    <rect x="795" y="86" width="12" height="12" rx="2.5" fill="#15803D" class="pop" style="animation-delay:0.72s"/>
+    <rect x="795" y="101" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.74s"/>
     <rect x="795" y="116" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.75s"/>
     <rect x="795" y="131" width="12" height="12" rx="2.5" fill="#FDE68A" class="pop" style="animation-delay:0.76s"/>
     <rect x="795" y="146" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.77s"/>
@@ -419,8 +419,9 @@
     <rect x="810" y="146" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.78s"/>
     <rect x="825" y="56" width="12" height="12" rx="2.5" fill="#102A20" class="fade" style="animation-delay:0.72s"/>
     <rect x="825" y="71" width="12" height="12" rx="2.5" fill="#FDE68A" class="pop" style="animation-delay:0.73s"/>
-    <rect x="825" y="86" width="12" height="12" rx="2.5" fill="#22C55E" class="pop" style="animation-delay:0.75s"/>
-    <rect x="825" y="101" width="12" height="12" rx="2.5" fill="#14532D" class="pop" style="animation-delay:0.76s"/>
+    <rect x="825" y="86" width="12" height="12" rx="2.5" fill="#15803D" class="pop" style="animation-delay:0.75s"/>
+    <rect x="825" y="101" width="12" height="12" rx="2.5" fill="#FDE68A" class="pop" style="animation-delay:0.76s"/>
+    <rect x="825" y="116" width="12" height="12" rx="2.5" fill="#FDE68A" class="pop" style="animation-delay:0.77s"/>
     
   <text x="680" y="178" font-size="9" fill="#6C8C7E"
         font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Less</text>
