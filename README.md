@@ -38,21 +38,21 @@
 <!-- PROFILE:STATS:START -->
 <div align="center">
   <img src="assets/stats-card.svg" width="100%"
-       alt="GitHub statistics — 34 public repositories, 2 stars earned, 0 followers, most used languages: TypeScript, JavaScript, Java, Python"/>
+       alt="GitHub statistics — 34 public repositories, 2 stars earned, 1 followers, most used languages: TypeScript, JavaScript, Java, Python"/>
 </div>
 <!-- PROFILE:STATS:END -->
 
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 117 commits, 5 pull requests, active on 40 of the last 369 days, longest streak 4 days, current streak 4 days"/>
+       alt="Public activity over the last twelve months — 128 commits, 6 pull requests, active on 41 of the last 370 days, longest streak 5 days, current streak 5 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 153 contributions in the last year"/>
+       alt="Contribution calendar — 165 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -61,11 +61,11 @@
 
 <h3>Featured Repositories</h3>
 
-<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-0.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-1.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-2.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Multimodal-Road-Safety-Risk-Assessment-System"><img src="assets/repo-card-3.svg" alt="Multimodal-Road-Safety-Risk-Assessment-System — Python, 2 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-4.svg" alt="3dwebportfolio — TypeScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-0.svg" alt="3dwebportfolio — TypeScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-1.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-2.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-3.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Multimodal-Road-Safety-Risk-Assessment-System"><img src="assets/repo-card-4.svg" alt="Multimodal-Road-Safety-Risk-Assessment-System — Python, 2 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/JavaPrep"><img src="assets/repo-card-5.svg" alt="JavaPrep — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 
 </div>
