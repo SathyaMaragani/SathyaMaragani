@@ -17,7 +17,7 @@
 <!-- PROFILE:IDENTITY:START -->
 <div align="center">
   <img src="assets/identity-card.svg" width="100%"
-       alt="Sathya Krishna Maragani (@SathyaMaragani) — 36 public repositories, 2 stars earned, Joined December 2021"/>
+       alt="Sathya Krishna Maragani (@SathyaMaragani) — 37 public repositories, 2 stars earned, Joined December 2021"/>
 </div>
 <!-- PROFILE:IDENTITY:END -->
 
@@ -38,21 +38,21 @@
 <!-- PROFILE:STATS:START -->
 <div align="center">
   <img src="assets/stats-card.svg" width="100%"
-       alt="GitHub statistics — 36 public repositories, 2 stars earned, 1 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
+       alt="GitHub statistics — 37 public repositories, 2 stars earned, 1 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
 </div>
 <!-- PROFILE:STATS:END -->
 
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 138 commits, 8 pull requests, active on 43 of the last 365 days, longest streak 7 days, current streak 7 days"/>
+       alt="Public activity over the last twelve months — 139 commits, 9 pull requests, active on 44 of the last 366 days, longest streak 8 days, current streak 8 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 179 contributions in the last year"/>
+       alt="Contribution calendar — 182 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -62,11 +62,11 @@
 <h3>Featured Repositories</h3>
 
 <a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-0.svg" alt="3dwebportfolio — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/NeoChems-MSA"><img src="assets/repo-card-1.svg" alt="NeoChems-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-2.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/NeoChem-MAS"><img src="assets/repo-card-3.svg" alt="NeoChem-MAS — 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-4.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-5.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-1.svg" alt="Vesyn-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/NeoChems-MSA"><img src="assets/repo-card-2.svg" alt="NeoChems-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-3.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/NeoChem-MAS"><img src="assets/repo-card-4.svg" alt="NeoChem-MAS — 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-5.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 
 </div>
 <!-- PROFILE:REPOS:END -->

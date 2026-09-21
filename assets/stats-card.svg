@@ -39,10 +39,10 @@
       <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.34"/>
       <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
     </linearGradient>
-    <clipPath id="barClip0"><rect x="463" y="97" width="276.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip1"><rect x="463" y="119" width="161.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip2"><rect x="463" y="141" width="69.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip3"><rect x="463" y="163" width="46.0" height="11" rx="5.5"/></clipPath>
+    <clipPath id="barClip0"><rect x="463" y="97" width="276.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip1"><rect x="463" y="119" width="161.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip2"><rect x="463" y="141" width="92.0" height="11" rx="5.5"/></clipPath><clipPath id="barClip3"><rect x="463" y="163" width="46.0" height="11" rx="5.5"/></clipPath>
   </defs>
   <rect width="840" height="204" fill="transparent"/>
-  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#34D399"><path d="M2.5 2.75a.75.75 0 0 0-1.5 0v18.5c0 .414.336.75.75.75H20a.75.75 0 0 0 0-1.5H2.5V2.75Z"/><path d="M22.28 7.78a.75.75 0 0 0-1.06-1.06l-5.72 5.72-3.72-3.72a.75.75 0 0 0-1.06 0l-6 6a.75.75 0 1 0 1.06 1.06l5.47-5.47 3.72 3.72a.75.75 0 0 0 1.06 0l6.25-6.25Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">GitHub Stats</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">35 sources &#183; 1 fork &#183; 0 archived &#183; 0 forks received</text><g class="breathe" style="animation-duration:7.0s;animation-delay:1.35s"><line x1="25" y1="38.5" x2="815" y2="38.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.15s"/></g>
+  <g transform="translate(25,10)"><g transform="scale(0.7083)" fill="#34D399"><path d="M2.5 2.75a.75.75 0 0 0-1.5 0v18.5c0 .414.336.75.75.75H20a.75.75 0 0 0 0-1.5H2.5V2.75Z"/><path d="M22.28 7.78a.75.75 0 0 0-1.06-1.06l-5.72 5.72-3.72-3.72a.75.75 0 0 0-1.06 0l-6 6a.75.75 0 1 0 1.06 1.06l5.47-5.47 3.72 3.72a.75.75 0 0 0 1.06 0l6.25-6.25Z"/></g></g><text x="49" y="27" font-size="17" font-weight="700" fill="#EAF7F0" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade">GitHub Stats</text><text x="815" y="26" text-anchor="end" font-size="10.5" fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.35s">36 sources &#183; 1 fork &#183; 0 archived &#183; 0 forks received</text><g class="breathe" style="animation-duration:7.0s;animation-delay:1.35s"><line x1="25" y1="38.5" x2="815" y2="38.5" stroke="#1E4034" stroke-width="1" stroke-dasharray="790" stroke-dashoffset="0" class="draw" style="--len:790;animation-delay:0.15s"/></g>
 
   <g class="rise" style="animation-delay:0.12s">
     <rect x="25" y="50" width="300" height="145" rx="12"
@@ -55,7 +55,7 @@
       <g>
         <text x="45" y="107" font-size="12.5" fill="#93B3A6"
               font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.30s">Public Repositories</text>
-        <text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.34s">0</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.45s">10</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.56s">21</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.67s">30</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.78s">34</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.89s">36</text>
+        <text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.34s">0</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.45s">10</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.56s">21</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.67s">30</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" opacity="0" class="tick" style="animation-delay:0.78s">35</text><text x="305" y="107" text-anchor="end" font-size="12.5" font-weight="700" fill="#E9C97E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif" class="fade" style="animation-delay:0.89s">37</text>
       </g>
       <g>
         <text x="45" y="129" font-size="12.5" fill="#93B3A6"
@@ -97,7 +97,7 @@
           </g>
         </g>
         <text x="795" y="106" text-anchor="end" font-size="11"
-              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">42.9%</text>
+              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">41.4%</text>
       </g>
       <g class="fade" style="animation-delay:0.39s">
         <text x="365" y="128" font-size="12" fill="#93B3A6"
@@ -112,14 +112,14 @@
           </g>
         </g>
         <text x="795" y="128" text-anchor="end" font-size="11"
-              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">25.0%</text>
+              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">24.1%</text>
       </g>
       <g class="fade" style="animation-delay:0.48s">
         <text x="365" y="150" font-size="12" fill="#93B3A6"
               font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">Python</text>
         <rect x="463" y="141" width="276" height="11" rx="5.5"
               fill="#12291F"/>
-        <rect x="463" y="141" width="69.0" height="11" rx="5.5"
+        <rect x="463" y="141" width="92.0" height="11" rx="5.5"
               fill="#3776AB" opacity="0.9" class="grow" style="animation-delay:0.67s"/>
         <g clip-path="url(#barClip2)">
           <g class="sheen" style="animation-delay:3.0s">
@@ -127,7 +127,7 @@
           </g>
         </g>
         <text x="795" y="150" text-anchor="end" font-size="11"
-              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">10.7%</text>
+              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">13.8%</text>
       </g>
       <g class="fade" style="animation-delay:0.57s">
         <text x="365" y="172" font-size="12" fill="#93B3A6"
@@ -142,7 +142,7 @@
           </g>
         </g>
         <text x="795" y="172" text-anchor="end" font-size="11"
-              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">7.1%</text>
+              fill="#6C8C7E" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif">6.9%</text>
       </g>
   </g>
 </svg>
