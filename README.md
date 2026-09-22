@@ -45,14 +45,14 @@
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 139 commits, 9 pull requests, active on 44 of the last 366 days, longest streak 8 days, current streak 8 days"/>
+       alt="Public activity over the last twelve months — 139 commits, 10 pull requests, active on 45 of the last 367 days, longest streak 9 days, current streak 9 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 182 contributions in the last year"/>
+       alt="Contribution calendar — 183 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -62,7 +62,7 @@
 <h3>Featured Repositories</h3>
 
 <a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-0.svg" alt="3dwebportfolio — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-1.svg" alt="Vesyn-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-1.svg" alt="Vesyn-MSA — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/NeoChems-MSA"><img src="assets/repo-card-2.svg" alt="NeoChems-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-3.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/NeoChem-MAS"><img src="assets/repo-card-4.svg" alt="NeoChem-MAS — 0 stars, 0 forks" width="48%"/></a>
