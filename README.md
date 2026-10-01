@@ -31,7 +31,7 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, JavaScript, CSS, Python, Java, HTML, Lua, C, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, Lua, C, Shell, Git"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
@@ -45,14 +45,14 @@
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 170 commits, 18 pull requests, active on 53 of the last 368 days, longest streak 17 days, current streak 17 days"/>
+       alt="Public activity over the last twelve months — 173 commits, 19 pull requests, active on 54 of the last 369 days, longest streak 18 days, current streak 18 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 225 contributions in the last year"/>
+       alt="Contribution calendar — 229 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -63,8 +63,8 @@
 
 <a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-0.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/26087-ERP"><img src="assets/repo-card-1.svg" alt="26087-ERP — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/NeoChems-MSA"><img src="assets/repo-card-2.svg" alt="NeoChems-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-3.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-2.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/NeoChems-MSA"><img src="assets/repo-card-3.svg" alt="NeoChems-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-4.svg" alt="3dwebportfolio — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-5.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
 
