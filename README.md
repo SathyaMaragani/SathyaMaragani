@@ -45,14 +45,14 @@
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 173 commits, 21 pull requests, active on 56 of the last 371 days, longest streak 20 days, current streak 20 days"/>
+       alt="Public activity over the last twelve months — 174 commits, 22 pull requests, active on 57 of the last 365 days, longest streak 21 days, current streak 21 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 231 contributions in the last year"/>
+       alt="Contribution calendar — 233 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
