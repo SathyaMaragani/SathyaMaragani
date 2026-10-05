@@ -45,14 +45,14 @@
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 174 commits, 22 pull requests, active on 57 of the last 365 days, longest streak 21 days, current streak 21 days"/>
+       alt="Public activity over the last twelve months — 186 commits, 23 pull requests, active on 58 of the last 366 days, longest streak 22 days, current streak 22 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 233 contributions in the last year"/>
+       alt="Contribution calendar — 246 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -63,10 +63,10 @@
 
 <a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-0.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/26087-ERP"><img src="assets/repo-card-1.svg" alt="26087-ERP — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-2.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/NeoChems-MSA"><img src="assets/repo-card-3.svg" alt="NeoChems-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-4.svg" alt="3dwebportfolio — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-5.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-2.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-3.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/NeoChems-MSA"><img src="assets/repo-card-4.svg" alt="NeoChems-MSA — Python, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/3dwebportfolio"><img src="assets/repo-card-5.svg" alt="3dwebportfolio — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 
 </div>
 <!-- PROFILE:REPOS:END -->
