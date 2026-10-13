@@ -11,7 +11,9 @@
     "Trading",
     "Full-Stack",
     "Automation",
-    "Open Source"
+    "Open Source",
+    "Programming",
+    "3D Animation"
   ],
 
   "cards": {
@@ -28,7 +30,7 @@
     "interests_card": {
       "title": "Interests",
       "emoji": "💡",
-      "items": ["Code", "Create", "Explore", "Stay Curious"]
+      "items": ["Code", "Create", "Explore", "Stay Curious", "Blender"]
     }
   },
 
@@ -51,7 +53,7 @@
     "linkedin": "",
     "x": "",
     "portfolio": "",
-    "email": ""
+    "email": "luckyindian994@gmail.com"
   },
 
   "ranking_weights": {
