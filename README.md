@@ -17,7 +17,7 @@
 <!-- PROFILE:IDENTITY:START -->
 <div align="center">
   <img src="assets/identity-card.svg" width="100%"
-       alt="Sathya Krishna Maragani (@SathyaMaragani) — 41 public repositories, 2 stars earned, Joined December 2021"/>
+       alt="Sathya Krishna Maragani (@SathyaMaragani) — 42 public repositories, 2 stars earned, Joined December 2021"/>
 </div>
 <!-- PROFILE:IDENTITY:END -->
 
@@ -31,28 +31,28 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, Lua, C, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
 <!-- PROFILE:STATS:START -->
 <div align="center">
   <img src="assets/stats-card.svg" width="100%"
-       alt="GitHub statistics — 41 public repositories, 2 stars earned, 1 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
+       alt="GitHub statistics — 42 public repositories, 2 stars earned, 1 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
 </div>
 <!-- PROFILE:STATS:END -->
 
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 221 commits, 52 pull requests, active on 64 of the last 367 days, longest streak 30 days, current streak 30 days"/>
+       alt="Public activity over the last twelve months — 222 commits, 59 pull requests, active on 65 of the last 368 days, longest streak 31 days, current streak 31 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 309 contributions in the last year"/>
+       alt="Contribution calendar — 318 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -64,9 +64,9 @@
 <a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-0.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-1.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/26087-ERP"><img src="assets/repo-card-2.svg" alt="26087-ERP — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/RAG_Mongo"><img src="assets/repo-card-3.svg" alt="RAG_Mongo — 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-4.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/wsl-imgod"><img src="assets/repo-card-5.svg" alt="wsl-imgod — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Smart-Conveyor-Belt-Controller"><img src="assets/repo-card-3.svg" alt="Smart-Conveyor-Belt-Controller — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/RAG_Mongo"><img src="assets/repo-card-4.svg" alt="RAG_Mongo — 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-5.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 
 </div>
 <!-- PROFILE:REPOS:END -->
