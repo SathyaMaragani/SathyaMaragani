@@ -31,7 +31,7 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, JavaScript, Python, Java, HTML, C, Lua, Git, Blender"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
@@ -43,16 +43,13 @@
 <!-- PROFILE:STATS:END -->
 
 <!-- PROFILE:ACTIVITY:START -->
-<div align="center">
-  <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 223 commits, 74 pull requests, active on 67 of the last 370 days, longest streak 33 days, current streak 33 days"/>
-</div>
+
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 334 contributions in the last year"/>
+       alt="Contribution calendar"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -72,7 +69,13 @@
 <!-- PROFILE:REPOS:END -->
 
 <!-- PROFILE:CONNECT:START -->
+<div align="center">
 
+<h3>Connect</h3>
+
+<a href="mailto:luckyindian994@gmail.com"><img src="assets/social-email.svg" height="34" alt="Email"/></a>
+
+</div>
 <!-- PROFILE:CONNECT:END -->
 
 <!-- PROFILE:FOOTER:START -->
