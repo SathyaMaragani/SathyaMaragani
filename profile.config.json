@@ -43,7 +43,9 @@
   "max_featured_repos": 6,
   "max_repo_pages": 100,
 
-  "tech_stack_overrides": [],
+  "tech_stack_overrides": [
+    "blender"
+  ],
   "language_min_share": 0.05,
 
   "socials": {
@@ -51,7 +53,7 @@
     "linkedin": "",
     "x": "",
     "portfolio": "",
-    "email": ""
+    "email": "luckyindian994@gmail.com"
   },
 
   "ranking_weights": {
