@@ -199,6 +199,7 @@ TECH_DB = {
     "kubernetes":  {"cat": "Tools",       "color": "#326CE5", "icon": "K8", "name": "Kubernetes"},
     "git":         {"cat": "Tools",       "color": "#F05032", "icon": "GT", "name": "Git"},
     "github-actions": {"cat": "Tools",    "color": "#2088FF", "icon": "GA", "name": "GitHub Actions"},
+    "blender":     {"cat": "Tools",       "color": "#E87D0D", "icon": "BL", "name": "Blender"},
     "aws":         {"cat": "Tools",       "color": "#FF9900", "icon": "AW", "name": "AWS"},
     "vercel":      {"cat": "Tools",       "color": "#CCCCCC", "icon": "VC", "name": "Vercel"},
     "netlify":     {"cat": "Tools",       "color": "#00C7B7", "icon": "NT", "name": "Netlify"},
