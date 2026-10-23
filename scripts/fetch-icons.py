@@ -37,7 +37,7 @@ SIMPLE_SLUGS = {
     "HTML": "html5", "CSS": "css", "Java": "java", "C++": "cplusplus",
     "C#": "csharp", "C": "c", "Go": "go", "Rust": "rust", "Ruby": "ruby",
     "PHP": "php", "Swift": "swift", "Kotlin": "kotlin", "Dart": "dart",
-    "Shell": "gnubash", "Lua": "lua", "Scala": "scala", "SCSS": "sass",
+    "Shell": "gnubash", "Lua": "lua", "Scala": "scala", "SCSS": "sass", "Blender": "blender",
     "Sass": "sass", "EJS": "ejs", "Jupyter Notebook": "jupyter",
     "PowerShell": "powershell", "Vue": "vuedotjs", "Svelte": "svelte",
     "React": "react", "Next.js": "nextdotjs", "Node.js": "nodedotjs",
