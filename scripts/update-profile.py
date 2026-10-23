@@ -202,6 +202,7 @@ TECH_DB = {
     "aws":         {"cat": "Tools",       "color": "#FF9900", "icon": "AW", "name": "AWS"},
     "vercel":      {"cat": "Tools",       "color": "#CCCCCC", "icon": "VC", "name": "Vercel"},
     "netlify":     {"cat": "Tools",       "color": "#00C7B7", "icon": "NT", "name": "Netlify"},
+    "blender":     {"cat": "Tools",       "color": "#E87D0D", "icon": "BL", "name": "Blender"},
     "linux":       {"cat": "Tools",       "color": "#FCC624", "icon": "LX", "name": "Linux"},
     "automation":  {"cat": "Tools",       "color": "#9333EA", "icon": "AU", "name": "Automation"},
 }
