@@ -48,6 +48,7 @@ SIMPLE_SLUGS = {
     "PostgreSQL": "postgresql", "MongoDB": "mongodb", "MySQL": "mysql",
     "Redis": "redis", "SQLite": "sqlite", "Firebase": "firebase",
     "Supabase": "supabase", "Prisma": "prisma", "Docker": "docker",
+    "Blender": "blender",
     "Kubernetes": "kubernetes", "Git": "git", "GitHub Actions": "githubactions",
     "AWS": "amazonwebservices", "Vercel": "vercel", "Netlify": "netlify",
     "Linux": "linux",
