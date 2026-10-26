@@ -141,6 +141,7 @@ TECH_DB = {
     "JavaScript":  {"cat": "Languages",   "color": "#F7DF1E", "icon": "JS"},
     "TypeScript":  {"cat": "Languages",   "color": "#3178C6", "icon": "TS"},
     "Python":      {"cat": "Languages",   "color": "#3776AB", "icon": "PY"},
+    "Python Advanced": {"cat": "Languages",   "color": "#3776AB", "icon": "PY"},
     "HTML":        {"cat": "Languages",   "color": "#E34F26", "icon": "HT"},
     "CSS":         {"cat": "Languages",   "color": "#1572B6", "icon": "CS"},
     "Java":        {"cat": "Languages",   "color": "#ED8B00", "icon": "JV"},
@@ -203,6 +204,7 @@ TECH_DB = {
     "vercel":      {"cat": "Tools",       "color": "#CCCCCC", "icon": "VC", "name": "Vercel"},
     "netlify":     {"cat": "Tools",       "color": "#00C7B7", "icon": "NT", "name": "Netlify"},
     "linux":       {"cat": "Tools",       "color": "#FCC624", "icon": "LX", "name": "Linux"},
+    "blender":     {"cat": "Tools",       "color": "#E87D0D", "icon": "BL", "name": "Blender"},
     "automation":  {"cat": "Tools",       "color": "#9333EA", "icon": "AU", "name": "Automation"},
 }
 
