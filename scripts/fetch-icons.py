@@ -33,7 +33,7 @@ OCTICON = "https://cdn.jsdelivr.net/npm/@primer/octicons@19/build/svg/{slug}-24.
 
 # Display name (must match TECH_DB in update-profile.py) -> Simple Icons slug.
 SIMPLE_SLUGS = {
-    "JavaScript": "javascript", "TypeScript": "typescript", "Python": "python",
+    "JavaScript": "javascript", "TypeScript": "typescript", "Python": "python", "Python Advanced": "python",
     "HTML": "html5", "CSS": "css", "Java": "java", "C++": "cplusplus",
     "C#": "csharp", "C": "c", "Go": "go", "Rust": "rust", "Ruby": "ruby",
     "PHP": "php", "Swift": "swift", "Kotlin": "kotlin", "Dart": "dart",
@@ -50,7 +50,7 @@ SIMPLE_SLUGS = {
     "Supabase": "supabase", "Prisma": "prisma", "Docker": "docker",
     "Kubernetes": "kubernetes", "Git": "git", "GitHub Actions": "githubactions",
     "AWS": "amazonwebservices", "Vercel": "vercel", "Netlify": "netlify",
-    "Linux": "linux",
+    "Linux": "linux", "Blender": "blender",
     # Social destinations, used by the connect row rather than the tech grid
     "LinkedIn": "linkedin", "X": "x",
 }
