@@ -52,7 +52,7 @@ SIMPLE_SLUGS = {
     "AWS": "amazonwebservices", "Vercel": "vercel", "Netlify": "netlify",
     "Linux": "linux",
     # Social destinations, used by the connect row rather than the tech grid
-    "LinkedIn": "linkedin", "X": "x",
+    "LinkedIn": "linkedin", "X": "x", "Blender": "blender",
 }
 
 # Taken from Devicon regardless of what Simple Icons offers.
