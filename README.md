@@ -72,7 +72,9 @@
 <!-- PROFILE:REPOS:END -->
 
 <!-- PROFILE:CONNECT:START -->
-
+<div align="center">
+  <a href="mailto:luckyindian994@gmail.com"><img src="assets/social-email.svg" height="32" alt="Email: luckyindian994@gmail.com"/></a>
+</div>
 <!-- PROFILE:CONNECT:END -->
 
 <!-- PROFILE:FOOTER:START -->
