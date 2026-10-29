@@ -4,56 +4,75 @@
   "tagline": "Developer • Builder • Explorer",
   "bio": "Building ideas at the intersection of technology, creativity and curiosity.",
   "hero_subtitle": "A developer, learner and builder who loves turning ideas into reality.",
-
   "interests": [
     "Web Development",
     "AI / ML",
     "Trading",
     "Full-Stack",
     "Automation",
-    "Open Source"
+    "Open Source",
+    "3D Animation"
   ],
-
   "cards": {
     "focus": {
       "title": "Focus",
       "emoji": "🎯",
-      "items": ["Build", "Learn", "Improve", "Repeat"]
+      "items": [
+        "Build",
+        "Learn",
+        "Improve",
+        "Repeat"
+      ]
     },
     "mindset": {
       "title": "Mindset",
       "emoji": "🧠",
-      "items": ["Discipline", "Consistency", "Progress", "Freedom"]
+      "items": [
+        "Discipline",
+        "Consistency",
+        "Progress",
+        "Freedom"
+      ]
     },
     "interests_card": {
       "title": "Interests",
       "emoji": "💡",
-      "items": ["Code", "Create", "Explore", "Stay Curious"]
+      "items": [
+        "Code",
+        "Create",
+        "Explore",
+        "Stay Curious"
+      ]
     }
   },
-
   "quote": "A dream without a plan is just a wish.",
   "motto": "Discipline today, freedom tomorrow.",
-  "side_text": ["SAME", "HUMAN", "DIFFERENT", "MINDSET"],
-
+  "side_text": [
+    "SAME",
+    "HUMAN",
+    "DIFFERENT",
+    "MINDSET"
+  ],
   "featured_repositories": [],
-  "exclude_repositories": ["Sathya994"],
+  "exclude_repositories": [
+    "Sathya994"
+  ],
   "include_forks_in_featured": false,
   "include_archived_in_featured": false,
   "max_featured_repos": 6,
   "max_repo_pages": 100,
-
-  "tech_stack_overrides": [],
+  "tech_stack_overrides": [
+    "blender",
+    "Python"
+  ],
   "language_min_share": 0.05,
-
   "socials": {
     "github": "https://github.com/SathyaMaragani",
     "linkedin": "",
     "x": "",
     "portfolio": "",
-    "email": ""
+    "email": "luckyindian994@gmail.com"
   },
-
   "ranking_weights": {
     "stars": 5,
     "forks": 3,
@@ -65,6 +84,5 @@
     "half_life_days": 180,
     "stars_floor": 0.4
   },
-
   "footer_message": "Let's build something incredible together."
 }
