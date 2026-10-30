@@ -196,6 +196,7 @@ TECH_DB = {
     "prisma":      {"cat": "Databases",   "color": "#2D3748", "icon": "PR", "name": "Prisma"},
     # Tools
     "docker":      {"cat": "Tools",       "color": "#2496ED", "icon": "DK", "name": "Docker"},
+    "blender":     {"cat": "Tools",       "color": "#E87D0D", "icon": "BL", "name": "Blender"},
     "kubernetes":  {"cat": "Tools",       "color": "#326CE5", "icon": "K8", "name": "Kubernetes"},
     "git":         {"cat": "Tools",       "color": "#F05032", "icon": "GT", "name": "Git"},
     "github-actions": {"cat": "Tools",    "color": "#2088FF", "icon": "GA", "name": "GitHub Actions"},
