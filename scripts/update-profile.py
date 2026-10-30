@@ -204,6 +204,7 @@ TECH_DB = {
     "netlify":     {"cat": "Tools",       "color": "#00C7B7", "icon": "NT", "name": "Netlify"},
     "linux":       {"cat": "Tools",       "color": "#FCC624", "icon": "LX", "name": "Linux"},
     "automation":  {"cat": "Tools",       "color": "#9333EA", "icon": "AU", "name": "Automation"},
+    "blender":     {"cat": "Tools",       "color": "#F5792A", "icon": "BL", "name": "Blender"},
 }
 
 # ============================================================
