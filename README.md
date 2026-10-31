@@ -24,14 +24,14 @@
 <!-- PROFILE:ABOUT:START -->
 <div align="center">
   <img src="assets/about-cards.svg" width="100%"
-       alt="Focus: Build, Learn, Improve, Repeat · Mindset: Discipline, Consistency, Progress, Freedom · Interests: Code, Create, Explore, Stay Curious · Quote: A dream without a plan is just a wish."/>
+       alt="Focus: Build, Learn, Improve, Repeat · Mindset: Discipline, Consistency, Progress, Freedom · Interests: Web Development, AI / ML, Trading, Full-Stack, Automation, Open Source, Programming, 3D Animation · Quote: A dream without a plan is just a wish."/>
 </div>
 <!-- PROFILE:ABOUT:END -->
 
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git, Blender"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
@@ -72,7 +72,9 @@
 <!-- PROFILE:REPOS:END -->
 
 <!-- PROFILE:CONNECT:START -->
-
+<div align="center">
+  <a href="mailto:luckyindian994@gmail.com"><img src="assets/social-email.svg" alt="Email: luckyindian994@gmail.com"/></a>
+</div>
 <!-- PROFILE:CONNECT:END -->
 
 <!-- PROFILE:FOOTER:START -->
