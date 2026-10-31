@@ -31,14 +31,14 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, JavaScript, Python, Java, HTML, C, Lua, Git, Blender"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
 <!-- PROFILE:STATS:START -->
 <div align="center">
   <img src="assets/stats-card.svg" width="100%"
-       alt="GitHub statistics — 42 public repositories, 2 stars earned, 1 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
+       alt="GitHub statistics — 42 public repositories, 2 stars earned, 2 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
 </div>
 <!-- PROFILE:STATS:END -->
 
@@ -72,7 +72,13 @@
 <!-- PROFILE:REPOS:END -->
 
 <!-- PROFILE:CONNECT:START -->
+<div align="center">
 
+<h3>Connect</h3>
+
+<a href="mailto:luckyindian994@gmail.com"><img src="assets/social-email.svg" height="34" alt="Email"/></a>
+
+</div>
 <!-- PROFILE:CONNECT:END -->
 
 <!-- PROFILE:FOOTER:START -->
