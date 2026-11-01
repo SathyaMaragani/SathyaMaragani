@@ -195,6 +195,7 @@ TECH_DB = {
     "supabase":    {"cat": "Databases",   "color": "#3ECF8E", "icon": "SB", "name": "Supabase"},
     "prisma":      {"cat": "Databases",   "color": "#2D3748", "icon": "PR", "name": "Prisma"},
     # Tools
+    "blender":     {"cat": "Tools",       "color": "#F5792A", "icon": "BL", "name": "Blender"},
     "docker":      {"cat": "Tools",       "color": "#2496ED", "icon": "DK", "name": "Docker"},
     "kubernetes":  {"cat": "Tools",       "color": "#326CE5", "icon": "K8", "name": "Kubernetes"},
     "git":         {"cat": "Tools",       "color": "#F05032", "icon": "GT", "name": "Git"},
