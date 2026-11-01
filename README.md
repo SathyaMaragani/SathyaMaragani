@@ -38,21 +38,21 @@
 <!-- PROFILE:STATS:START -->
 <div align="center">
   <img src="assets/stats-card.svg" width="100%"
-       alt="GitHub statistics — 42 public repositories, 2 stars earned, 1 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
+       alt="GitHub statistics — 42 public repositories, 2 stars earned, 2 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
 </div>
 <!-- PROFILE:STATS:END -->
 
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 223 commits, 184 pull requests, active on 82 of the last 371 days, longest streak 48 days, current streak 48 days"/>
+       alt="Public activity over the last twelve months — 223 commits, 192 pull requests, active on 82 of the last 365 days, longest streak 49 days, current streak 49 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 444 contributions in the last year"/>
+       alt="Contribution calendar — 452 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
