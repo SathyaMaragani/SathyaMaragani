@@ -141,6 +141,7 @@ TECH_DB = {
     "JavaScript":  {"cat": "Languages",   "color": "#F7DF1E", "icon": "JS"},
     "TypeScript":  {"cat": "Languages",   "color": "#3178C6", "icon": "TS"},
     "Python":      {"cat": "Languages",   "color": "#3776AB", "icon": "PY"},
+    "python advanced": {"cat": "Languages",   "color": "#3776AB", "icon": "PY", "name": "Python"},
     "HTML":        {"cat": "Languages",   "color": "#E34F26", "icon": "HT"},
     "CSS":         {"cat": "Languages",   "color": "#1572B6", "icon": "CS"},
     "Java":        {"cat": "Languages",   "color": "#ED8B00", "icon": "JV"},
@@ -195,6 +196,7 @@ TECH_DB = {
     "supabase":    {"cat": "Databases",   "color": "#3ECF8E", "icon": "SB", "name": "Supabase"},
     "prisma":      {"cat": "Databases",   "color": "#2D3748", "icon": "PR", "name": "Prisma"},
     # Tools
+    "blender":     {"cat": "Tools",       "color": "#F5792A", "icon": "BL", "name": "Blender"},
     "docker":      {"cat": "Tools",       "color": "#2496ED", "icon": "DK", "name": "Docker"},
     "kubernetes":  {"cat": "Tools",       "color": "#326CE5", "icon": "K8", "name": "Kubernetes"},
     "git":         {"cat": "Tools",       "color": "#F05032", "icon": "GT", "name": "Git"},
