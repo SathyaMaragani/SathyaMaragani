@@ -137,6 +137,7 @@ P = {
 
 # Technology detection: maps language/topic names to display info
 TECH_DB = {
+    "blender":     {"cat": "Tools",       "color": "#E87D0D", "icon": "BL"},
     # Languages (from GitHub's language detection)
     "JavaScript":  {"cat": "Languages",   "color": "#F7DF1E", "icon": "JS"},
     "TypeScript":  {"cat": "Languages",   "color": "#3178C6", "icon": "TS"},
