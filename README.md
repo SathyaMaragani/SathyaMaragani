@@ -31,7 +31,7 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, JavaScript, Python, Java, HTML, C, Lua, React, Node.js, Git"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
@@ -72,7 +72,13 @@
 <!-- PROFILE:REPOS:END -->
 
 <!-- PROFILE:CONNECT:START -->
+<div align="center">
 
+<h3>Connect</h3>
+
+<a href="https://linkedin.com/in/sathyamaragani"><img src="assets/social-linkedin.svg" height="34" alt="LinkedIn"/></a>
+
+</div>
 <!-- PROFILE:CONNECT:END -->
 
 <!-- PROFILE:FOOTER:START -->
