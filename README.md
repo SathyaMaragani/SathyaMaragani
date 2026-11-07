@@ -10,7 +10,7 @@
 <!-- PROFILE:HERO:START -->
 <div align="center">
   <img src="assets/hero-banner.svg" width="100%"
-       alt="Hi there, I&#39;m Sathya. A developer, learner and builder who loves turning ideas into reality."/>
+       alt="Hi there, I&#39;m Sathya. A developer, learner, and builder who loves turning ideas into reality."/>
 </div>
 <!-- PROFILE:HERO:END -->
 
@@ -31,7 +31,7 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, JavaScript, Python, Java, HTML, C, Lua, Git"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
@@ -63,8 +63,8 @@
 
 <a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-0.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 1 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-1.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 1 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Smart-Conveyor-Belt-Controller"><img src="assets/repo-card-2.svg" alt="Smart-Conveyor-Belt-Controller — C, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/26087-ERP"><img src="assets/repo-card-3.svg" alt="26087-ERP — TypeScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/26087-ERP"><img src="assets/repo-card-2.svg" alt="26087-ERP — TypeScript, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Smart-Conveyor-Belt-Controller"><img src="assets/repo-card-3.svg" alt="Smart-Conveyor-Belt-Controller — C, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/RAG_Mongo"><img src="assets/repo-card-4.svg" alt="RAG_Mongo — 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/RPWeb"><img src="assets/repo-card-5.svg" alt="RPWeb — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 
