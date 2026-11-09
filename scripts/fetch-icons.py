@@ -41,7 +41,7 @@ SIMPLE_SLUGS = {
     "Sass": "sass", "EJS": "ejs", "Jupyter Notebook": "jupyter",
     "PowerShell": "powershell", "Vue": "vuedotjs", "Svelte": "svelte",
     "React": "react", "Next.js": "nextdotjs", "Node.js": "nodedotjs",
-    "Express": "express", "Django": "django", "Flask": "flask",
+    "Express": "express", "Blender": "blender", "Django": "django", "Flask": "flask",
     "FastAPI": "fastapi", "Angular": "angular", "Tailwind": "tailwindcss",
     "Bootstrap": "bootstrap", "Flutter": "flutter", "Vite": "vite",
     "Electron": "electron", "Three.js": "threedotjs",
