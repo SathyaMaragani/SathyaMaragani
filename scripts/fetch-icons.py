@@ -50,7 +50,7 @@ SIMPLE_SLUGS = {
     "Supabase": "supabase", "Prisma": "prisma", "Docker": "docker",
     "Kubernetes": "kubernetes", "Git": "git", "GitHub Actions": "githubactions",
     "AWS": "amazonwebservices", "Vercel": "vercel", "Netlify": "netlify",
-    "Linux": "linux",
+    "Linux": "linux", "Blender": "blender",
     # Social destinations, used by the connect row rather than the tech grid
     "LinkedIn": "linkedin", "X": "x",
 }
