@@ -166,6 +166,7 @@ TECH_DB = {
     "PowerShell":  {"cat": "Languages",   "color": "#5391FE", "icon": "PS"},
     "Batchfile":   {"cat": "Languages",   "color": "#C1F12E", "icon": "BT"},
     # Frameworks/tools (from repo topics)
+    "Blender":     {"cat": "Frameworks",  "color": "#E87D0D", "icon": "BL"},
     "react":       {"cat": "Frameworks",  "color": "#61DAFB", "icon": "RE", "name": "React"},
     "nextjs":      {"cat": "Frameworks",  "color": "#EEEEEE", "icon": "NX", "name": "Next.js"},
     "next":        {"cat": "Frameworks",  "color": "#EEEEEE", "icon": "NX", "name": "Next.js"},
