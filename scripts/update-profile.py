@@ -141,6 +141,7 @@ TECH_DB = {
     "JavaScript":  {"cat": "Languages",   "color": "#F7DF1E", "icon": "JS"},
     "TypeScript":  {"cat": "Languages",   "color": "#3178C6", "icon": "TS"},
     "Python":      {"cat": "Languages",   "color": "#3776AB", "icon": "PY"},
+    "Blender":     {"cat": "Tools",       "color": "#E87D0D", "icon": "BL"},
     "HTML":        {"cat": "Languages",   "color": "#E34F26", "icon": "HT"},
     "CSS":         {"cat": "Languages",   "color": "#1572B6", "icon": "CS"},
     "Java":        {"cat": "Languages",   "color": "#ED8B00", "icon": "JV"},
