@@ -17,7 +17,7 @@
 <!-- PROFILE:IDENTITY:START -->
 <div align="center">
   <img src="assets/identity-card.svg" width="100%"
-       alt="Sathya Krishna Maragani (@SathyaMaragani) — 43 public repositories, 5 stars earned, Joined December 2021"/>
+       alt="Sathya Krishna Maragani (@SathyaMaragani) — 44 public repositories, 5 stars earned, Joined December 2021"/>
 </div>
 <!-- PROFILE:IDENTITY:END -->
 
@@ -31,28 +31,28 @@
 <!-- PROFILE:TECHSTACK:START -->
 <div align="center">
   <img src="assets/tech-stack.svg" width="100%"
-       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, Java, HTML, C, Lua, Shell, Git"/>
+       alt="Tech stack detected from repository languages and topics: TypeScript, CSS, JavaScript, Python, HTML, Java, C, Lua, Jupyter Notebook, Shell, Git"/>
 </div>
 <!-- PROFILE:TECHSTACK:END -->
 
 <!-- PROFILE:STATS:START -->
 <div align="center">
   <img src="assets/stats-card.svg" width="100%"
-       alt="GitHub statistics — 43 public repositories, 5 stars earned, 2 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
+       alt="GitHub statistics — 44 public repositories, 5 stars earned, 2 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
 </div>
 <!-- PROFILE:STATS:END -->
 
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 240 commits, 268 pull requests, active on 93 of the last 370 days, longest streak 60 days, current streak 60 days"/>
+       alt="Public activity over the last twelve months — 258 commits, 268 pull requests, active on 95 of the last 371 days, longest streak 62 days, current streak 62 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 545 contributions in the last year"/>
+       alt="Contribution calendar — 564 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -63,10 +63,10 @@
 
 <a href="https://github.com/SathyaMaragani/LuckyLook"><img src="assets/repo-card-0.svg" alt="LuckyLook — A private AI for your Windows PC that knows what&apos;s on it. Ask about your files, screen, clipboard and browsing; runs locally with Ollama. — Python, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-1.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 1 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-2.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 1 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Smart-Conveyor-Belt-Controller"><img src="assets/repo-card-3.svg" alt="Smart-Conveyor-Belt-Controller — C, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/26087-ERP"><img src="assets/repo-card-4.svg" alt="26087-ERP — TypeScript, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/RAG_Mongo"><img src="assets/repo-card-5.svg" alt="RAG_Mongo — 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/NSWQuant"><img src="assets/repo-card-2.svg" alt="NSWQuant — TinyML order-book mid-price prediction (NIFTY, FI-2010, crypto): integer-only int8 model, C kernel, live dashboard — Jupyter Notebook, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-3.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 1 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Smart-Conveyor-Belt-Controller"><img src="assets/repo-card-4.svg" alt="Smart-Conveyor-Belt-Controller — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/26087-ERP"><img src="assets/repo-card-5.svg" alt="26087-ERP — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 
 </div>
 <!-- PROFILE:REPOS:END -->
