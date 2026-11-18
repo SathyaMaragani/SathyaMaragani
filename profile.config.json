@@ -11,14 +11,16 @@
     "Trading",
     "Full-Stack",
     "Automation",
-    "Open Source"
+    "Open Source",
+    "Programming",
+    "3D Animation"
   ],
 
   "cards": {
     "focus": {
       "title": "Focus",
       "emoji": "🎯",
-      "items": ["Build", "Learn", "Improve", "Repeat"]
+      "items": ["Build", "Learn Blender", "Learn Python Advanced", "Repeat"]
     },
     "mindset": {
       "title": "Mindset",
@@ -51,7 +53,7 @@
     "linkedin": "",
     "x": "",
     "portfolio": "",
-    "email": ""
+    "email": "luckyindian994@gmail.com"
   },
 
   "ranking_weights": {
