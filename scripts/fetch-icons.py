@@ -33,6 +33,7 @@ OCTICON = "https://cdn.jsdelivr.net/npm/@primer/octicons@19/build/svg/{slug}-24.
 
 # Display name (must match TECH_DB in update-profile.py) -> Simple Icons slug.
 SIMPLE_SLUGS = {
+    "Blender": "blender",
     "JavaScript": "javascript", "TypeScript": "typescript", "Python": "python",
     "HTML": "html5", "CSS": "css", "Java": "java", "C++": "cplusplus",
     "C#": "csharp", "C": "c", "Go": "go", "Rust": "rust", "Ruby": "ruby",
