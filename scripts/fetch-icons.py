@@ -44,7 +44,7 @@ SIMPLE_SLUGS = {
     "Express": "express", "Django": "django", "Flask": "flask",
     "FastAPI": "fastapi", "Angular": "angular", "Tailwind": "tailwindcss",
     "Bootstrap": "bootstrap", "Flutter": "flutter", "Vite": "vite",
-    "Electron": "electron", "Three.js": "threedotjs",
+    "Electron": "electron", "Three.js": "threedotjs", "Blender": "blender",
     "PostgreSQL": "postgresql", "MongoDB": "mongodb", "MySQL": "mysql",
     "Redis": "redis", "SQLite": "sqlite", "Firebase": "firebase",
     "Supabase": "supabase", "Prisma": "prisma", "Docker": "docker",
