@@ -45,7 +45,7 @@
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 266 commits, 268 pull requests, active on 96 of the last 370 days, longest streak 62 days, current streak 1 day"/>
+       alt="Public activity over the last twelve months — 266 commits, 268 pull requests, active on 96 of the last 371 days, longest streak 62 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
