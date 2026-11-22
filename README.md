@@ -17,7 +17,7 @@
 <!-- PROFILE:IDENTITY:START -->
 <div align="center">
   <img src="assets/identity-card.svg" width="100%"
-       alt="Sathya Krishna Maragani (@SathyaMaragani) — 45 public repositories, 5 stars earned, Joined December 2021"/>
+       alt="Sathya Krishna Maragani (@SathyaMaragani) — 46 public repositories, 5 stars earned, Joined December 2021"/>
 </div>
 <!-- PROFILE:IDENTITY:END -->
 
@@ -38,21 +38,21 @@
 <!-- PROFILE:STATS:START -->
 <div align="center">
   <img src="assets/stats-card.svg" width="100%"
-       alt="GitHub statistics — 45 public repositories, 5 stars earned, 2 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
+       alt="GitHub statistics — 46 public repositories, 5 stars earned, 2 followers, most used languages: TypeScript, JavaScript, Python, Java"/>
 </div>
 <!-- PROFILE:STATS:END -->
 
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 266 commits, 268 pull requests, active on 96 of the last 371 days, longest streak 62 days"/>
+       alt="Public activity over the last twelve months — 271 commits, 268 pull requests, 1 issues opened, active on 98 of the last 365 days, longest streak 62 days, current streak 2 days"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 571 contributions in the last year"/>
+       alt="Contribution calendar — 578 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -62,11 +62,11 @@
 <h3>Featured Repositories</h3>
 
 <a href="https://github.com/SathyaMaragani/LuckyLook"><img src="assets/repo-card-0.svg" alt="LuckyLook — A private AI for your Windows PC that knows what&apos;s on it. Ask about your files, screen, clipboard and browsing; runs locally with Ollama. — Python, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-1.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 1 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/NSWQuant"><img src="assets/repo-card-2.svg" alt="NSWQuant — TinyML order-book mid-price prediction (NIFTY, FI-2010, crypto): integer-only int8 model, C kernel, live dashboard — Jupyter Notebook, 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Interactive-3D-World-Reconstruction-with-Language-Guided-AI"><img src="assets/repo-card-3.svg" alt="Interactive-3D-World-Reconstruction-with-Language-Guided-AI — Interactive 3D World Reconstruction with Language-Guided AI — 0 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-4.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 1 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Smart-Conveyor-Belt-Controller"><img src="assets/repo-card-5.svg" alt="Smart-Conveyor-Belt-Controller — C, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/PaluAI"><img src="assets/repo-card-1.svg" alt="PaluAI — Free self-hosted Jules-style coding agent: Gemini CLI on GitHub Actions — Python, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-2.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 1 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/NSWQuant"><img src="assets/repo-card-3.svg" alt="NSWQuant — TinyML order-book mid-price prediction (NIFTY, FI-2010, crypto): integer-only int8 model, C kernel, live dashboard — Jupyter Notebook, 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Interactive-3D-World-Reconstruction-with-Language-Guided-AI"><img src="assets/repo-card-4.svg" alt="Interactive-3D-World-Reconstruction-with-Language-Guided-AI — Interactive 3D World Reconstruction with Language-Guided AI — 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Enterprise-Knowledge-Intelligence-Platform"><img src="assets/repo-card-5.svg" alt="Enterprise-Knowledge-Intelligence-Platform — JavaScript, 1 stars, 0 forks" width="48%"/></a>
 
 </div>
 <!-- PROFILE:REPOS:END -->
