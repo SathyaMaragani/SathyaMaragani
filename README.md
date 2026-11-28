@@ -45,14 +45,14 @@
 <!-- PROFILE:ACTIVITY:START -->
 <div align="center">
   <img src="assets/activity-card.svg" width="100%"
-       alt="Public activity over the last twelve months — 274 commits, 268 pull requests, 1 issues opened, active on 99 of the last 370 days, longest streak 62 days"/>
+       alt="Public activity over the last twelve months — 278 commits, 268 pull requests, 1 issues opened, active on 100 of the last 371 days, longest streak 62 days, current streak 1 day"/>
 </div>
 <!-- PROFILE:ACTIVITY:END -->
 
 <!-- PROFILE:CONTRIBUTIONS:START -->
 <div align="center">
   <img src="assets/contribution-graph.svg" width="100%"
-       alt="Contribution calendar — 582 contributions in the last year"/>
+       alt="Contribution calendar — 586 contributions in the last year"/>
 </div>
 <!-- PROFILE:CONTRIBUTIONS:END -->
 
@@ -66,7 +66,7 @@
 <a href="https://github.com/SathyaMaragani/Experiment-4-PyTorch-CUDA"><img src="assets/repo-card-2.svg" alt="Experiment-4-PyTorch-CUDA — DL Lab Experiment 4: project repository, Git workflow and PyTorch-CUDA environment setup — Jupyter Notebook, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/PaluAI"><img src="assets/repo-card-3.svg" alt="PaluAI — Free self-hosted Jules-style coding agent: Gemini CLI on GitHub Actions — Python, 0 stars, 0 forks" width="48%"/></a>
 <a href="https://github.com/SathyaMaragani/Vesyn-MSA"><img src="assets/repo-card-4.svg" alt="Vesyn-MSA — Drug discovery agents that remember what they learned: a multi-agent retrosynthesis system with Hindsight memory. — TypeScript, 1 stars, 0 forks" width="48%"/></a>
-<a href="https://github.com/SathyaMaragani/Interactive-3D-World-Reconstruction-with-Language-Guided-AI"><img src="assets/repo-card-5.svg" alt="Interactive-3D-World-Reconstruction-with-Language-Guided-AI — Interactive 3D World Reconstruction with Language-Guided AI — 0 stars, 0 forks" width="48%"/></a>
+<a href="https://github.com/SathyaMaragani/Personal-WebCV"><img src="assets/repo-card-5.svg" alt="Personal-WebCV — TypeScript, 0 stars, 0 forks" width="48%"/></a>
 
 </div>
 <!-- PROFILE:REPOS:END -->
